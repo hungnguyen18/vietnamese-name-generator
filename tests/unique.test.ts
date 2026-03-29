@@ -33,7 +33,7 @@ describe("generateMany", () => {
 
   it("throws when count exceeds max possible unique names", () => {
     expect(() =>
-      generateMany(10000, {
+      generateMany(1000000, {
         gender: EGender.Unisex,
         region: ERegion.North,
         era: EEra.Traditional,
