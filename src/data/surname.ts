@@ -4,7 +4,6 @@ import type { TWeightedEntry } from "../types";
 export const INDEX_SURNAME: Record<string, TWeightedEntry[]> = {
   "north": [
     { value: "Nguyễn", weight: 31.5 },
-    { value: "pub", weight: 12.499999999936811 },
     { value: "Trần", weight: 10.9 },
     { value: "Lê", weight: 8.9 },
     { value: "Phạm", weight: 5.9 },
@@ -244,12 +243,10 @@ export const INDEX_SURNAME: Record<string, TWeightedEntry[]> = {
     { value: "border", weight: 1.8375853174625174e-14 },
     { value: "me", weight: 1.8375853174625174e-14 },
     { value: "ms", weight: 1.8375853174625174e-14 },
-    { value: "btn", weight: 1.8375853174625174e-14 },
-    { value: "end", weight: 0 }
+    { value: "btn", weight: 1.8375853174625174e-14 }
   ],
   "central": [
     { value: "Nguyễn", weight: 31.5 },
-    { value: "pub", weight: 12.499999999936811 },
     { value: "Trần", weight: 10.9 },
     { value: "Lê", weight: 8.9 },
     { value: "Phạm", weight: 5.9 },
@@ -489,12 +486,10 @@ export const INDEX_SURNAME: Record<string, TWeightedEntry[]> = {
     { value: "border", weight: 1.8375853174625174e-14 },
     { value: "me", weight: 1.8375853174625174e-14 },
     { value: "ms", weight: 1.8375853174625174e-14 },
-    { value: "btn", weight: 1.8375853174625174e-14 },
-    { value: "end", weight: 0 }
+    { value: "btn", weight: 1.8375853174625174e-14 }
   ],
   "south": [
     { value: "Nguyễn", weight: 31.5 },
-    { value: "pub", weight: 12.499999999936811 },
     { value: "Trần", weight: 10.9 },
     { value: "Lê", weight: 8.9 },
     { value: "Phạm", weight: 5.9 },
@@ -735,7 +730,6 @@ export const INDEX_SURNAME: Record<string, TWeightedEntry[]> = {
     { value: "border", weight: 1.8375853174625174e-14 },
     { value: "me", weight: 1.8375853174625174e-14 },
     { value: "ms", weight: 1.8375853174625174e-14 },
-    { value: "btn", weight: 1.8375853174625174e-14 },
-    { value: "end", weight: 0 }
+    { value: "btn", weight: 1.8375853174625174e-14 }
   ]
 };

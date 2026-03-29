@@ -1,5 +1,34 @@
 import type { IRawNameEntry } from "../types";
 
+// Common HTML/parsing artifacts to filter out
+const GARBAGE_VALUES = new Set([
+  "pub",
+  "end",
+  "var",
+  "function",
+  "return",
+  "const",
+  "let",
+  "class",
+  "export",
+  "import",
+  "default",
+]);
+
+function valueIsValid(value: string): boolean {
+  if (value.length === 0) {
+    return false;
+  }
+  if (GARBAGE_VALUES.has(value.toLowerCase())) {
+    return false;
+  }
+  // Must contain at least one letter
+  if (!/\p{L}/u.test(value)) {
+    return false;
+  }
+  return true;
+}
+
 function valueNormalize(value: string): string {
   return value.normalize("NFC").trim();
 }
@@ -11,6 +40,10 @@ export function entriesDeduplicate(entries: IRawNameEntry[]): IRawNameEntry[] {
     const entry = entries[i];
     const normalized = valueNormalize(entry.value);
     entry.value = normalized;
+
+    if (!valueIsValid(normalized)) {
+      continue;
+    }
 
     const key = `${entry.type}:${normalized}:${entry.gender ?? "any"}`;
 
