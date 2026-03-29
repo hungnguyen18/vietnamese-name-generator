@@ -89,3 +89,62 @@ export function generate(options?: TGenerateOptions): INameResult {
 export function generateFullName(options?: TGenerateOptions): string {
   return generate(options).fullName;
 }
+
+export function generateMany(
+  count: number,
+  options?: TGenerateOptions,
+): INameResult[] {
+  if (count <= 0) {
+    throw new Error("Count must be greater than 0");
+  }
+
+  const resolved = optionResolve(options);
+  const surnameCount = INDEX_SURNAME[resolved.region].length;
+  const middleCount = resolved.withMiddleName
+    ? (INDEX_MIDDLE_NAME[resolved.gender]?.[resolved.region]?.[resolved.era]
+        ?.length ?? 1)
+    : 1;
+  const givenCount =
+    INDEX_GIVEN_NAME[resolved.gender]?.[resolved.region]?.[resolved.era]
+      ?.length ?? 0;
+  const compoundCount =
+    INDEX_COMPOUND_GIVEN_NAME[resolved.gender]?.[resolved.era]?.length ?? 0;
+  const totalGivenCount = givenCount + compoundCount;
+  const maxCombinations = surnameCount * middleCount * totalGivenCount;
+
+  if (count > maxCombinations) {
+    throw new Error(
+      `Cannot generate ${count} unique names. Maximum possible combinations: ${maxCombinations}`,
+    );
+  }
+
+  const results: INameResult[] = [];
+  const seen = new Set<string>();
+  const maxRetries = count * 3;
+  let retries = 0;
+
+  while (results.length < count) {
+    const result = generate(options);
+    if (!seen.has(result.fullName)) {
+      seen.add(result.fullName);
+      results.push(result);
+      retries = 0;
+    } else {
+      retries += 1;
+      if (retries > maxRetries) {
+        throw new Error(
+          `Cannot generate ${count} unique names after ${maxRetries} retries. Generated ${results.length} so far.`,
+        );
+      }
+    }
+  }
+
+  return results;
+}
+
+export function generateManyFullNames(
+  count: number,
+  options?: TGenerateOptions,
+): string[] {
+  return generateMany(count, options).map((r) => r.fullName);
+}
