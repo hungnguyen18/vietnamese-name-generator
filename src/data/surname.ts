@@ -1,0 +1,40 @@
+import { ERegion, type TWeightedEntry } from "../types";
+
+export const INDEX_SURNAME: Record<ERegion, TWeightedEntry[]> = {
+  [ERegion.North]: [
+    { value: "Nguyen", weight: 31.5 },
+    { value: "Tran", weight: 10.9 },
+    { value: "Le", weight: 8.9 },
+    { value: "Pham", weight: 5.9 },
+    { value: "Hoang", weight: 5.1 },
+    { value: "Vu", weight: 4.9 },
+    { value: "Phan", weight: 2.8 },
+    { value: "Dang", weight: 1.9 },
+    { value: "Bui", weight: 2.1 },
+    { value: "Do", weight: 1.9 },
+  ],
+  [ERegion.Central]: [
+    { value: "Nguyen", weight: 31.5 },
+    { value: "Tran", weight: 10.9 },
+    { value: "Le", weight: 8.9 },
+    { value: "Pham", weight: 5.9 },
+    { value: "Hoang", weight: 5.1 },
+    { value: "Phan", weight: 2.8 },
+    { value: "Truong", weight: 2.2 },
+    { value: "Dang", weight: 1.9 },
+    { value: "Ngo", weight: 1.7 },
+    { value: "Ho", weight: 1.5 },
+  ],
+  [ERegion.South]: [
+    { value: "Nguyen", weight: 31.5 },
+    { value: "Tran", weight: 10.9 },
+    { value: "Le", weight: 8.9 },
+    { value: "Pham", weight: 5.9 },
+    { value: "Huynh", weight: 5.1 },
+    { value: "Vo", weight: 4.9 },
+    { value: "Phan", weight: 2.8 },
+    { value: "Truong", weight: 2.2 },
+    { value: "Dang", weight: 1.9 },
+    { value: "Bui", weight: 2.1 },
+  ],
+};
