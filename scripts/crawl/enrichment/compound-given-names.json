@@ -1,0 +1,58 @@
+{
+  "male": {
+    "traditional": [
+      "Quốc Tuấn",
+      "Đức Trung",
+      "Hải Đăng",
+      "Trọng Nghĩa",
+      "Thế Vinh"
+    ],
+    "modern": [
+      "Bảo Long",
+      "Minh Khang",
+      "Gia Huy",
+      "Đức Anh",
+      "Quốc Bảo",
+      "Minh Đức",
+      "Gia Bảo",
+      "Đình Khoa",
+      "Nhật Minh",
+      "Anh Khoa",
+      "Tuấn Kiệt",
+      "Hải Đăng",
+      "Phúc An",
+      "Đăng Khoa",
+      "Thiên Phúc"
+    ]
+  },
+  "female": {
+    "traditional": [
+      "Ngọc Lan",
+      "Thúy Hằng",
+      "Minh Nguyệt",
+      "Kim Chi",
+      "Thanh Hà"
+    ],
+    "modern": [
+      "Bảo Ngọc",
+      "Minh Châu",
+      "Gia Hân",
+      "Khánh Vy",
+      "An Nhiên",
+      "Cát Anh",
+      "Uyên Thu",
+      "Diệu Linh",
+      "Phương Nhi",
+      "Thanh Trúc",
+      "Thùy Tiên",
+      "Ngọc Ánh",
+      "Bảo Trâm",
+      "Hạ Vy",
+      "Minh Anh"
+    ]
+  },
+  "unisex": {
+    "traditional": ["Minh An", "Thanh Bình", "Xuân Lâm"],
+    "modern": ["Bảo An", "Minh Anh", "Gia Bảo", "An Khang", "Phúc Lâm"]
+  }
+}

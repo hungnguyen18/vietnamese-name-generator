@@ -1,0 +1,30 @@
+{
+  "surnameVariants": {
+    "Hoàng": { "region": "north", "southVariant": "Huỳnh" },
+    "Huỳnh": { "region": "south", "northVariant": "Hoàng" },
+    "Vũ": { "region": "north", "southVariant": "Võ" },
+    "Võ": { "region": "south", "northVariant": "Vũ" }
+  },
+  "universalSurnames": [
+    "Nguyễn",
+    "Trần",
+    "Lê",
+    "Phạm",
+    "Phan",
+    "Trương",
+    "Đặng",
+    "Bùi",
+    "Đỗ",
+    "Ngô",
+    "Hồ",
+    "Dương",
+    "Lý",
+    "Hà",
+    "Trịnh",
+    "Đinh",
+    "Đoàn",
+    "Cao",
+    "Lương",
+    "Lâm"
+  ]
+}

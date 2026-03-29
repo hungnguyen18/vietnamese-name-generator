@@ -1,0 +1,64 @@
+{
+  "male": {
+    "traditional": {
+      "all": ["Văn", "Hữu", "Đức", "Công", "Quang"],
+      "north": ["Văn", "Hữu", "Đức", "Quốc"],
+      "central": ["Văn", "Đức", "Công", "Thanh"],
+      "south": ["Văn", "Thanh", "Hữu", "Minh"]
+    },
+    "modern": {
+      "all": [
+        "Minh",
+        "Quốc",
+        "Gia",
+        "Bảo",
+        "Hoàng",
+        "Đại",
+        "Đức",
+        "Quang",
+        "Thanh"
+      ],
+      "north": ["Minh", "Quốc", "Gia", "Đức"],
+      "central": ["Minh", "Quốc", "Bảo", "Thanh"],
+      "south": ["Minh", "Hoàng", "Gia", "Bảo"]
+    }
+  },
+  "female": {
+    "traditional": {
+      "all": ["Thị", "Ngọc", "Diệu", "Mỹ", "Bích", "Hồng", "Kim"],
+      "north": ["Thị", "Ngọc", "Diệu"],
+      "central": ["Thị", "Ngọc", "Mỹ"],
+      "south": ["Thị", "Ngọc", "Kim"]
+    },
+    "modern": {
+      "all": [
+        "Ngọc",
+        "Minh",
+        "Khánh",
+        "Bảo",
+        "An",
+        "Gia",
+        "Thanh",
+        "Diệu",
+        "Mỹ"
+      ],
+      "north": ["Ngọc", "Minh", "Khánh"],
+      "central": ["Ngọc", "Bảo", "An"],
+      "south": ["Ngọc", "Bảo", "Gia"]
+    }
+  },
+  "unisex": {
+    "traditional": {
+      "all": ["Minh", "Thanh", "Kim"],
+      "north": ["Minh", "Thanh"],
+      "central": ["Minh", "Thanh"],
+      "south": ["Minh", "Kim"]
+    },
+    "modern": {
+      "all": ["An", "Bảo", "Gia", "Khánh", "Ngọc", "Phước"],
+      "north": ["An", "Bảo"],
+      "central": ["An", "Bảo"],
+      "south": ["An", "Gia"]
+    }
+  }
+}

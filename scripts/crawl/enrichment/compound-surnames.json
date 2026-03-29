@@ -1,0 +1,23 @@
+[
+  {
+    "value": "Tôn Thất",
+    "gender": "male",
+    "note": "Male Nguyen imperial family"
+  },
+  {
+    "value": "Tôn Nữ",
+    "gender": "female",
+    "note": "Female Nguyen imperial family"
+  },
+  { "value": "Nguyễn Phước", "note": "Direct Nguyen royal family" },
+  { "value": "Hoàng Phủ", "note": "Branch of Tu clan" },
+  { "value": "Âu Dương", "note": "South of Au Du mountain" },
+  { "value": "Thượng Quan", "note": "High official" },
+  { "value": "Tư Mã", "note": "Horse master" },
+  { "value": "Tư Đồ", "note": "Official position" },
+  { "value": "Gia Cát", "note": "Branch from Cat clan" },
+  { "value": "Hạ Hầu", "note": "Descendants of Ha Vu" },
+  { "value": "Tây Môn", "note": "Western gate" },
+  { "value": "Vũ Văn", "note": "Non-Han origin" },
+  { "value": "Chung Ly", "note": "Spring and Autumn period" }
+]

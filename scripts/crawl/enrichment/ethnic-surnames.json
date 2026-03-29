@@ -1,0 +1,63 @@
+{
+  "hmong": [
+    "Giàng",
+    "Vừ",
+    "Thào",
+    "Lầu",
+    "Lý",
+    "Sùng",
+    "Mùa",
+    "Vàng",
+    "Cư",
+    "Hàng",
+    "Chá",
+    "Chảo",
+    "Lò",
+    "Phà",
+    "Hơ",
+    "Khang",
+    "Fàng",
+    "Chênh"
+  ],
+  "tay": ["Mã", "Mông", "Ca", "Nông", "Hoàng", "Lý", "Chu", "Vi", "Ngân", "Bế"],
+  "nung": ["Nông", "Chu", "Vi", "Hoàng", "Lương", "Triệu"],
+  "muong": ["Bùi", "Đinh", "Quách", "Bạch", "Hoàng", "Hà"],
+  "thai": [
+    "Lò",
+    "Lường",
+    "Quàng",
+    "Tòng",
+    "Cà",
+    "Lù",
+    "Mè",
+    "Lư",
+    "Lèm",
+    "Ngần",
+    "Nông"
+  ],
+  "khmer": [
+    "Sơn",
+    "Lâm",
+    "Thạch",
+    "Kim",
+    "Danh",
+    "Bàn",
+    "Bình",
+    "Châu",
+    "Chiêm",
+    "Đồng"
+  ],
+  "cham": ["Ông", "Trà", "Ma", "Bà", "Chế", "Đàng", "Đào", "Lâm", "Nguyễn"],
+  "dao": [
+    "Bàn",
+    "Triệu",
+    "Chử",
+    "Lưu",
+    "Lý",
+    "Đặng",
+    "Lê",
+    "Đàm",
+    "Trương",
+    "Bạch"
+  ]
+}
