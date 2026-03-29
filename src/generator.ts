@@ -1,0 +1,91 @@
+import type { TGenerateOptions, INameResult, TGivenNameEntry } from "./types";
+import { EGender, ERegion, EEra } from "./types";
+import { pickRandom, pickWeighted } from "./random";
+import { INDEX_SURNAME } from "./data/surname";
+import { INDEX_MIDDLE_NAME } from "./data/middle-name";
+import { INDEX_GIVEN_NAME } from "./data/given-name";
+import { INDEX_COMPOUND_GIVEN_NAME } from "./data/compound-given-name";
+
+const LIST_BINARY_GENDER = [EGender.Male, EGender.Female];
+const LIST_REGION = [ERegion.North, ERegion.Central, ERegion.South];
+const LIST_ERA = [EEra.Traditional, EEra.Modern];
+
+function optionResolve(options?: TGenerateOptions) {
+  const gender = options?.gender ?? pickRandom(LIST_BINARY_GENDER);
+  const region = options?.region ?? pickRandom(LIST_REGION);
+  const era = options?.era ?? pickRandom(LIST_ERA);
+  const withMiddleName = options?.withMiddleName ?? true;
+  const compoundName = options?.compoundName;
+  const meaningCategory = options?.meaningCategory;
+
+  return { gender, region, era, withMiddleName, compoundName, meaningCategory };
+}
+
+function givenNamePick(
+  gender: EGender,
+  region: ERegion,
+  era: EEra,
+  compoundName: boolean | undefined,
+  meaningCategory: string | undefined,
+): string {
+  const useCompound =
+    compoundName === true ||
+    (compoundName === undefined && era === EEra.Modern && Math.random() < 0.3);
+
+  if (useCompound) {
+    const compoundList = INDEX_COMPOUND_GIVEN_NAME[gender]?.[era];
+    if (compoundList && compoundList.length > 0) {
+      return pickRandom(compoundList);
+    }
+  }
+
+  let list: TGivenNameEntry[] = INDEX_GIVEN_NAME[gender]?.[region]?.[era] ?? [];
+
+  if (meaningCategory) {
+    const filtered = list.filter((entry) => entry.category === meaningCategory);
+    if (filtered.length > 0) {
+      list = filtered;
+    }
+  }
+
+  if (list.length === 0) {
+    throw new Error(
+      `No given names found for gender=${gender}, region=${region}, era=${era}`,
+    );
+  }
+
+  return pickRandom(list).value;
+}
+
+export function generate(options?: TGenerateOptions): INameResult {
+  const { gender, region, era, withMiddleName, compoundName, meaningCategory } =
+    optionResolve(options);
+
+  const surname = pickWeighted(INDEX_SURNAME[region]);
+
+  let middleName = "";
+  if (withMiddleName) {
+    const middleList = INDEX_MIDDLE_NAME[gender]?.[region]?.[era];
+    if (middleList && middleList.length > 0) {
+      middleName = pickRandom(middleList);
+    }
+  }
+
+  const givenName = givenNamePick(
+    gender,
+    region,
+    era,
+    compoundName,
+    meaningCategory,
+  );
+
+  const fullName = middleName
+    ? `${surname} ${middleName} ${givenName}`
+    : `${surname} ${givenName}`;
+
+  return { surname, middleName, givenName, fullName, gender, region, era };
+}
+
+export function generateFullName(options?: TGenerateOptions): string {
+  return generate(options).fullName;
+}
