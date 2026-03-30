@@ -1,0 +1,55 @@
+name: Auto Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  authorization-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check authorized user
+        env:
+          CURRENT_USER: ${{ github.actor }}
+        run: |
+          AUTHORIZED_USERS=('hungnguyen18')
+          if [[ " ${AUTHORIZED_USERS[*]} " =~ " ${CURRENT_USER} " ]]; then
+            echo "User ${CURRENT_USER} is authorized"
+          else
+            echo "User ${CURRENT_USER} is NOT authorized"
+            exit 1
+          fi
+
+  release:
+    runs-on: ubuntu-latest
+    needs: authorization-check
+    outputs:
+      version: ${{ steps.get-version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get version from tag
+        id: get-version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          generate_release_notes: true
+
+  publish:
+    needs: [authorization-check, release]
+    uses: ./.github/workflows/publish.yml
+    with:
+      version: ${{ needs.release.outputs.version }}
+      skip_authorization: true
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

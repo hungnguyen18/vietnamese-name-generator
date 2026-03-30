@@ -1,17 +1,41 @@
 # vietnamese-name-generator
 
-Generate realistic Vietnamese names with gender, region, era, and meaning filtering.
-
 [![npm version](https://img.shields.io/npm/v/vietnamese-name-generator)](https://www.npmjs.com/package/vietnamese-name-generator)
+[![npm downloads](https://img.shields.io/npm/dm/vietnamese-name-generator)](https://www.npmjs.com/package/vietnamese-name-generator)
+[![CI](https://github.com/hungnguyen18/vietnamese-name-generator/actions/workflows/ci.yml/badge.svg)](https://github.com/hungnguyen18/vietnamese-name-generator/actions/workflows/ci.yml)
 [![license](https://img.shields.io/npm/l/vietnamese-name-generator)](./LICENSE)
 
-## Install
+Generate realistic Vietnamese names with gender, region, era, and meaning filtering.
+
+Surnames are weighted by census frequency. Regional dialects are respected (Hoàng/Huỳnh, Vũ/Võ). Names carry real semantic meaning across 9 categories. Zero runtime dependencies. Ships as CJS + ESM with full TypeScript declarations.
+
+## Installation
+
+**npm**
 
 ```bash
 npm install vietnamese-name-generator
 ```
 
-## Quick Start
+**pnpm**
+
+```bash
+pnpm add vietnamese-name-generator
+```
+
+**yarn**
+
+```bash
+yarn add vietnamese-name-generator
+```
+
+**bun**
+
+```bash
+bun add vietnamese-name-generator
+```
+
+## Usage
 
 ```typescript
 import {
@@ -22,73 +46,80 @@ import {
   EGender,
   ERegion,
   EEra,
+  EMeaningCategory,
 } from "vietnamese-name-generator";
 
-// Generate a single name result
+// Single name — full metadata
 const name = generate();
-console.log(name.fullName); // e.g. "Nguyễn Thị Lan"
+console.log(name.fullName); // 'Nguyễn Thị Lan'
+console.log(name.surname); // 'Nguyễn'
+console.log(name.givenName); // 'Lan'
 
-// Generate with options
-const maleName = generate({ gender: EGender.Male, region: ERegion.North });
-console.log(maleName.fullName); // e.g. "Trần Văn Minh"
+// Filter by gender and region
+const north = generate({ gender: EGender.Male, region: ERegion.North });
+console.log(north.fullName); // 'Hoàng Văn Minh'  (not Huỳnh — North variant)
 
-// Generate just the full name string
-const fullName = generateFullName({ era: EEra.Modern, compoundName: true });
-console.log(fullName); // e.g. "Lê Thị Bảo Châu"
+const south = generate({ gender: EGender.Male, region: ERegion.South });
+console.log(south.fullName); // 'Huỳnh Văn Minh'  (not Hoàng — South variant)
 
-// Generate a batch of 5 unique full name strings
+// Modern compound name (tên kép)
+const modern = generateFullName({ era: EEra.Modern, compoundName: true });
+console.log(modern); // 'Lê Thị Bảo Châu'
+
+// Filter by meaning
+const nature = generateFullName({ meaningCategory: EMeaningCategory.Nature });
+console.log(nature); // 'Trần Thị Hà'  (Hà = river)
+
+// Batch generation — uniqueness guaranteed
 const names = generateManyFullNames(5, { gender: EGender.Female });
-console.log(names); // ["Phạm Thị Hoa", "Võ Thị Mai", ...]
+// ['Phạm Thị Hoa', 'Võ Ngọc Mai', 'Đặng Thị Linh', ...]
+
+// Full result objects in batch
+const results = generateMany(3, { region: ERegion.South });
+results.forEach((r) => console.log(r.fullName, r.era, r.gender));
 ```
 
-## API Reference
+## API
 
-### `generate(options?): INameResult`
+### Functions
 
-Generates a single name. Returns a full `INameResult` object with all name components and metadata.
+| Function                                 | Returns         | Description                        |
+| ---------------------------------------- | --------------- | ---------------------------------- |
+| `generate(options?)`                     | `INameResult`   | Single name with full metadata     |
+| `generateMany(count, options?)`          | `INameResult[]` | `count` unique names with metadata |
+| `generateFullName(options?)`             | `string`        | Single full name string            |
+| `generateManyFullNames(count, options?)` | `string[]`      | `count` unique full name strings   |
 
-### `generateMany(count, options?): INameResult[]`
+### Options
 
-Generates `count` unique names. Returns an array of `INameResult` objects.
+All functions accept an optional `TGenerateOptions`:
 
-### `generateFullName(options?): string`
+| Option            | Type               | Default | Description                       |
+| ----------------- | ------------------ | ------- | --------------------------------- |
+| `gender`          | `EGender`          | random  | `male`, `female`, or `unisex`     |
+| `region`          | `ERegion`          | random  | `north`, `central`, or `south`    |
+| `era`             | `EEra`             | random  | `traditional` or `modern`         |
+| `compoundName`    | `boolean`          | random  | Two-syllable given name (tên kép) |
+| `meaningCategory` | `EMeaningCategory` | any     | Filter by semantic category       |
+| `withMiddleName`  | `boolean`          | `true`  | Include the middle name (đệm)     |
 
-Generates a single name and returns only the full name string.
-
-### `generateManyFullNames(count, options?): string[]`
-
-Generates `count` unique full name strings.
-
----
-
-### `TGenerateOptions`
-
-| Option            | Type               | Default | Description                                  |
-| ----------------- | ------------------ | ------- | -------------------------------------------- |
-| `gender`          | `EGender`          | random  | Filter by gender                             |
-| `region`          | `ERegion`          | random  | Filter by regional variant                   |
-| `era`             | `EEra`             | random  | Filter by naming era (traditional or modern) |
-| `compoundName`    | `boolean`          | random  | Generate a compound given name (tên kép)     |
-| `meaningCategory` | `EMeaningCategory` | any     | Filter given names by semantic category      |
-| `withMiddleName`  | `boolean`          | `true`  | Include a middle name                        |
-
-### `INameResult`
+### Result
 
 ```typescript
 interface INameResult {
   surname: string;
   middleName: string;
   givenName: string;
-  fullName: string;
+  fullName: string; // surname + middleName + givenName
   gender: EGender;
   region: ERegion;
   era: EEra;
 }
 ```
 
-## Enums
+### Enums
 
-### `EGender`
+**`EGender`**
 
 | Value    | Description  |
 | -------- | ------------ |
@@ -96,7 +127,7 @@ interface INameResult {
 | `female` | Female names |
 | `unisex` | Unisex names |
 
-### `ERegion`
+**`ERegion`**
 
 | Value     | Description                       |
 | --------- | --------------------------------- |
@@ -104,14 +135,14 @@ interface INameResult {
 | `central` | Central Vietnam                   |
 | `south`   | Southern Vietnam (e.g. Huỳnh, Võ) |
 
-### `EEra`
+**`EEra`**
 
 | Value         | Description                     |
 | ------------- | ------------------------------- |
 | `traditional` | Classical Sino-Vietnamese names |
 | `modern`      | Contemporary Vietnamese names   |
 
-### `EMeaningCategory`
+**`EMeaningCategory`**
 
 | Value        | Description             |
 | ------------ | ----------------------- |
@@ -125,25 +156,21 @@ interface INameResult {
 | `intellect`  | Wisdom and knowledge    |
 | `prosperity` | Wealth and good fortune |
 
-## Features
+## Vietnamese Naming
 
-- Zero runtime dependencies
-- Weighted surname distribution matching Vietnamese census data
-- Regional variants (Hoàng/Huỳnh, Vũ/Võ)
-- Traditional and modern naming patterns
-- Compound given names (tên kép)
-- Meaning-based filtering across 9 semantic categories
-- Batch generation with uniqueness guarantee
-- CJS + ESM + TypeScript declarations
+Vietnamese names are written **surname → middle name → given name** — the reverse of Western order. In daily life, people are addressed by their given name only; using a full name is formal or distant.
 
-## Data Sources
+**Surname concentration is extreme.** About 40% of Vietnamese people carry the surname Nguyễn — a direct consequence of mass surname assignments during dynastic census policies. The top 14 surnames cover over 90% of the population, which is why the middle name and given name are the true differentiators.
 
-- [duyet/vietnamese-namedb](https://github.com/duyet/vietnamese-namedb) — MIT
-- [faker-js/faker](https://github.com/faker-js/faker) vi locale — MIT
-- [Wiktionary Vietnamese Names](https://en.wiktionary.org/wiki/Appendix:Vietnamese_given_names) — CC BY-SA
-- [Wikipedia: Vietnamese Name](https://en.wikipedia.org/wiki/Vietnamese_name) — CC BY-SA
-- [surnam.es/vietnam](https://surnam.es/vietnam) — surname frequency data
-- [Dr.Papie](https://drpapie.com.vn) — naming meaning references
+**The middle name (đệm) encodes gender.** Văn (文) has historically marked male names; Thị (氏) marks female names. Both are fading in modern usage but remain common. Other middle names like Hữu, Đức, Công (male) or Thùy, Ngọc, Kim (female) add meaning and style.
+
+**Region determines which surname form you use.** The same Chinese character is read differently by dialect: Hoàng in the North becomes Huỳnh in the South; Vũ becomes Võ. Names are regionally self-consistent — a southern name will use Huỳnh, Võ, Trương, and so on throughout.
+
+**Every given name carries meaning.** Vietnamese parents deliberately choose names for semantic content drawn from Sino-Vietnamese vocabulary: Lan (orchid), Hà (river), Minh (bright/intelligent), Phúc (blessing), Nguyệt (moon). This library's meaning filter maps directly to these categories.
+
+**Compound names (tên kép) emerged as a workaround.** With so few surnames in circulation, two-syllable given names like Bảo Châu, Minh Khôi, or Thanh Hà became popular from the late 20th century onward — both for beauty and to reduce ambiguity.
+
+**Imperial name taboos left lasting marks.** Under feudal dynasties, using the emperor's personal name (or a near-homophone) was forbidden — a practice called kỵ húy. Banned names became rare and some were respelled entirely, which partly explains unusual character choices still visible in the modern name pool.
 
 ## License
 
