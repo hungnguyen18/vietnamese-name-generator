@@ -2,8 +2,8 @@
 
 [![npm version](https://img.shields.io/npm/v/vietnamese-name-generator)](https://www.npmjs.com/package/vietnamese-name-generator)
 [![npm downloads](https://img.shields.io/npm/dm/vietnamese-name-generator)](https://www.npmjs.com/package/vietnamese-name-generator)
-[![CI](https://github.com/hungnguyen18/vietnamese-name-generator/actions/workflows/ci.yml/badge.svg)](https://github.com/hungnguyen18/vietnamese-name-generator/actions/workflows/ci.yml)
-[![license](https://img.shields.io/npm/l/vietnamese-name-generator)](./LICENSE)
+[![CI](https://github.com/hungnguyen18/vietnamese-name-generator/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/hungnguyen18/vietnamese-name-generator/actions/workflows/ci.yml)
+[![license](https://img.shields.io/github/license/hungnguyen18/vietnamese-name-generator)](./LICENSE)
 
 Generate realistic Vietnamese names with gender, region, era, and meaning filtering.
 
