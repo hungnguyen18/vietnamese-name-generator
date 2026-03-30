@@ -36,8 +36,16 @@
     "vietnam",
     "random"
   ],
-  "author": "hungnguyen",
+  "author": "hungnguyen18",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hungnguyen18/vietnamese-name-generator.git"
+  },
+  "homepage": "https://github.com/hungnguyen18/vietnamese-name-generator#readme",
+  "bugs": {
+    "url": "https://github.com/hungnguyen18/vietnamese-name-generator/issues"
+  },
   "devDependencies": {
     "tsup": "^8.5.1",
     "tsx": "^4.21.0",
