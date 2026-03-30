@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { INDEX_SURNAME } from "../src/data/surname";
 import { INDEX_MIDDLE_NAME } from "../src/data/middle-name";
-import { INDEX_GIVEN_NAME } from "../src/data/given-name";
+import { givenNameIndex } from "../src/data/given-name-compact";
 import { INDEX_COMPOUND_GIVEN_NAME } from "../src/data/compound-given-name";
 import { EGender, ERegion, EEra } from "../src/types";
 
@@ -114,12 +114,12 @@ describe("INDEX_MIDDLE_NAME", () => {
   });
 });
 
-describe("INDEX_GIVEN_NAME", () => {
+describe("givenNameIndex()", () => {
   it("has entries for every gender × region × era combination", () => {
     for (const gender of GENDERS) {
       for (const region of REGIONS) {
         for (const era of ERAS) {
-          const entries = INDEX_GIVEN_NAME[gender]?.[region]?.[era];
+          const entries = givenNameIndex()[gender]?.[region]?.[era];
           expect(entries).toBeDefined();
           expect(entries.length).toBeGreaterThan(0);
         }
@@ -131,7 +131,7 @@ describe("INDEX_GIVEN_NAME", () => {
     for (const gender of GENDERS) {
       for (const region of REGIONS) {
         for (const era of ERAS) {
-          const entries = INDEX_GIVEN_NAME[gender]?.[region]?.[era] ?? [];
+          const entries = givenNameIndex()[gender]?.[region]?.[era] ?? [];
           for (const entry of entries) {
             expect(entry.value).toBe(entry.value.normalize("NFC"));
           }
@@ -144,7 +144,7 @@ describe("INDEX_GIVEN_NAME", () => {
     for (const gender of GENDERS) {
       for (const region of REGIONS) {
         for (const era of ERAS) {
-          const entries = INDEX_GIVEN_NAME[gender]?.[region]?.[era] ?? [];
+          const entries = givenNameIndex()[gender]?.[region]?.[era] ?? [];
           for (const entry of entries) {
             expect(typeof entry.value).toBe("string");
             expect(entry.value.length).toBeGreaterThan(0);

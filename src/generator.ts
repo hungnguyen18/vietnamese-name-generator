@@ -1,9 +1,10 @@
-import type { TGenerateOptions, INameResult, TGivenNameEntry } from "./types";
+import type { TGenerateOptions, INameResult } from "./types";
+import type { TCompactGivenNameEntry } from "./data/given-name-compact";
 import { EGender, ERegion, EEra } from "./types";
 import { pickRandom, pickWeighted } from "./random";
 import { INDEX_SURNAME } from "./data/surname";
 import { INDEX_MIDDLE_NAME } from "./data/middle-name";
-import { INDEX_GIVEN_NAME } from "./data/given-name";
+import { givenNameIndex } from "./data/given-name-compact";
 import { INDEX_COMPOUND_GIVEN_NAME } from "./data/compound-given-name";
 
 const LIST_BINARY_GENDER = [EGender.Male, EGender.Female];
@@ -39,7 +40,8 @@ function givenNamePick(
     }
   }
 
-  let list: TGivenNameEntry[] = INDEX_GIVEN_NAME[gender]?.[region]?.[era] ?? [];
+  let list: TCompactGivenNameEntry[] =
+    givenNameIndex()[gender]?.[region]?.[era] ?? [];
 
   if (meaningCategory) {
     const filtered = list.filter((entry) => entry.category === meaningCategory);
@@ -105,7 +107,7 @@ export function generateMany(
         ?.length ?? 1)
     : 1;
   const givenCount =
-    INDEX_GIVEN_NAME[resolved.gender]?.[resolved.region]?.[resolved.era]
+    givenNameIndex()[resolved.gender]?.[resolved.region]?.[resolved.era]
       ?.length ?? 0;
   const compoundCount =
     INDEX_COMPOUND_GIVEN_NAME[resolved.gender]?.[resolved.era]?.length ?? 0;
