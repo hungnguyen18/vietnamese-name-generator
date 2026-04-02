@@ -1,6 +1,6 @@
 {
   "name": "vietnamese-name-generator",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Generate realistic Vietnamese names with gender, region, era, and meaning filtering",
   "type": "module",
   "bin": {

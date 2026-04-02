@@ -39,6 +39,17 @@ export {
 } from "./name-statistics";
 
 export {
+  normalize,
+  accentInsensitiveMatch,
+  accentInsensitiveEqual,
+  VIETNAMESE_NAME_REGEX,
+} from "./normalize";
+
+export { salutation } from "./salutation";
+
+export { sortVietnamese, vietnameseNameComparator } from "./sort-vietnamese";
+
+export {
   EGender,
   ERegion,
   EEra,
