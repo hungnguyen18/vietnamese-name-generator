@@ -49,6 +49,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Build
+        run: npm run build
+
       - name: Run tests
         run: npm test
 
@@ -63,10 +66,6 @@ jobs:
           else
             echo "exists=false" >> $GITHUB_OUTPUT
           fi
-
-      - name: Build
-        if: steps.check-version.outputs.exists == 'false'
-        run: npm run build
 
       - name: Publish
         if: steps.check-version.outputs.exists == 'false'
