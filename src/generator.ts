@@ -1,7 +1,7 @@
 import type { TGenerateOptions, INameResult } from "./types";
 import type { TCompactGivenNameEntry } from "./data/given-name-compact";
 import { EGender, ERegion, EEra } from "./types";
-import { pickRandom, pickWeighted } from "./random";
+import { mulberry32, pickRandom, pickWeighted } from "./random";
 import { INDEX_SURNAME } from "./data/surname";
 import { INDEX_MIDDLE_NAME } from "./data/middle-name";
 import { givenNameIndex } from "./data/given-name-compact";
@@ -11,10 +11,10 @@ const LIST_BINARY_GENDER = [EGender.Male, EGender.Female];
 const LIST_REGION = [ERegion.North, ERegion.Central, ERegion.South];
 const LIST_ERA = [EEra.Traditional, EEra.Modern];
 
-function optionResolve(options?: TGenerateOptions) {
-  const gender = options?.gender ?? pickRandom(LIST_BINARY_GENDER);
-  const region = options?.region ?? pickRandom(LIST_REGION);
-  const era = options?.era ?? pickRandom(LIST_ERA);
+function optionResolve(options?: TGenerateOptions, rng?: () => number) {
+  const gender = options?.gender ?? pickRandom(LIST_BINARY_GENDER, rng);
+  const region = options?.region ?? pickRandom(LIST_REGION, rng);
+  const era = options?.era ?? pickRandom(LIST_ERA, rng);
   const withMiddleName = options?.withMiddleName ?? true;
   const compoundName = options?.compoundName;
   const meaningCategory = options?.meaningCategory;
@@ -28,15 +28,17 @@ function givenNamePick(
   era: EEra,
   compoundName: boolean | undefined,
   meaningCategory: string | undefined,
+  rng?: () => number,
 ): string {
+  const rand = rng ?? Math.random;
   const useCompound =
     compoundName === true ||
-    (compoundName === undefined && era === EEra.Modern && Math.random() < 0.3);
+    (compoundName === undefined && era === EEra.Modern && rand() < 0.3);
 
   if (useCompound) {
     const compoundList = INDEX_COMPOUND_GIVEN_NAME[gender]?.[era];
     if (compoundList && compoundList.length > 0) {
-      return pickRandom(compoundList);
+      return pickRandom(compoundList, rng);
     }
   }
 
@@ -56,20 +58,21 @@ function givenNamePick(
     );
   }
 
-  return pickRandom(list).value;
+  return pickRandom(list, rng).value;
 }
 
 export function generate(options?: TGenerateOptions): INameResult {
+  const rng = options?.seed !== undefined ? mulberry32(options.seed) : undefined;
   const { gender, region, era, withMiddleName, compoundName, meaningCategory } =
-    optionResolve(options);
+    optionResolve(options, rng);
 
-  const surname = pickWeighted(INDEX_SURNAME[region]);
+  const surname = pickWeighted(INDEX_SURNAME[region], rng);
 
   let middleName = "";
   if (withMiddleName) {
     const middleList = INDEX_MIDDLE_NAME[gender]?.[region]?.[era];
     if (middleList && middleList.length > 0) {
-      middleName = pickRandom(middleList);
+      middleName = pickRandom(middleList, rng);
     }
   }
 
@@ -79,6 +82,7 @@ export function generate(options?: TGenerateOptions): INameResult {
     era,
     compoundName,
     meaningCategory,
+    rng,
   );
 
   const fullName = middleName
@@ -124,9 +128,12 @@ export function generateMany(
   const seen = new Set<string>();
   const maxRetries = count * 3;
   let retries = 0;
+  let iteration = 0;
 
   while (results.length < count) {
-    const result = generate(options);
+    const iterSeed = options?.seed !== undefined ? options.seed + iteration : undefined;
+    const result = generate({ ...options, seed: iterSeed });
+    iteration += 1;
     if (!seen.has(result.fullName)) {
       seen.add(result.fullName);
       results.push(result);

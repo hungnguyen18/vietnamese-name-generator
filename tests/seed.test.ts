@@ -72,3 +72,60 @@ describe("pickWeighted with rng", () => {
     expect(["A", "B"]).toContain(result);
   });
 });
+
+import { generate, generateMany, generateManyFullNames } from "../src/generator";
+import { EGender, ERegion, EEra } from "../src/types";
+
+describe("generate with seed", () => {
+  it("same seed produces same name", () => {
+    const result1 = generate({ seed: 42 });
+    const result2 = generate({ seed: 42 });
+    expect(result1.fullName).toBe(result2.fullName);
+    expect(result1.surname).toBe(result2.surname);
+    expect(result1.middleName).toBe(result2.middleName);
+    expect(result1.givenName).toBe(result2.givenName);
+    expect(result1.gender).toBe(result2.gender);
+    expect(result1.region).toBe(result2.region);
+    expect(result1.era).toBe(result2.era);
+  });
+
+  it("different seeds produce different names", () => {
+    const result1 = generate({ seed: 42 });
+    const result2 = generate({ seed: 99 });
+    expect(result1.fullName).not.toBe(result2.fullName);
+  });
+
+  it("seed works with other options", () => {
+    const opts = { seed: 42, gender: EGender.Female, region: ERegion.South, era: EEra.Modern };
+    const result1 = generate(opts);
+    const result2 = generate(opts);
+    expect(result1.fullName).toBe(result2.fullName);
+    expect(result1.gender).toBe(EGender.Female);
+  });
+
+  it("no seed still produces random output", () => {
+    const names = new Set<string>();
+    for (let i = 0; i < 20; i += 1) {
+      names.add(generate().fullName);
+    }
+    expect(names.size).toBeGreaterThan(1);
+  });
+});
+
+describe("generateMany with seed", () => {
+  it("same seed produces same batch", () => {
+    const batch1 = generateMany(5, { seed: 42 });
+    const batch2 = generateMany(5, { seed: 42 });
+    for (let i = 0; i < 5; i += 1) {
+      expect(batch1[i].fullName).toBe(batch2[i].fullName);
+    }
+  });
+});
+
+describe("generateManyFullNames with seed", () => {
+  it("same seed produces same names", () => {
+    const batch1 = generateManyFullNames(5, { seed: 42 });
+    const batch2 = generateManyFullNames(5, { seed: 42 });
+    expect(batch1).toEqual(batch2);
+  });
+});
