@@ -50,6 +50,18 @@ export { salutation } from "./salutation";
 export { sortVietnamese, vietnameseNameComparator } from "./sort-vietnamese";
 
 export {
+  EElement,
+  getElementInfo,
+  getNameElement,
+  getNamesByElement,
+  getBirthYearElement,
+} from "./five-elements";
+
+export { getHanViet, type THanVietEntry } from "./get-han-viet";
+
+export { generateNickname, type INicknameResult, type TNicknameCategory } from "./generate-nickname";
+
+export {
   EGender,
   ERegion,
   EEra,

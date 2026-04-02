@@ -1,6 +1,6 @@
 {
   "name": "vietnamese-name-generator",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "description": "The most comprehensive Vietnamese name toolkit — generate, parse, validate, format, and analyze Vietnamese names with full cultural awareness",
   "type": "module",
   "bin": {
