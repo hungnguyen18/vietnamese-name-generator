@@ -1,16 +1,24 @@
 #!/usr/bin/env node
 
 import { generate, generateMany } from "./generator";
+import { parseName } from "./parse-name";
+import { validateName } from "./validate-name";
+import { detectGender } from "./detect-gender";
 import { EGender, ERegion, EEra, EMeaningCategory, ENameFormat } from "./types";
 import type { TGenerateOptions, INameResult } from "./types";
 
-const VERSION = "0.2.0";
+const VERSION = "0.3.0";
 
 const HELP = `Usage: vietnamese-name-generator [options]
 
-Generate realistic Vietnamese names.
+Generate, parse, validate, and analyze Vietnamese names.
 
-Options:
+Commands:
+  --parse <name>           Parse a Vietnamese name into parts
+  --validate <name>        Validate a Vietnamese name
+  --detect <name>          Detect gender from a Vietnamese name
+
+Generate Options:
   --count, -n <number>     Number of names to generate (default: 1)
   --gender, -g <value>     Gender: male, female, unisex (default: random)
   --region, -r <value>     Region: north, central, south (default: random)
@@ -23,6 +31,8 @@ Options:
                            precious, beauty, celestial, season, intellect,
                            prosperity
   --no-middle              Omit middle name
+
+Output Options:
   --json                   Output as JSON
   --help, -h               Show this help message
   --version, -v            Show version`;
@@ -55,6 +65,12 @@ function argParse(argv: string[]): Record<string, string | boolean> {
       args.format = argv[++i];
     } else if (arg === "--meaning") {
       args.meaning = argv[++i];
+    } else if (arg === "--parse") {
+      args.parse = argv[++i];
+    } else if (arg === "--validate") {
+      args.validate = argv[++i];
+    } else if (arg === "--detect") {
+      args.detect = argv[++i];
     }
   }
   return args;
@@ -114,6 +130,54 @@ function main(): void {
     return;
   }
 
+  // Command: --parse
+  if (typeof args.parse === "string") {
+    const result = parseName(args.parse);
+    if (args.json) {
+      console.log(JSON.stringify(result));
+    } else {
+      console.log(`  Surname:     ${result.surname || "(none)"}`);
+      console.log(`  Middle name: ${result.middleName || "(none)"}`);
+      console.log(`  Given name:  ${result.givenName || "(none)"}`);
+    }
+    return;
+  }
+
+  // Command: --validate
+  if (typeof args.validate === "string") {
+    const result = validateName(args.validate);
+    if (args.json) {
+      console.log(JSON.stringify(result));
+    } else if (result.valid) {
+      console.log(`  Valid: yes`);
+    } else {
+      console.log(`  Valid: no`);
+      for (let i = 0; i < result.reasons.length; i += 1) {
+        console.log(`  - ${result.reasons[i]}`);
+      }
+    }
+    return;
+  }
+
+  // Command: --detect
+  if (typeof args.detect === "string") {
+    const result = detectGender(args.detect);
+    if (args.json) {
+      console.log(JSON.stringify(result));
+    } else {
+      console.log(`  Gender:     ${result.gender}`);
+      console.log(`  Confidence: ${result.confidence}`);
+      if (result.signals.middleName) {
+        console.log(`  Middle:     ${result.signals.middleName.value} -> ${result.signals.middleName.gender}`);
+      }
+      if (result.signals.givenName) {
+        console.log(`  Given:      ${result.signals.givenName.value} -> ${result.signals.givenName.gender}`);
+      }
+    }
+    return;
+  }
+
+  // Default: generate names
   const count = typeof args.count === "string" ? parseInt(args.count, 10) : 1;
   const options = optionBuild(args);
 
