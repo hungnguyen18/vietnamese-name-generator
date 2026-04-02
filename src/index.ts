@@ -15,6 +15,14 @@ export { validateName } from "./validate-name";
 
 export { detectGender } from "./detect-gender";
 
+export { generateEmail, type IEmailResult, type TEmailOptions } from "./generate-email";
+
+export { generateUsername, type IUsernameResult } from "./generate-username";
+
+export { getSurnameInfo, type ISurnameInfo } from "./surname-info";
+
+export { getRegionalVariant } from "./regional-variant";
+
 export {
   EGender,
   ERegion,
