@@ -23,6 +23,10 @@ export { getSurnameInfo, type ISurnameInfo } from "./surname-info";
 
 export { getRegionalVariant } from "./regional-variant";
 
+export { fakerVi } from "./faker-adapter";
+
+export { nameSimilarity, type ISimilarityResult } from "./name-similarity";
+
 export {
   EGender,
   ERegion,
