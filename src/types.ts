@@ -49,6 +49,13 @@ export type TGenerateOptions = {
   seed?: number;
 };
 
+export interface IRomanizedName {
+  surname: string;
+  middleName: string;
+  givenName: string;
+  fullName: string;
+}
+
 export interface INameResult {
   surname: string;
   middleName: string;
@@ -57,4 +64,5 @@ export interface INameResult {
   gender: EGender;
   region: ERegion;
   era: EEra;
+  romanized: IRomanizedName;
 }

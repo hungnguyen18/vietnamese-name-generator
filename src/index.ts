@@ -5,6 +5,8 @@ export {
   generateManyFullNames,
 } from "./generator";
 
+export { romanize } from "./romanize";
+
 export {
   EGender,
   ERegion,
@@ -12,6 +14,7 @@ export {
   EMeaningCategory,
   type TGenerateOptions,
   type INameResult,
+  type IRomanizedName,
   type TWeightedEntry,
   type TGivenNameEntry,
 } from "./types";

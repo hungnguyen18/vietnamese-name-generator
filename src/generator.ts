@@ -2,6 +2,7 @@ import type { TGenerateOptions, INameResult } from "./types";
 import type { TCompactGivenNameEntry } from "./data/given-name-compact";
 import { EGender, ERegion, EEra } from "./types";
 import { mulberry32, pickRandom, pickWeighted } from "./random";
+import { romanize } from "./romanize";
 import { INDEX_SURNAME } from "./data/surname";
 import { INDEX_MIDDLE_NAME } from "./data/middle-name";
 import { givenNameIndex } from "./data/given-name-compact";
@@ -89,7 +90,21 @@ export function generate(options?: TGenerateOptions): INameResult {
     ? `${surname} ${middleName} ${givenName}`
     : `${surname} ${givenName}`;
 
-  return { surname, middleName, givenName, fullName, gender, region, era };
+  const romanizedSurname = romanize(surname);
+  const romanizedMiddleName = romanize(middleName);
+  const romanizedGivenName = romanize(givenName);
+  const romanizedFullName = romanizedMiddleName
+    ? `${romanizedSurname} ${romanizedMiddleName} ${romanizedGivenName}`
+    : `${romanizedSurname} ${romanizedGivenName}`;
+
+  const romanized = {
+    surname: romanizedSurname,
+    middleName: romanizedMiddleName,
+    givenName: romanizedGivenName,
+    fullName: romanizedFullName,
+  };
+
+  return { surname, middleName, givenName, fullName, gender, region, era, romanized };
 }
 
 export function generateFullName(options?: TGenerateOptions): string {

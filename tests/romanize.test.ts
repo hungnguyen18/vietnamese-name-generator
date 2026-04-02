@@ -50,3 +50,36 @@ describe("romanize", () => {
     expect(romanize("Ư")).toBe("U");
   });
 });
+
+import { generate } from "../src/generator";
+
+describe("generate romanized field", () => {
+  it("result contains romanized object", () => {
+    const result = generate({ seed: 42 });
+    expect(result.romanized).toBeDefined();
+    expect(result.romanized.surname).toBeDefined();
+    expect(result.romanized.middleName).toBeDefined();
+    expect(result.romanized.givenName).toBeDefined();
+    expect(result.romanized.fullName).toBeDefined();
+  });
+
+  it("romanized fullName matches romanize(fullName)", () => {
+    const result = generate({ seed: 42 });
+    expect(result.romanized.fullName).toBe(romanize(result.fullName));
+  });
+
+  it("romanized parts are ASCII-only", () => {
+    for (let i = 0; i < 50; i += 1) {
+      const result = generate({ seed: i });
+      expect(result.romanized.fullName).toMatch(/^[a-zA-Z\s]+$/);
+    }
+  });
+
+  it("romanized with no middle name", () => {
+    const result = generate({ seed: 42, withMiddleName: false });
+    expect(result.romanized.middleName).toBe("");
+    expect(result.romanized.fullName).toBe(
+      `${result.romanized.surname} ${result.romanized.givenName}`,
+    );
+  });
+});
