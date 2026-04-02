@@ -1,8 +1,9 @@
 import type { TGenerateOptions, INameResult } from "./types";
 import type { TCompactGivenNameEntry } from "./data/given-name-compact";
-import { EGender, ERegion, EEra } from "./types";
+import { EGender, ERegion, EEra, ENameFormat } from "./types";
 import { mulberry32, pickRandom, pickWeighted } from "./random";
 import { romanize } from "./romanize";
+import { formatName } from "./format";
 import { INDEX_SURNAME } from "./data/surname";
 import { INDEX_MIDDLE_NAME } from "./data/middle-name";
 import { givenNameIndex } from "./data/given-name-compact";
@@ -104,7 +105,18 @@ export function generate(options?: TGenerateOptions): INameResult {
     fullName: romanizedFullName,
   };
 
-  return { surname, middleName, givenName, fullName, gender, region, era, romanized };
+  const parts = { surname, middleName, givenName, fullName, romanized };
+
+  const formatList = options?.format
+    ? Array.isArray(options.format) ? options.format : [options.format]
+    : [ENameFormat.Full];
+
+  const formatted: Partial<Record<ENameFormat, string>> = {};
+  for (let i = 0; i < formatList.length; i += 1) {
+    formatted[formatList[i]] = formatName(parts, formatList[i]);
+  }
+
+  return { ...parts, gender, region, era, formatted };
 }
 
 export function generateFullName(options?: TGenerateOptions): string {

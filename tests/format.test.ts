@@ -95,3 +95,38 @@ describe("formatName", () => {
     expect(formatName(COMPOUND_SURNAME, ENameFormat.Slug)).toBe("ton-that-van-an");
   });
 });
+
+import { generate } from "../src/generator";
+
+describe("generate formatted field", () => {
+  it("default: formatted contains full", () => {
+    const result = generate({ seed: 42 });
+    expect(result.formatted).toBeDefined();
+    expect(result.formatted.full).toBe(result.fullName);
+  });
+
+  it("single format option", () => {
+    const result = generate({ seed: 42, format: ENameFormat.Slug });
+    expect(result.formatted.slug).toBeDefined();
+    expect(result.formatted.slug).toMatch(/^[a-z-]+$/);
+  });
+
+  it("array of formats", () => {
+    const result = generate({
+      seed: 42,
+      format: [ENameFormat.Full, ENameFormat.Slug, ENameFormat.Abbreviated],
+    });
+    expect(result.formatted.full).toBeDefined();
+    expect(result.formatted.slug).toBeDefined();
+    expect(result.formatted.abbreviated).toBeDefined();
+    expect(Object.keys(result.formatted)).toHaveLength(3);
+  });
+
+  it("all four formats", () => {
+    const result = generate({
+      seed: 42,
+      format: [ENameFormat.Full, ENameFormat.Abbreviated, ENameFormat.Reversed, ENameFormat.Slug],
+    });
+    expect(Object.keys(result.formatted)).toHaveLength(4);
+  });
+});

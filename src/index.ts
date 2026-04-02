@@ -7,13 +7,17 @@ export {
 
 export { romanize } from "./romanize";
 
+export { formatName } from "./format";
+
 export {
   EGender,
   ERegion,
   EEra,
   EMeaningCategory,
+  ENameFormat,
   type TGenerateOptions,
   type INameResult,
+  type INameParts,
   type IRomanizedName,
   type TWeightedEntry,
   type TGivenNameEntry,
