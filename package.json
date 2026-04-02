@@ -1,8 +1,11 @@
 {
   "name": "vietnamese-name-generator",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Generate realistic Vietnamese names with gender, region, era, and meaning filtering",
   "type": "module",
+  "bin": {
+    "vietnamese-name-generator": "./dist/cli.cjs"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -47,6 +50,7 @@
     "url": "https://github.com/hungnguyen18/vietnamese-name-generator/issues"
   },
   "devDependencies": {
+    "@types/node": "^25.5.0",
     "tsup": "^8.5.1",
     "tsx": "^4.21.0",
     "typescript": "^6.0.2",
