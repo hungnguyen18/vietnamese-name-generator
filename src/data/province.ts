@@ -1,0 +1,85 @@
+export type TProvince = {
+  name: string;
+  nameEn: string;
+  cccdCode: string;
+  postalCode: string;
+  region: string;
+};
+
+export const LIST_PROVINCE: TProvince[] = [
+  // North
+  { name: 'Hà Nội', nameEn: 'Ha Noi', cccdCode: '001', postalCode: '100000', region: 'north' },
+  { name: 'Hà Giang', nameEn: 'Ha Giang', cccdCode: '002', postalCode: '310000', region: 'north' },
+  { name: 'Cao Bằng', nameEn: 'Cao Bang', cccdCode: '004', postalCode: '270000', region: 'north' },
+  { name: 'Bắc Kạn', nameEn: 'Bac Kan', cccdCode: '006', postalCode: '260000', region: 'north' },
+  { name: 'Tuyên Quang', nameEn: 'Tuyen Quang', cccdCode: '008', postalCode: '300000', region: 'north' },
+  { name: 'Lào Cai', nameEn: 'Lao Cai', cccdCode: '010', postalCode: '330000', region: 'north' },
+  { name: 'Điện Biên', nameEn: 'Dien Bien', cccdCode: '011', postalCode: '380000', region: 'north' },
+  { name: 'Lai Châu', nameEn: 'Lai Chau', cccdCode: '012', postalCode: '390000', region: 'north' },
+  { name: 'Sơn La', nameEn: 'Son La', cccdCode: '014', postalCode: '360000', region: 'north' },
+  { name: 'Yên Bái', nameEn: 'Yen Bai', cccdCode: '015', postalCode: '320000', region: 'north' },
+  { name: 'Hòa Bình', nameEn: 'Hoa Binh', cccdCode: '017', postalCode: '350000', region: 'north' },
+  { name: 'Thái Nguyên', nameEn: 'Thai Nguyen', cccdCode: '019', postalCode: '250000', region: 'north' },
+  { name: 'Lạng Sơn', nameEn: 'Lang Son', cccdCode: '020', postalCode: '240000', region: 'north' },
+  { name: 'Quảng Ninh', nameEn: 'Quang Ninh', cccdCode: '022', postalCode: '200000', region: 'north' },
+  { name: 'Bắc Giang', nameEn: 'Bac Giang', cccdCode: '024', postalCode: '230000', region: 'north' },
+  { name: 'Phú Thọ', nameEn: 'Phu Tho', cccdCode: '025', postalCode: '290000', region: 'north' },
+  { name: 'Vĩnh Phúc', nameEn: 'Vinh Phuc', cccdCode: '026', postalCode: '280000', region: 'north' },
+  { name: 'Bắc Ninh', nameEn: 'Bac Ninh', cccdCode: '027', postalCode: '220000', region: 'north' },
+  { name: 'Hải Dương', nameEn: 'Hai Duong', cccdCode: '030', postalCode: '170000', region: 'north' },
+  { name: 'Hải Phòng', nameEn: 'Hai Phong', cccdCode: '031', postalCode: '180000', region: 'north' },
+  { name: 'Hưng Yên', nameEn: 'Hung Yen', cccdCode: '033', postalCode: '160000', region: 'north' },
+  { name: 'Thái Bình', nameEn: 'Thai Binh', cccdCode: '034', postalCode: '410000', region: 'north' },
+  { name: 'Hà Nam', nameEn: 'Ha Nam', cccdCode: '035', postalCode: '400000', region: 'north' },
+  { name: 'Nam Định', nameEn: 'Nam Dinh', cccdCode: '036', postalCode: '420000', region: 'north' },
+  { name: 'Ninh Bình', nameEn: 'Ninh Binh', cccdCode: '037', postalCode: '430000', region: 'north' },
+  { name: 'Thanh Hóa', nameEn: 'Thanh Hoa', cccdCode: '038', postalCode: '440000', region: 'north' },
+  { name: 'Nghệ An', nameEn: 'Nghe An', cccdCode: '040', postalCode: '460000', region: 'north' },
+  { name: 'Hà Tĩnh', nameEn: 'Ha Tinh', cccdCode: '042', postalCode: '480000', region: 'north' },
+  // Central
+  { name: 'Quảng Bình', nameEn: 'Quang Binh', cccdCode: '044', postalCode: '510000', region: 'central' },
+  { name: 'Quảng Trị', nameEn: 'Quang Tri', cccdCode: '045', postalCode: '520000', region: 'central' },
+  { name: 'Thừa Thiên Huế', nameEn: 'Thua Thien Hue', cccdCode: '046', postalCode: '530000', region: 'central' },
+  { name: 'Đà Nẵng', nameEn: 'Da Nang', cccdCode: '048', postalCode: '550000', region: 'central' },
+  { name: 'Quảng Nam', nameEn: 'Quang Nam', cccdCode: '049', postalCode: '560000', region: 'central' },
+  { name: 'Quảng Ngãi', nameEn: 'Quang Ngai', cccdCode: '051', postalCode: '570000', region: 'central' },
+  { name: 'Bình Định', nameEn: 'Binh Dinh', cccdCode: '052', postalCode: '590000', region: 'central' },
+  { name: 'Phú Yên', nameEn: 'Phu Yen', cccdCode: '054', postalCode: '620000', region: 'central' },
+  { name: 'Khánh Hòa', nameEn: 'Khanh Hoa', cccdCode: '056', postalCode: '650000', region: 'central' },
+  { name: 'Ninh Thuận', nameEn: 'Ninh Thuan', cccdCode: '058', postalCode: '660000', region: 'central' },
+  { name: 'Bình Thuận', nameEn: 'Binh Thuan', cccdCode: '060', postalCode: '800000', region: 'central' },
+  { name: 'Kon Tum', nameEn: 'Kon Tum', cccdCode: '062', postalCode: '580000', region: 'central' },
+  { name: 'Gia Lai', nameEn: 'Gia Lai', cccdCode: '064', postalCode: '600000', region: 'central' },
+  { name: 'Đắk Lắk', nameEn: 'Dak Lak', cccdCode: '066', postalCode: '630000', region: 'central' },
+  { name: 'Đắk Nông', nameEn: 'Dak Nong', cccdCode: '067', postalCode: '640000', region: 'central' },
+  { name: 'Lâm Đồng', nameEn: 'Lam Dong', cccdCode: '068', postalCode: '670000', region: 'central' },
+  // South
+  { name: 'Bình Phước', nameEn: 'Binh Phuoc', cccdCode: '070', postalCode: '830000', region: 'south' },
+  { name: 'Tây Ninh', nameEn: 'Tay Ninh', cccdCode: '072', postalCode: '840000', region: 'south' },
+  { name: 'Bình Dương', nameEn: 'Binh Duong', cccdCode: '074', postalCode: '820000', region: 'south' },
+  { name: 'Đồng Nai', nameEn: 'Dong Nai', cccdCode: '075', postalCode: '810000', region: 'south' },
+  { name: 'Bà Rịa - Vũng Tàu', nameEn: 'Ba Ria - Vung Tau', cccdCode: '077', postalCode: '790000', region: 'south' },
+  { name: 'Hồ Chí Minh', nameEn: 'Ho Chi Minh', cccdCode: '079', postalCode: '700000', region: 'south' },
+  { name: 'Long An', nameEn: 'Long An', cccdCode: '080', postalCode: '850000', region: 'south' },
+  { name: 'Tiền Giang', nameEn: 'Tien Giang', cccdCode: '082', postalCode: '860000', region: 'south' },
+  { name: 'Bến Tre', nameEn: 'Ben Tre', cccdCode: '083', postalCode: '930000', region: 'south' },
+  { name: 'Trà Vinh', nameEn: 'Tra Vinh', cccdCode: '084', postalCode: '870000', region: 'south' },
+  { name: 'Vĩnh Long', nameEn: 'Vinh Long', cccdCode: '086', postalCode: '890000', region: 'south' },
+  { name: 'Đồng Tháp', nameEn: 'Dong Thap', cccdCode: '087', postalCode: '880000', region: 'south' },
+  { name: 'An Giang', nameEn: 'An Giang', cccdCode: '089', postalCode: '900000', region: 'south' },
+  { name: 'Kiên Giang', nameEn: 'Kien Giang', cccdCode: '091', postalCode: '920000', region: 'south' },
+  { name: 'Cần Thơ', nameEn: 'Can Tho', cccdCode: '092', postalCode: '940000', region: 'south' },
+  { name: 'Hậu Giang', nameEn: 'Hau Giang', cccdCode: '093', postalCode: '950000', region: 'south' },
+  { name: 'Sóc Trăng', nameEn: 'Soc Trang', cccdCode: '094', postalCode: '960000', region: 'south' },
+  { name: 'Bạc Liêu', nameEn: 'Bac Lieu', cccdCode: '095', postalCode: '970000', region: 'south' },
+  { name: 'Cà Mau', nameEn: 'Ca Mau', cccdCode: '096', postalCode: '980000', region: 'south' },
+];
+
+export const PHONE_PREFIX: Record<string, string[]> = {
+  viettel: ['032', '033', '034', '035', '036', '037', '038', '039', '086', '096', '097', '098'],
+  vinaphone: ['081', '082', '083', '084', '085', '088', '091', '094'],
+  mobifone: ['070', '076', '077', '078', '079', '089', '090', '093'],
+  vietnamobile: ['052', '056', '058', '092'],
+  gmobile: ['059', '099'],
+  reddi: ['055'],
+};

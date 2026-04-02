@@ -49,6 +49,14 @@ export { salutation } from "./salutation";
 
 export { sortVietnamese, vietnameseNameComparator } from "./sort-vietnamese";
 
+export { generateCCCD, type ICCCDResult, type ICCCDOptions } from "./generate-cccd";
+
+export { generatePhone, type IPhoneResult, type IPhoneOptions } from "./generate-phone";
+
+export { generateAddress, type IAddressResult, type IAddressOptions } from "./generate-address";
+
+export { generatePerson, type IPersonResult, type IPersonOptions } from "./generate-person";
+
 export {
   EGender,
   ERegion,
