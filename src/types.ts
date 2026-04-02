@@ -46,6 +46,7 @@ export type TGenerateOptions = {
   compoundName?: boolean;
   meaningCategory?: EMeaningCategory;
   withMiddleName?: boolean;
+  seed?: number;
 };
 
 export interface INameResult {
