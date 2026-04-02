@@ -39,6 +39,13 @@ export type TGivenNameEntry = {
   category?: EMeaningCategory;
 };
 
+export enum ENameFormat {
+  Full = "full",
+  Abbreviated = "abbreviated",
+  Reversed = "reversed",
+  Slug = "slug",
+}
+
 export type TGenerateOptions = {
   gender?: EGender;
   region?: ERegion;
@@ -47,6 +54,7 @@ export type TGenerateOptions = {
   meaningCategory?: EMeaningCategory;
   withMiddleName?: boolean;
   seed?: number;
+  format?: ENameFormat | ENameFormat[];
 };
 
 export interface IRomanizedName {
@@ -56,13 +64,17 @@ export interface IRomanizedName {
   fullName: string;
 }
 
-export interface INameResult {
+export interface INameParts {
   surname: string;
   middleName: string;
   givenName: string;
   fullName: string;
+  romanized: IRomanizedName;
+}
+
+export interface INameResult extends INameParts {
   gender: EGender;
   region: ERegion;
   era: EEra;
-  romanized: IRomanizedName;
+  formatted: Partial<Record<ENameFormat, string>>;
 }
