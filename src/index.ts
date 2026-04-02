@@ -61,6 +61,8 @@ export { getHanViet, type THanVietEntry } from "./get-han-viet";
 
 export { generateNickname, type INicknameResult, type TNicknameCategory } from "./generate-nickname";
 
+export { generatePetName, generateManyPetNames, type IPetNameResult, type IPetNameOptions, type TPetNameCategory } from "./generate-pet-name";
+
 export {
   EGender,
   ERegion,
