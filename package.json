@@ -1,7 +1,7 @@
 {
   "name": "vietnamese-name-generator",
   "version": "0.8.1",
-  "description": "Generate realistic Vietnamese names with gender, region, era, and meaning filtering",
+  "description": "The most comprehensive Vietnamese name toolkit — generate, parse, validate, format, and analyze Vietnamese names with full cultural awareness",
   "type": "module",
   "bin": {
     "vietnamese-name-generator": "./dist/cli.cjs"
@@ -35,9 +35,17 @@
     "vietnamese",
     "name",
     "generator",
+    "parser",
+    "validator",
     "faker",
     "vietnam",
-    "random"
+    "i18n",
+    "gender-detection",
+    "romanize",
+    "salutation",
+    "testing",
+    "mock-data",
+    "synthetic-data"
   ],
   "author": "hungnguyen18",
   "license": "MIT",

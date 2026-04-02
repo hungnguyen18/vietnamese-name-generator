@@ -5,172 +5,253 @@
 [![CI](https://github.com/hungnguyen18/vietnamese-name-generator/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/hungnguyen18/vietnamese-name-generator/actions/workflows/ci.yml)
 [![license](https://img.shields.io/github/license/hungnguyen18/vietnamese-name-generator)](./LICENSE)
 
-Generate realistic Vietnamese names with gender, region, era, and meaning filtering.
+The most comprehensive Vietnamese name toolkit for JavaScript/TypeScript. Generate, parse, validate, format, and analyze Vietnamese names with full cultural awareness.
 
-Surnames are weighted by census frequency. Regional dialects are respected (Hoàng/Huỳnh, Vũ/Võ). Names carry real semantic meaning across 9 categories. Zero runtime dependencies. Ships as CJS + ESM with full TypeScript declarations.
+Zero runtime dependencies. Ships as CJS + ESM with full TypeScript declarations.
+
+## Why this library?
+
+- **No npm alternative** for Vietnamese name parsing, gender detection, or validation
+- **Census-weighted** surname distribution (Nguyen 40%, Tran 11%, Le 9%...)
+- **Culturally correct** — regional variants (Hoang/Huynh), gender-encoded middle names, proper honorifics
+- **i18n-ready** — NFC normalization, accent-insensitive search, Vietnamese sort order
+- **AI/testing-friendly** — deterministic seed, batch generation, CSV/JSON export
 
 ## Installation
-
-**npm**
 
 ```bash
 npm install vietnamese-name-generator
 ```
 
-**pnpm**
+Also works with pnpm, yarn, and bun.
 
-```bash
-pnpm add vietnamese-name-generator
-```
-
-**yarn**
-
-```bash
-yarn add vietnamese-name-generator
-```
-
-**bun**
-
-```bash
-bun add vietnamese-name-generator
-```
-
-## Usage
+## Quick Start
 
 ```typescript
 import {
   generate,
-  generateMany,
-  generateFullName,
-  generateManyFullNames,
-  EGender,
-  ERegion,
-  EEra,
-  EMeaningCategory,
-} from "vietnamese-name-generator";
+  parseName,
+  detectGender,
+  salutation,
+  romanize,
+} from 'vietnamese-name-generator';
 
-// Single name — full metadata
-const name = generate();
-console.log(name.fullName); // 'Nguyễn Thị Lan'
-console.log(name.surname); // 'Nguyễn'
-console.log(name.givenName); // 'Lan'
+// Generate a realistic Vietnamese name
+const name = generate({ seed: 42 });
+// { surname: 'Phan', middleName: 'Ngoc', givenName: 'Kim Trang',
+//   fullName: 'Phan Ngoc Kim Trang', gender: 'female', region: 'central',
+//   era: 'modern', romanized: {...}, formatted: {...} }
 
-// Filter by gender and region
-const north = generate({ gender: EGender.Male, region: ERegion.North });
-console.log(north.fullName); // 'Hoàng Văn Minh'  (not Huỳnh — North variant)
+// Parse any Vietnamese name into structured parts
+parseName('Nguyen Van An');
+// { surname: 'Nguyen', middleName: 'Van', givenName: 'An' }
 
-const south = generate({ gender: EGender.Male, region: ERegion.South });
-console.log(south.fullName); // 'Huỳnh Văn Minh'  (not Hoàng — South variant)
+// Detect gender from name
+detectGender('Nguyen Thi Mai');
+// { gender: 'female', confidence: 'high', signals: { middleName: { gender: 'female', value: 'Thi' } } }
 
-// Modern compound name (tên kép)
-const modern = generateFullName({ era: EEra.Modern, compoundName: true });
-console.log(modern); // 'Lê Thị Bảo Châu'
+// Generate culturally correct salutation
+salutation('Nguyen Van Nam', { formality: 'formal' });
+// { honorific: 'Ong', addressName: 'Nam', fullSalutation: 'Kinh gui Ong Nam' }
 
-// Filter by meaning
-const nature = generateFullName({ meaningCategory: EMeaningCategory.Nature });
-console.log(nature); // 'Trần Thị Hà'  (Hà = river)
-
-// Batch generation — uniqueness guaranteed
-const names = generateManyFullNames(5, { gender: EGender.Female });
-// ['Phạm Thị Hoa', 'Võ Ngọc Mai', 'Đặng Thị Linh', ...]
-
-// Full result objects in batch
-const results = generateMany(3, { region: ERegion.South });
-results.forEach((r) => console.log(r.fullName, r.era, r.gender));
+// Romanize (remove diacritics)
+romanize('Nguyen Van An');
+// 'Nguyen Van An'
 ```
 
-## API
+## CLI
 
-### Functions
+```bash
+# Generate names
+npx vietnamese-name-generator --count 10 --gender female --region south
+npx vietnamese-name-generator --seed 42 --format slug --json
 
-| Function                                 | Returns         | Description                        |
-| ---------------------------------------- | --------------- | ---------------------------------- |
-| `generate(options?)`                     | `INameResult`   | Single name with full metadata     |
-| `generateMany(count, options?)`          | `INameResult[]` | `count` unique names with metadata |
-| `generateFullName(options?)`             | `string`        | Single full name string            |
-| `generateManyFullNames(count, options?)` | `string[]`      | `count` unique full name strings   |
+# Parse, validate, detect
+npx vietnamese-name-generator --parse "Nguyen Van An"
+npx vietnamese-name-generator --validate "Nguyen Van An"
+npx vietnamese-name-generator --detect "Nguyen Thi Mai"
 
-### Options
+# Export batch data
+npx vietnamese-name-generator --export csv --count 100 --seed 42
+npx vietnamese-name-generator --export json --count 50
+```
 
-All functions accept an optional `TGenerateOptions`:
+## API Reference
 
-| Option            | Type               | Default | Description                       |
-| ----------------- | ------------------ | ------- | --------------------------------- |
-| `gender`          | `EGender`          | random  | `male`, `female`, or `unisex`     |
-| `region`          | `ERegion`          | random  | `north`, `central`, or `south`    |
-| `era`             | `EEra`             | random  | `traditional` or `modern`         |
-| `compoundName`    | `boolean`          | random  | Two-syllable given name (tên kép) |
-| `meaningCategory` | `EMeaningCategory` | any     | Filter by semantic category       |
-| `withMiddleName`  | `boolean`          | `true`  | Include the middle name (đệm)     |
+### Generation
 
-### Result
+| Function | Returns | Description |
+|----------|---------|-------------|
+| `generate(options?)` | `INameResult` | Single name with full metadata |
+| `generateMany(count, options?)` | `INameResult[]` | Batch unique names |
+| `generateFullName(options?)` | `string` | Single full name string |
+| `generateManyFullNames(count, options?)` | `string[]` | Batch full name strings |
+| `generateEmail(options?)` | `IEmailResult` | Email from generated name |
+| `generateUsername(options?)` | `IUsernameResult` | Username from generated name |
+
+#### Options
+
+```typescript
+type TGenerateOptions = {
+  gender?: EGender;          // 'male' | 'female' | 'unisex'
+  region?: ERegion;          // 'north' | 'central' | 'south'
+  era?: EEra;                // 'traditional' | 'modern'
+  compoundName?: boolean;    // two-syllable given name
+  meaningCategory?: EMeaningCategory;  // 9 semantic categories
+  withMiddleName?: boolean;  // default: true
+  seed?: number;             // deterministic output
+  format?: ENameFormat | ENameFormat[];  // output formats
+};
+```
+
+#### Result
 
 ```typescript
 interface INameResult {
   surname: string;
   middleName: string;
   givenName: string;
-  fullName: string; // surname + middleName + givenName
+  fullName: string;
   gender: EGender;
   region: ERegion;
   era: EEra;
+  romanized: IRomanizedName;   // ASCII versions of all parts
+  formatted: Partial<Record<ENameFormat, string>>;  // requested formats
 }
+```
+
+### Parsing & Validation
+
+| Function | Returns | Description |
+|----------|---------|-------------|
+| `parseName(input)` | `IParsedName` | Split full name into surname/middle/given |
+| `validateName(input)` | `IValidationResult` | Check if string is a valid Vietnamese name |
+| `detectGender(input)` | `IGenderResult` | Infer gender from middle + given name signals |
+
+```typescript
+// Parse — handles compound surnames (Ton That), romanized input (Nguyen)
+parseName('Ton That Minh An');
+// { surname: 'Ton That', middleName: 'Minh', givenName: 'An' }
+
+// Validate — returns specific failure reasons
+validateName('xyz van an');
+// { valid: false, reasons: ['Each part must start with uppercase', 'Unknown surname: xyz'] }
+
+// Detect gender — confidence levels based on signal strength
+detectGender('Tran Van An');
+// { gender: 'male', confidence: 'high', signals: { middleName: { gender: 'male', value: 'Van' } } }
+```
+
+### Formatting & i18n
+
+| Function | Returns | Description |
+|----------|---------|-------------|
+| `romanize(input)` | `string` | Remove Vietnamese diacritics |
+| `formatName(parts, format)` | `string` | Format name as full/abbreviated/reversed/slug |
+| `salutation(name, options?)` | `ISalutationResult` | Culturally correct Vietnamese honorific |
+| `normalize(input)` | `string` | NFC Unicode normalization |
+| `accentInsensitiveMatch(text, query)` | `boolean` | Search ignoring diacritics |
+| `accentInsensitiveEqual(a, b)` | `boolean` | Compare ignoring diacritics |
+| `sortVietnamese(names, options?)` | `string[]` | Sort by given name (Vietnamese convention) |
+| `vietnameseNameComparator(options?)` | `Function` | Comparator for `Array.sort()` |
+| `VIETNAMESE_NAME_REGEX` | `RegExp` | Validates Vietnamese characters |
+
+```typescript
+// Format — 4 built-in formats, request multiple at once
+generate({ format: ['full', 'slug', 'abbreviated'] });
+// result.formatted = { full: 'Nguyen Van An', slug: 'nguyen-van-an', abbreviated: 'N.V. An' }
+
+// Salutation — "Ong Nam" not "Mr. Nguyen"
+salutation('Nguyen Van Nam', { formality: 'formal' });
+// { honorific: 'Ong', addressName: 'Nam', fullSalutation: 'Kinh gui Ong Nam' }
+
+// Accent-insensitive search
+accentInsensitiveMatch('Nguyen Van An', 'nguyen');  // true
+
+// Sort by given name (Vietnamese convention)
+sortVietnamese(['Tran Thi Binh', 'Nguyen Van An']);
+// ['Nguyen Van An', 'Tran Thi Binh']  (An < Binh)
+```
+
+### Data & Lookup
+
+| Function | Returns | Description |
+|----------|---------|-------------|
+| `getMeaning(name)` | `INameMeaning` | Meaning category, gender/region/era distribution |
+| `getSurnameInfo(surname)` | `ISurnameInfo` | Frequency, rank, regional variants |
+| `getRegionalVariant(surname, region)` | `string` | Convert Hoang<->Huynh, Vu<->Vo |
+| `nameSimilarity(name1, name2)` | `ISimilarityResult` | Compare names accounting for diacritics/variants |
+| `getStatistics()` | `IStatisticsResult` | Dataset overview counts |
+| `getTopSurnames(options?)` | `IRankedName[]` | Top N surnames by frequency |
+| `getGivenNameCount(options?)` | `number` | Count given names by gender/region/era |
+| `getUniqueGivenNames(options?)` | `string[]` | List unique given names |
+
+```typescript
+// Name meaning
+getMeaning('Hung');
+// { found: true, category: 'strength', genders: ['male'], regions: ['north','central','south'], ... }
+
+// Surname info
+getSurnameInfo('Nguyen');
+// { found: true, frequency: { north: 31.5, central: 30.2, south: 28.5 }, rank: { north: 1, ... } }
+
+// Regional variant
+getRegionalVariant('Hoang', 'south');  // 'Huynh'
+getRegionalVariant('Vo', 'north');     // 'Vu'
+
+// Name similarity (handles diacritics, variants)
+nameSimilarity('Nguyen Van An', 'Nguyen Van An');
+// { score: 0.9, romanizedMatch: true, ... }
+```
+
+### Faker.js Compatible
+
+```typescript
+import { fakerVi } from 'vietnamese-name-generator';
+
+fakerVi.person.firstName();          // 'An'
+fakerVi.person.lastName();           // 'Nguyen'
+fakerVi.person.fullName();           // 'Nguyen Van An'
+fakerVi.person.sex();                // 'male'
+fakerVi.person.prefix('female');     // 'Ba'
+fakerVi.internet.email();            // 'an.nguyen@gmail.com'
+fakerVi.internet.username();         // 'annguyen'
 ```
 
 ### Enums
 
-**`EGender`**
+| Enum | Values |
+|------|--------|
+| `EGender` | `male`, `female`, `unisex` |
+| `ERegion` | `north`, `central`, `south` |
+| `EEra` | `traditional`, `modern` |
+| `EMeaningCategory` | `strength`, `virtue`, `nature`, `precious`, `beauty`, `celestial`, `season`, `intellect`, `prosperity` |
+| `ENameFormat` | `full`, `abbreviated`, `reversed`, `slug` |
 
-| Value    | Description  |
-| -------- | ------------ |
-| `male`   | Male names   |
-| `female` | Female names |
-| `unisex` | Unisex names |
+## Data Sources
 
-**`ERegion`**
+Names are collected from 6 web sources via an automated crawl pipeline:
 
-| Value     | Description                       |
-| --------- | --------------------------------- |
-| `north`   | Northern Vietnam (e.g. Hoàng, Vũ) |
-| `central` | Central Vietnam                   |
-| `south`   | Southern Vietnam (e.g. Huỳnh, Võ) |
+- [duyet/vietnamese-namedb](https://github.com/duyet/vietnamese-namedb) (GitHub)
+- faker-vi (Vietnamese faker library)
+- Wiktionary Vietnamese entries
+- Wikipedia Vietnamese surname pages
+- [surnam.es](https://surnam.es) genealogy database
+- DrPapie Vietnamese name database
 
-**`EEra`**
+Surnames are weighted by census frequency. Given names are tagged by gender, region, era, and meaning category.
 
-| Value         | Description                     |
-| ------------- | ------------------------------- |
-| `traditional` | Classical Sino-Vietnamese names |
-| `modern`      | Contemporary Vietnamese names   |
+## Vietnamese Naming Context
 
-**`EMeaningCategory`**
+Vietnamese names are written **surname - middle name - given name** (reverse of Western order). In daily life, people are addressed by their **given name**, not surname.
 
-| Value        | Description             |
-| ------------ | ----------------------- |
-| `strength`   | Power and fortitude     |
-| `virtue`     | Moral excellence        |
-| `nature`     | Natural world           |
-| `precious`   | Gems and valuables      |
-| `beauty`     | Aesthetic qualities     |
-| `celestial`  | Sky, stars, cosmos      |
-| `season`     | Seasons and weather     |
-| `intellect`  | Wisdom and knowledge    |
-| `prosperity` | Wealth and good fortune |
+**Surname concentration is extreme.** About 40% of Vietnamese carry the surname Nguyen. The top 14 surnames cover 90%+ of the population.
 
-## Vietnamese Naming
+**The middle name encodes gender.** Van marks male, Thi marks female (traditional). Modern names use varied middle names like Minh, Bao, Ngoc.
 
-Vietnamese names are written **surname → middle name → given name** — the reverse of Western order. In daily life, people are addressed by their given name only; using a full name is formal or distant.
+**Region determines surname form.** Hoang (North) = Huynh (South). Vu (North) = Vo (South).
 
-**Surname concentration is extreme.** About 40% of Vietnamese people carry the surname Nguyễn — a direct consequence of mass surname assignments during dynastic census policies. The top 14 surnames cover over 90% of the population, which is why the middle name and given name are the true differentiators.
-
-**The middle name (đệm) encodes gender.** Văn (文) has historically marked male names; Thị (氏) marks female names. Both are fading in modern usage but remain common. Other middle names like Hữu, Đức, Công (male) or Thùy, Ngọc, Kim (female) add meaning and style.
-
-**Region determines which surname form you use.** The same Chinese character is read differently by dialect: Hoàng in the North becomes Huỳnh in the South; Vũ becomes Võ. Names are regionally self-consistent — a southern name will use Huỳnh, Võ, Trương, and so on throughout.
-
-**Every given name carries meaning.** Vietnamese parents deliberately choose names for semantic content drawn from Sino-Vietnamese vocabulary: Lan (orchid), Hà (river), Minh (bright/intelligent), Phúc (blessing), Nguyệt (moon). This library's meaning filter maps directly to these categories.
-
-**Compound names (tên kép) emerged as a workaround.** With so few surnames in circulation, two-syllable given names like Bảo Châu, Minh Khôi, or Thanh Hà became popular from the late 20th century onward — both for beauty and to reduce ambiguity.
-
-**Imperial name taboos left lasting marks.** Under feudal dynasties, using the emperor's personal name (or a near-homophone) was forbidden — a practice called kỵ húy. Banned names became rare and some were respelled entirely, which partly explains unusual character choices still visible in the modern name pool.
+**Every given name carries meaning.** Lan = orchid, Ha = river, Minh = bright, Phuc = blessing, Nguyet = moon.
 
 ## License
 
