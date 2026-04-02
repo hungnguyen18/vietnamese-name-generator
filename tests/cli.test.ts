@@ -75,4 +75,37 @@ describe("CLI", () => {
     const parsed = JSON.parse(output);
     expect(parsed[0].middleName).toBe("");
   });
+
+  it("--export csv --count 3 --seed 42 outputs CSV with header + 3 data rows", () => {
+    const output = run("--export", "csv", "--count", "3", "--seed", "42");
+    const lines = output.split("\n");
+    expect(lines).toHaveLength(4);
+    expect(lines[0]).toBe("surname,middleName,givenName,fullName,gender,region,era,romanizedFullName");
+    for (let i = 1; i < lines.length; i += 1) {
+      expect(lines[i].split(",").length).toBeGreaterThanOrEqual(8);
+    }
+  });
+
+  it("--export json --count 2 --seed 42 outputs valid formatted JSON", () => {
+    const output = run("--export", "json", "--count", "2", "--seed", "42");
+    const parsed = JSON.parse(output);
+    expect(Array.isArray(parsed)).toBe(true);
+    expect(parsed).toHaveLength(2);
+    expect(parsed[0]).toHaveProperty("surname");
+    expect(parsed[0]).toHaveProperty("romanized");
+    // Verify it is formatted with indentation (not compact)
+    expect(output).toContain("\n");
+    expect(output).toMatch(/^ {4}"/m);
+  });
+
+  it("CSV output contains surname,middleName header", () => {
+    const output = run("--export", "csv", "--seed", "42");
+    expect(output.startsWith("surname,middleName")).toBe(true);
+  });
+
+  it("CSV is deterministic with seed", () => {
+    const output1 = run("--export", "csv", "--count", "3", "--seed", "42");
+    const output2 = run("--export", "csv", "--count", "3", "--seed", "42");
+    expect(output1).toBe(output2);
+  });
 });

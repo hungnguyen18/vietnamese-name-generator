@@ -27,6 +27,17 @@ export { fakerVi } from "./faker-adapter";
 
 export { nameSimilarity, type ISimilarityResult } from "./name-similarity";
 
+export { getMeaning, type INameMeaning } from "./get-meaning";
+
+export {
+  getStatistics,
+  getTopSurnames,
+  getGivenNameCount,
+  getUniqueGivenNames,
+  type IStatisticsResult,
+  type IRankedName,
+} from "./name-statistics";
+
 export {
   EGender,
   ERegion,

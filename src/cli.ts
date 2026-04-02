@@ -34,6 +34,8 @@ Generate Options:
 
 Output Options:
   --json                   Output as JSON
+  --export <format>        Export as csv or json (default: json)
+                           Generates --count names and outputs in format
   --help, -h               Show this help message
   --version, -v            Show version`;
 
@@ -71,6 +73,8 @@ function argParse(argv: string[]): Record<string, string | boolean> {
       args.validate = argv[++i];
     } else if (arg === "--detect") {
       args.detect = argv[++i];
+    } else if (arg === "--export") {
+      args.export = argv[++i] || "json";
     }
   }
   return args;
@@ -173,6 +177,38 @@ function main(): void {
       if (result.signals.givenName) {
         console.log(`  Given:      ${result.signals.givenName.value} -> ${result.signals.givenName.gender}`);
       }
+    }
+    return;
+  }
+
+  // Command: --export
+  if (typeof args.export === "string") {
+    const format = args.export.toLowerCase();
+    const count = typeof args.count === "string" ? parseInt(args.count, 10) : 1;
+    const options = optionBuild(args);
+    const results = count === 1 ? [generate(options)] : generateMany(count, options);
+
+    if (format === "csv") {
+      const header = "surname,middleName,givenName,fullName,gender,region,era,romanizedFullName";
+      const rows: string[] = [header];
+      for (let i = 0; i < results.length; i += 1) {
+        const r = results[i];
+        const fields = [
+          r.surname,
+          r.middleName,
+          r.givenName,
+          r.fullName,
+          r.gender,
+          r.region,
+          r.era,
+          r.romanized.fullName,
+        ];
+        const escaped = fields.map((f) => (f.includes(",") || f.includes('"')) ? `"${f.replace(/"/g, '""')}"` : f);
+        rows.push(escaped.join(","));
+      }
+      console.log(rows.join("\n"));
+    } else {
+      console.log(JSON.stringify(results, null, 2));
     }
     return;
   }
