@@ -72,6 +72,27 @@ export interface INameParts {
   romanized: IRomanizedName;
 }
 
+export interface IParsedName {
+  surname: string;
+  middleName: string;
+  givenName: string;
+  fullName: string;
+}
+
+export interface IValidationResult {
+  valid: boolean;
+  reasons: string[];
+}
+
+export interface IGenderResult {
+  gender: EGender | "unknown";
+  confidence: "high" | "medium" | "low";
+  signals: {
+    middleName?: { gender: EGender | "unknown"; value: string };
+    givenName?: { gender: EGender | "unknown"; value: string };
+  };
+}
+
 export interface INameResult extends INameParts {
   gender: EGender;
   region: ERegion;
