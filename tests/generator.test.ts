@@ -66,3 +66,54 @@ describe("generateFullName", () => {
     expect(result.length).toBeGreaterThan(0);
   });
 });
+
+describe('generate with style option', () => {
+  it('style=japanese returns a name', () => {
+    const result = generate({ style: 'japanese', seed: 1 });
+    expect(result.fullName).toBeTruthy();
+    expect(result.era).toBe(EEra.Modern);
+  });
+
+  it('style=korean returns a name', () => {
+    const result = generate({ style: 'korean', seed: 2 });
+    expect(result.fullName).toBeTruthy();
+    expect(result.era).toBe(EEra.Modern);
+  });
+
+  it('style=western returns a name', () => {
+    const result = generate({ style: 'western', seed: 3 });
+    expect(result.fullName).toBeTruthy();
+    expect(result.era).toBe(EEra.Modern);
+  });
+
+  it('style=hybrid returns a name', () => {
+    const result = generate({ style: 'hybrid', seed: 4 });
+    expect(result.fullName).toBeTruthy();
+    expect(result.era).toBe(EEra.Modern);
+  });
+
+  it('without style, behavior unchanged', () => {
+    const result = generate({ gender: EGender.Male, region: ERegion.North, era: EEra.Traditional, seed: 100 });
+    expect(result.era).toBe(EEra.Traditional);
+    expect(result.region).toBe(ERegion.North);
+  });
+
+  it('style deterministic with seed', () => {
+    const a = generate({ style: 'japanese', seed: 55 });
+    const b = generate({ style: 'japanese', seed: 55 });
+    expect(a.fullName).toBe(b.fullName);
+  });
+
+  it('style generates variety across seeds', () => {
+    const names = new Set<string>();
+    for (let i = 0; i < 50; i += 1) {
+      names.add(generate({ style: 'japanese', seed: i }).givenName);
+    }
+    expect(names.size).toBeGreaterThan(5);
+  });
+
+  it('secure option does not crash', () => {
+    const result = generate({ secure: true });
+    expect(result.fullName).toBeTruthy();
+  });
+});

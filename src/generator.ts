@@ -1,27 +1,29 @@
-import type { TGenerateOptions, INameResult } from "./types";
+import type { TGenerateOptions, INameResult, TNameStyle } from "./types";
 import type { TCompactGivenNameEntry } from "./data/given-name-compact";
 import { EGender, ERegion, EEra, ENameFormat } from "./types";
-import { mulberry32, pickRandom, pickWeighted } from "./random";
+import { xoroshiro128plus, mulberry32, secureRandom, pickRandom, pickWeighted } from './random';
 import { romanize } from "./romanize";
 import { formatName } from "./format";
 import { INDEX_SURNAME } from "./data/surname";
 import { INDEX_MIDDLE_NAME } from "./data/middle-name";
 import { givenNameIndex } from "./data/given-name-compact";
 import { INDEX_COMPOUND_GIVEN_NAME } from "./data/compound-given-name";
+import { genzNameIndex, INDEX_GENZ_MIDDLE_NAME } from './data/genz-names';
 
 const LIST_BINARY_GENDER = [EGender.Male, EGender.Female];
 const LIST_REGION = [ERegion.North, ERegion.Central, ERegion.South];
 const LIST_ERA = [EEra.Traditional, EEra.Modern];
 
 function optionResolve(options?: TGenerateOptions, rng?: () => number) {
+  const style = options?.style;
   const gender = options?.gender ?? pickRandom(LIST_BINARY_GENDER, rng);
   const region = options?.region ?? pickRandom(LIST_REGION, rng);
-  const era = options?.era ?? pickRandom(LIST_ERA, rng);
+  const era = style ? EEra.Modern : (options?.era ?? pickRandom(LIST_ERA, rng));
   const withMiddleName = options?.withMiddleName ?? true;
   const compoundName = options?.compoundName;
   const meaningCategory = options?.meaningCategory;
 
-  return { gender, region, era, withMiddleName, compoundName, meaningCategory };
+  return { gender, region, era, withMiddleName, compoundName, meaningCategory, style };
 }
 
 function givenNamePick(
@@ -63,29 +65,65 @@ function givenNamePick(
   return pickRandom(list, rng).value;
 }
 
+const ORIGIN_MAP: Record<TNameStyle, string> = {
+  japanese: 'j',
+  korean: 'k',
+  western: 'w',
+  hybrid: 'h',
+};
+
+function genzGivenNamePick(
+  gender: EGender,
+  style: TNameStyle,
+  rng?: () => number,
+): string {
+  const idx = genzNameIndex();
+  const genderKey = gender === EGender.Unisex ? 'unisex' : gender;
+  let list = idx[genderKey] ?? idx.unisex;
+
+  if (style !== 'hybrid') {
+    const originCode = ORIGIN_MAP[style];
+    const filtered = list.filter(e => e.origin === originCode);
+    if (filtered.length > 0) {
+      list = filtered;
+    }
+  }
+
+  return pickRandom(list, rng).value;
+}
+
 export function generate(options?: TGenerateOptions): INameResult {
-  const rng = options?.seed !== undefined ? mulberry32(options.seed) : undefined;
-  const { gender, region, era, withMiddleName, compoundName, meaningCategory } =
+  let rng: (() => number) | undefined;
+  if (options?.seed !== undefined) {
+    rng = xoroshiro128plus(options.seed);
+  } else if (options?.secure) {
+    rng = secureRandom;
+  }
+  const { gender, region, era, withMiddleName, compoundName, meaningCategory, style } =
     optionResolve(options, rng);
 
   const surname = pickWeighted(INDEX_SURNAME[region], rng);
 
   let middleName = "";
   if (withMiddleName) {
-    const middleList = INDEX_MIDDLE_NAME[gender]?.[region]?.[era];
-    if (middleList && middleList.length > 0) {
+    if (style) {
+      const genderKey = gender === EGender.Unisex ? 'unisex' : gender;
+      const middleList = INDEX_GENZ_MIDDLE_NAME[genderKey] ?? INDEX_GENZ_MIDDLE_NAME.unisex;
       middleName = pickRandom(middleList, rng);
+    } else {
+      const middleList = INDEX_MIDDLE_NAME[gender]?.[region]?.[era];
+      if (middleList && middleList.length > 0) {
+        middleName = pickRandom(middleList, rng);
+      }
     }
   }
 
-  const givenName = givenNamePick(
-    gender,
-    region,
-    era,
-    compoundName,
-    meaningCategory,
-    rng,
-  );
+  let givenName: string;
+  if (style) {
+    givenName = genzGivenNamePick(gender, style, rng);
+  } else {
+    givenName = givenNamePick(gender, region, era, compoundName, meaningCategory, rng);
+  }
 
   const fullName = middleName
     ? `${surname} ${middleName} ${givenName}`
