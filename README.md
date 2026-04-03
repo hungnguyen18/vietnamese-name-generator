@@ -41,11 +41,20 @@ import {
   getBirthYearElement,
   generatePetName,
   generateNickname,
+  generateGenZNickname,
 } from 'vietnamese-name-generator';
 
 // Generate a realistic Vietnamese name
 const name = generate({ seed: 42 });
 // { surname: 'Phan', middleName: 'Ngoc', givenName: 'Kim Trang', ... }
+
+// Cross-cultural GenZ name (Japanese/Korean/Western influenced)
+generate({ style: 'japanese', seed: 1 });
+// { surname: 'Nguyễn', middleName: 'Minh', givenName: 'Sakura', ... }
+
+// GenZ nickname from a Vietnamese name
+generateGenZNickname({ name: 'Trần Thảo Linh', style: 'jp-suffix', seed: 5 });
+// { nickname: 'Linh-chan', style: 'jp-suffix', culturalNote: '...' }
 
 // Parse any Vietnamese name into structured parts
 parseName('Nguyen Van An');
@@ -108,6 +117,7 @@ npx vietnamese-name-generator --export json --count 50
 | `generateNickname(options?)` | `INicknameResult` | Traditional protective nickname |
 | `generatePetName(options?)` | `IPetNameResult` | Vietnamese pet name |
 | `generateManyPetNames(count, options?)` | `IPetNameResult[]` | Batch pet names |
+| `generateGenZNickname(options?)` | `IGenZNicknameResult` | GenZ nickname (JP/KR/EN influenced) |
 
 ### Parsing & Validation
 
@@ -161,13 +171,73 @@ fakerVi.internet.email();          // 'an.nguyen@gmail.com'
 fakerVi.internet.username();       // 'annguyen'
 ```
 
-### Enums
+### Cross-Cultural GenZ Names
 
-| Enum | Values |
-|------|--------|
+Generate Vietnamese names influenced by Japanese, Korean, and Western naming trends:
+
+```typescript
+import { generate } from 'vietnamese-name-generator';
+
+// Japanese-influenced name
+generate({ style: 'japanese', seed: 1 });
+// { surname: 'Nguyễn', middleName: 'Minh', givenName: 'Sakura', ... }
+
+// Korean-influenced name
+generate({ style: 'korean', seed: 2 });
+// { surname: 'Trần', middleName: 'Bảo', givenName: 'Ha-eun', ... }
+
+// Western-influenced name
+generate({ style: 'western', seed: 3 });
+// { surname: 'Lê', middleName: 'Gia', givenName: 'Leo', ... }
+
+// Hybrid (names that work across VN + foreign contexts)
+generate({ style: 'hybrid', seed: 4 });
+// { surname: 'Phạm', middleName: 'An', givenName: 'Kai', ... }
+```
+
+Each crosscultural name entry includes rich metadata: origin culture, native script (kanji/hangul), meaning, Vietnamese phonetic adaptation, and popularity score.
+
+### GenZ Nickname Generator
+
+Generate Vietnamese GenZ-style nicknames with 6 cultural styles:
+
+```typescript
+import { generateGenZNickname } from 'vietnamese-name-generator';
+
+// From an existing Vietnamese name
+generateGenZNickname({ name: 'Nguyễn Minh Anh', style: 'jp-suffix', seed: 1 });
+// { nickname: 'Anh-chan', style: 'jp-suffix', origin: 'japanese-honorific', culturalNote: '...' }
+
+generateGenZNickname({ name: 'Trần Văn Nam', style: 'english-viet', seed: 2 });
+// { nickname: 'Kevin Tran', style: 'english-viet', origin: 'viet-diaspora-english', ... }
+
+// Random mode (no input name)
+generateGenZNickname({ style: 'cute', seed: 3 });
+// { nickname: 'Bé Xoài', style: 'cute', origin: 'vietnamese-cute-tradition', ... }
+
+generateGenZNickname({ style: 'social-handle', seed: 4 });
+// { nickname: 'dreamy.linh', style: 'social-handle', ... }
+```
+
+**Nickname styles:**
+
+| Style | Description | Examples |
+|-------|-------------|---------|
+| `social-handle` | TikTok/Instagram handles | `minh.03`, `itz.linh`, `_an_` |
+| `jp-suffix` | Japanese honorific suffixes | `Linh-chan`, `Minh-kun`, `An-sama` |
+| `kr-suffix` | Korean honorifics | `Minh oppa`, `Linh unnie`, `An-ah` |
+| `cute` | Vietnamese cute nicknames | `Bé An`, `Mimi`, `Gấu`, `Xoài` |
+| `meme` | Vietnamese internet memes | `Kevin Nguyễn`, `Phở Mai Que` |
+| `english-viet` | English + VN surname | `Jenny Phạm`, `Ryan Trần` |
+
+### Enums & Types
+
+| Enum/Type | Values |
+|-----------|--------|
 | `EGender` | `male`, `female`, `unisex` |
 | `ERegion` | `north`, `central`, `south` |
 | `EEra` | `traditional`, `modern` |
+| `TNameStyle` | `japanese`, `korean`, `western`, `hybrid` |
 | `EMeaningCategory` | `strength`, `virtue`, `nature`, `precious`, `beauty`, `celestial`, `season`, `intellect`, `prosperity` |
 | `ENameFormat` | `full`, `abbreviated`, `reversed`, `slug` |
 | `EElement` | `kim` (Metal), `moc` (Wood), `thuy` (Water), `hoa` (Fire), `tho` (Earth) |
@@ -255,6 +325,17 @@ Under feudal dynasties, using the emperor's personal name or a near-homophone wa
 
 This library includes a protective nickname generator (`generateNickname()`) honoring this tradition.
 
+### Cross-Cultural Naming Trends (GenZ/Gen Alpha)
+
+Vietnamese naming culture is evolving rapidly under Japanese, Korean, and Western influences:
+
+- **Japanese influence (anime/manga):** Names like Sakura (桜), Hana (花), Ren (蓮), Akira (明) are increasingly used by Vietnamese parents. Many Japanese names have phonetic compatibility with Vietnamese (e.g., Mei ≈ Mai, Akira's kanji 明 = Minh in Han Viet).
+- **Korean influence (K-pop/K-drama):** Names like Jimin, Ha-eun, Min-jun are adapted via Han-Viet phonetic mapping (e.g., Ha-eun → Hà Ân, Min-jun → Min Tuấn). Korean naming sites report Vietnamese parents as a significant international audience.
+- **Western influence:** Short, internationally pronounceable names (Leo, Mia, Kai) are popular. The "Kevin Nguyen" meme (from Subtle Asian Traits, 2018) reflects the Viet diaspora naming pattern.
+- **GenZ nickname culture:** Vietnamese GenZ creates nicknames by mixing languages — Japanese suffixes (-chan, -kun), Korean honorifics (oppa, unnie), syllable doubling (Mimi, Nana), cute food/animal names (Xoài, Gấu), and social media handle patterns.
+
+Sources: [Kilala.vn](https://kilala.vn), [Huggies.com.vn](https://www.huggies.com.vn), [Vietcetera](https://vietcetera.com/en/how-vietnamese-choose-their-english-names), [korean-name.com](https://korean-name.com)
+
 ### Compound Names (Tên Kép)
 
 Two-syllable given names like Bảo Châu, Minh Khôi, or Thanh Hà became popular from the late 20th century. With so few surnames in circulation, compound names reduce ambiguity while adding poetic meaning. Modern compound names often combine two auspicious characters.
@@ -308,6 +389,18 @@ Names are collected from 6 web sources via an automated crawl pipeline, then mer
 | [CatHouse.vn](https://cathouse.vn) | 500+ cat names |
 | [PetPress.net](https://petpress.net/vietnamese-dog-names/) | 60 Vietnamese dog names with English meanings |
 | [WeReAllAboutPets.com](https://wereallaboutpets.com/pet-names/dog/vietnamese) | 90 names with meanings |
+
+### GenZ/Cross-Cultural Data
+
+| Source | Coverage |
+|--------|----------|
+| [Kilala.vn](https://kilala.vn) | Top Japanese names for Vietnamese parents, annual rankings |
+| [Huggies.com.vn](https://www.huggies.com.vn) | 500+ Japanese names, Korean names, English names for Vietnamese babies |
+| [korean-name.com](https://korean-name.com) | Korean name rankings 2024-2025, meaning data |
+| [Vietcetera](https://vietcetera.com) | How Vietnamese choose English names, GenZ internet slang |
+| [Colosmulti.com.vn](https://colosmulti.com.vn) | 440+ Korean names for Vietnamese children |
+| [Kenh14](https://kenh14.vn) | GenZ Instagram naming formulas |
+| [Know Your Meme](https://knowyourmeme.com/memes/kevin-nguyen) | Kevin Nguyen meme origin and cultural context |
 
 ### Academic References
 
