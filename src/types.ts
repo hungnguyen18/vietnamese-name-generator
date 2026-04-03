@@ -46,6 +46,8 @@ export enum ENameFormat {
   Slug = "slug",
 }
 
+export type TNameStyle = 'japanese' | 'korean' | 'western' | 'hybrid';
+
 export type TGenerateOptions = {
   gender?: EGender;
   region?: ERegion;
@@ -55,6 +57,8 @@ export type TGenerateOptions = {
   withMiddleName?: boolean;
   seed?: number;
   format?: ENameFormat | ENameFormat[];
+  style?: TNameStyle;
+  secure?: boolean;
 };
 
 export interface IRomanizedName {
