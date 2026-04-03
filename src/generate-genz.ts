@@ -1,8 +1,7 @@
-import { INDEX_GENZ_GIVEN_NAME, INDEX_GENZ_MIDDLE_NAME } from './data/genz-names';
-import { INDEX_SURNAME } from './data/surname';
-import { mulberry32, pickRandom, pickWeighted } from './random';
+import { generate } from './generator';
+import { EGender, ERegion } from './types';
+import { xoroshiro128plus, pickRandom } from './random';
 import { romanize } from './romanize';
-import { ERegion } from './types';
 
 export type TGenZStyle = 'short' | 'compound' | 'international';
 
@@ -25,45 +24,43 @@ export interface IGenZResult {
 
 const LIST_BINARY_GENDER: Array<'male' | 'female'> = ['male', 'female'];
 const LIST_STYLE: TGenZStyle[] = ['short', 'compound', 'international'];
-const LIST_REGION: ERegion[] = [ERegion.North, ERegion.Central, ERegion.South];
 
+/**
+ * @deprecated Use generate({ style: 'japanese' | 'korean' | 'western' | 'hybrid' }) instead.
+ * Kept for backward compatibility.
+ */
 export function generateGenZName(options?: IGenZOptions): IGenZResult {
-  const rng = options?.seed !== undefined ? mulberry32(options.seed) : undefined;
-
+  const rng = options?.seed !== undefined ? xoroshiro128plus(options.seed) : undefined;
   const gender: 'male' | 'female' | 'unisex' = options?.gender ?? pickRandom(LIST_BINARY_GENDER, rng);
   const style: TGenZStyle = options?.style ?? pickRandom(LIST_STYLE, rng);
-  const regionKey: ERegion = (options?.region as ERegion) ?? pickRandom(LIST_REGION, rng);
 
-  const surname = pickWeighted(INDEX_SURNAME[regionKey], rng);
+  const genderEnum = gender === 'male' ? EGender.Male
+    : gender === 'female' ? EGender.Female
+    : EGender.Unisex;
 
-  const middleList = INDEX_GENZ_MIDDLE_NAME[gender];
-  const middleName = pickRandom(middleList, rng);
+  // Map old styles to generate() options:
+  // 'international' -> style: 'western' (ASCII-safe crosscultural names)
+  // 'compound'      -> compoundName: true (two-part Vietnamese given names with space)
+  // 'short'         -> style: 'hybrid' (genz pool — all entries are single-word)
+  const mappedStyle = style === 'international' ? 'western' as const
+    : style === 'short' ? 'hybrid' as const
+    : undefined;
 
-  const givenNameList = INDEX_GENZ_GIVEN_NAME[gender]?.[style];
-  if (!givenNameList || givenNameList.length === 0) {
-    throw new Error(`No GenZ given names found for gender=${gender}, style=${style}`);
-  }
-  const givenName = pickRandom(givenNameList, rng);
-
-  const fullName = `${surname} ${middleName} ${givenName}`;
-
-  const romanizedSurname = romanize(surname);
-  const romanizedMiddleName = romanize(middleName);
-  const romanizedGivenName = romanize(givenName);
-  const romanizedFullName = `${romanizedSurname} ${romanizedMiddleName} ${romanizedGivenName}`;
+  const result = generate({
+    gender: genderEnum,
+    region: options?.region as ERegion | undefined,
+    style: mappedStyle,
+    compoundName: style === 'compound' ? true : undefined,
+    seed: options?.seed,
+  });
 
   return {
-    surname,
-    middleName,
-    givenName,
-    fullName,
+    surname: result.surname,
+    middleName: result.middleName,
+    givenName: result.givenName,
+    fullName: result.fullName,
     style,
     gender,
-    romanized: {
-      surname: romanizedSurname,
-      middleName: romanizedMiddleName,
-      givenName: romanizedGivenName,
-      fullName: romanizedFullName,
-    },
+    romanized: result.romanized,
   };
 }
