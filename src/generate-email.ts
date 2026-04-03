@@ -28,9 +28,9 @@ export function generateEmail(options?: TEmailOptions): IEmailResult {
 
   const nameResult = generate(options);
 
-  const firstName = nameResult.romanized.givenName.toLowerCase();
-  const middleName = nameResult.romanized.middleName.toLowerCase();
-  const lastName = nameResult.romanized.surname.toLowerCase();
+  const firstName = nameResult.romanized.givenName.toLowerCase().replace(/[^a-z]/g, '');
+  const middleName = nameResult.romanized.middleName.toLowerCase().replace(/[^a-z]/g, '');
+  const lastName = nameResult.romanized.surname.toLowerCase().replace(/[^a-z]/g, '');
 
   const domain = options?.domain ?? pickRandom(LIST_DEFAULT_DOMAIN, rng);
   const pattern = pickRandom(LIST_EMAIL_PATTERN, rng);

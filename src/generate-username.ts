@@ -30,8 +30,8 @@ export function generateUsername(options?: TGenerateOptions): IUsernameResult {
   const rng = options?.seed !== undefined ? mulberry32(options.seed) : undefined;
   const name = generate(options);
 
-  const first = name.romanized.givenName.toLowerCase().replace(/\s+/g, '');
-  const last = name.romanized.surname.toLowerCase().replace(/\s+/g, '');
+  const first = name.romanized.givenName.toLowerCase().replace(/[^a-z]/g, '');
+  const last = name.romanized.surname.toLowerCase().replace(/[^a-z]/g, '');
 
   const pattern = pickRandom(LIST_PATTERN, rng);
   const username = pattern(first, last, rng);

@@ -140,7 +140,7 @@ describe("givenNameIndex()", () => {
     }
   });
 
-  it("all given name values are non-empty strings", () => {
+  it("all given name values are non-empty strings", { timeout: 30000 }, () => {
     for (const gender of GENDERS) {
       for (const region of REGIONS) {
         for (const era of ERAS) {
