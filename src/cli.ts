@@ -7,7 +7,7 @@ import { detectGender } from "./detect-gender";
 import { EGender, ERegion, EEra, EMeaningCategory, ENameFormat } from "./types";
 import type { TGenerateOptions, INameResult } from "./types";
 
-const VERSION = "0.5.0";
+const VERSION = "0.11.1";
 
 const HELP = `Usage: vietnamese-name-generator [options]
 
