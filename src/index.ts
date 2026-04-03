@@ -66,12 +66,20 @@ export { generatePetName, generateManyPetNames, type IPetNameResult, type IPetNa
 export { generateGenZName, type IGenZResult, type IGenZOptions, type TGenZStyle } from "./generate-genz";
 
 export {
+  generateGenZNickname,
+  type IGenZNicknameResult,
+  type IGenZNicknameOptions,
+} from "./generate-genz-nickname";
+export type { TGenZNicknameStyle } from "./data/genz-nickname-patterns";
+
+export {
   EGender,
   ERegion,
   EEra,
   EMeaningCategory,
   ENameFormat,
   type TGenerateOptions,
+  type TNameStyle,
   type INameResult,
   type INameParts,
   type IRomanizedName,
@@ -106,6 +114,7 @@ import { getHanViet } from "./get-han-viet";
 import { generateNickname } from "./generate-nickname";
 import { generatePetName, generateManyPetNames } from "./generate-pet-name";
 import { generateGenZName } from "./generate-genz";
+import { generateGenZNickname } from "./generate-genz-nickname";
 import { EGender, ERegion, EEra, EMeaningCategory, ENameFormat } from "./types";
 
 const VietnameseNameGenerator = {
@@ -120,6 +129,7 @@ const VietnameseNameGenerator = {
   generatePetName,
   generateManyPetNames,
   generateGenZName,
+  generateGenZNickname,
 
   // Parsing & Validation
   parseName,
