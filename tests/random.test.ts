@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { xoroshiro128plus, pickRandom, pickWeighted, createAlias, pickAlias, secureRandom, mulberry32 } from '../src/random';
+import { xoroshiro128plus, pickRandom, pickWeighted, createAlias, pickAlias, secureRandom, mulberry32, shufflePartial } from '../src/random';
 
 describe('xoroshiro128plus', () => {
   it('produces deterministic output from the same seed', () => {
@@ -121,5 +121,40 @@ describe('secureRandom', () => {
       expect(v).toBeGreaterThanOrEqual(0);
       expect(v).toBeLessThan(1);
     }
+  });
+});
+
+describe('shufflePartial', () => {
+  it('returns requested number of elements', () => {
+    const list = [1, 2, 3, 4, 5];
+    const result = shufflePartial(list, 3);
+    expect(result.length).toBe(3);
+  });
+
+  it('returns all elements from original list', () => {
+    const list = ['a', 'b', 'c', 'd', 'e'];
+    const result = shufflePartial(list, 5);
+    expect(result.sort()).toEqual(['a', 'b', 'c', 'd', 'e']);
+  });
+
+  it('does not modify original array', () => {
+    const list = [1, 2, 3, 4, 5];
+    const copy = [...list];
+    shufflePartial(list, 3);
+    expect(list).toEqual(copy);
+  });
+
+  it('is deterministic with seeded rng', () => {
+    const rng1 = xoroshiro128plus(42);
+    const rng2 = xoroshiro128plus(42);
+    const list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    expect(shufflePartial(list, 5, rng1)).toEqual(shufflePartial(list, 5, rng2));
+  });
+
+  it('handles count larger than list', () => {
+    const list = [1, 2, 3];
+    const result = shufflePartial(list, 10);
+    expect(result.length).toBe(3);
+    expect(result.sort()).toEqual([1, 2, 3]);
   });
 });
