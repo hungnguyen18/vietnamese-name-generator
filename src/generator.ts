@@ -1,7 +1,7 @@
 import type { TGenerateOptions, INameResult, TNameStyle } from "./types";
 import type { TCompactGivenNameEntry } from "./data/given-name-compact";
 import { EGender, ERegion, EEra, ENameFormat } from "./types";
-import { xoroshiro128plus, mulberry32, secureRandom, pickRandom, pickWeighted } from './random';
+import { xoroshiro128plus, secureRandom, pickRandom, pickWeighted } from './random';
 import { romanize } from "./romanize";
 import { formatName } from "./format";
 import { INDEX_SURNAME } from "./data/surname";
