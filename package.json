@@ -22,10 +22,8 @@
     }
   },
   "sideEffects": false,
-  "runkitExampleFilename": "runkit-example.js",
   "files": [
-    "dist",
-    "runkit-example.js"
+    "dist"
   ],
   "scripts": {
     "build": "tsup",
