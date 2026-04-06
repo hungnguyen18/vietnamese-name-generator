@@ -5,7 +5,7 @@
 [![CI](https://github.com/hungnguyen18/vietnamese-name-generator/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/hungnguyen18/vietnamese-name-generator/actions/workflows/ci.yml)
 [![license](https://img.shields.io/github/license/hungnguyen18/vietnamese-name-generator)](./LICENSE)
 
-The most comprehensive Vietnamese name toolkit for JavaScript/TypeScript. Generate, parse, validate, format, and analyze Vietnamese names with full cultural awareness.
+The most comprehensive Vietnamese name toolkit for JavaScript/TypeScript. Generate, parse, validate, format, and analyze Vietnamese names — plus a full **Vietnamese honorific & address system** (xưng hô) with age-based pronouns, 30+ professional/military/political titles, regional dialects, and formality levels.
 
 Zero runtime dependencies. Ships as CJS + ESM with full TypeScript declarations.
 
@@ -15,7 +15,9 @@ Zero runtime dependencies. Ships as CJS + ESM with full TypeScript declarations.
 
 - **No npm alternative** for Vietnamese name parsing, gender detection, or validation
 - **Census-weighted** surname distribution (Nguyễn ~40%, Trần ~11%, Lê ~9%...)
-- **Culturally correct** -- regional variants (Hoang/Huynh), gender-encoded middle names, age-based pronoun system, 30+ professional titles
+- **Culturally correct** -- regional variants (Hoang/Huynh), gender-encoded middle names, proper honorifics
+- **Vietnamese address system (xưng hô)** -- age-based pronoun pairs (con/ông, cháu/chú, em/anh...), the nâng principle, regional dialect variants (Central "o" vs "cô"), and 5 formality levels from "Kính gửi" to "ơi"
+- **30+ professional titles** -- academic (Giáo sư, Tiến sĩ), medical (Bác sĩ, Dược sĩ), legal (Luật sư), military (12 ranks from Đại tướng to Thiếu úy), political (Tổng Bí thư, Chủ tịch, Đồng chí), education (Thầy/Cô)
 - **i18n-ready** -- NFC normalization, accent-insensitive search, Vietnamese sort order
 - **Cultural depth** -- Five Elements (Ngu Hanh), Han Viet characters, protective nicknames, pet names
 - **AI/testing-friendly** -- deterministic seed, batch generation, CSV/JSON export
