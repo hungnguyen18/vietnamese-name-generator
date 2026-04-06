@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/vietnamese-name-generator)](https://www.npmjs.com/package/vietnamese-name-generator)
 [![npm downloads](https://img.shields.io/npm/dm/vietnamese-name-generator)](https://www.npmjs.com/package/vietnamese-name-generator)
-[![bundle size](https://img.shields.io/bundlephobia/minzip/vietnamese-name-generator)](https://bundlephobia.com/package/vietnamese-name-generator)
+[![bundle size](https://deno.bundlejs.com/badge?q=vietnamese-name-generator)](https://bundlejs.com/?q=vietnamese-name-generator)
 [![CI](https://github.com/hungnguyen18/vietnamese-name-generator/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/hungnguyen18/vietnamese-name-generator/actions/workflows/ci.yml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0%2B-blue)](https://www.typescriptlang.org/)
 [![zero dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)](https://www.npmjs.com/package/vietnamese-name-generator)
