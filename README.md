@@ -8,7 +8,7 @@
 [![zero dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)](https://www.npmjs.com/package/vietnamese-name-generator)
 [![license](https://img.shields.io/github/license/hungnguyen18/vietnamese-name-generator)](./LICENSE)
 
-**[Documentation](https://hungnguyen18.github.io/vietnamese-name-generator/)** | **[Try on RunKit](https://runkit.com/npm/vietnamese-name-generator)** | **[API Reference](https://hungnguyen18.github.io/vietnamese-name-generator/api/)**
+**[Documentation](https://hungnguyen18.github.io/vietnamese-name-generator/)** | **[Try on StackBlitz](https://stackblitz.com/edit/stackblitz-starters-asvqgd?file=index.ts)** | **[API Reference](https://hungnguyen18.github.io/vietnamese-name-generator/api/)**
 
 The most comprehensive Vietnamese name toolkit for JavaScript/TypeScript. Generate, parse, validate, format, and analyze Vietnamese names — plus a full **Vietnamese honorific & address system** (xưng hô) with age-based pronouns, 30+ professional/military/political titles, regional dialects, and formality levels.
 
