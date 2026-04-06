@@ -1,0 +1,45 @@
+name: Feature Request
+description: Suggest a new feature or improvement
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: A clear description of the feature you'd like.
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Name generation
+        - Parsing / validation
+        - Address / honorifics (xung ho)
+        - Cultural data (Han Viet, Five Elements)
+        - GenZ / cross-cultural names
+        - Pet names / nicknames
+        - CLI
+        - i18n / formatting
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use Case
+      description: How would you use this feature? What problem does it solve?
+    validations:
+      required: true
+  - type: textarea
+    id: api-proposal
+    attributes:
+      label: Proposed API (optional)
+      description: If you have an idea for the API, share it here.
+      placeholder: |
+        ```typescript
+        import { newFeature } from 'vietnamese-name-generator';
+        const result = newFeature({ ... });
+        ```
