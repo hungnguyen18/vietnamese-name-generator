@@ -44,6 +44,7 @@ function fullSalutationBuild(honorific: string, addressName: string, formality: 
   return base;
 }
 
+/** @deprecated Use addressCalculate() for the full honorific system with age-based pronouns, professional titles, and regional variants. */
 export function salutation(fullName: string, options?: ISalutationOptions): ISalutationResult {
   const formality: TFormality = options?.formality ?? 'casual';
   const parsed = parseName(fullName);

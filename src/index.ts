@@ -47,6 +47,8 @@ export {
 
 export { salutation } from "./salutation";
 
+export { addressCalculate, pronounPairGet } from "./address";
+
 export { sortVietnamese, vietnameseNameComparator } from "./sort-vietnamese";
 
 export {
@@ -76,6 +78,10 @@ export {
   EEra,
   EMeaningCategory,
   ENameFormat,
+  EFormality,
+  EHonorificCategory,
+  EReligion,
+  EFeudalRank,
   type TGenerateOptions,
   type TNameStyle,
   type INameResult,
@@ -86,6 +92,11 @@ export {
   type IGenderResult,
   type TWeightedEntry,
   type TGivenNameEntry,
+  type IPronounPair,
+  type IAddressOptions,
+  type IAddressResult,
+  type ITitleEntry,
+  type IKinshipTerm,
 } from "./types";
 
 // --- Default export: namespace object for `import vn from 'vietnamese-name-generator'` ---
@@ -106,13 +117,14 @@ import { getMeaning } from "./get-meaning";
 import { getStatistics, getTopSurnames, getGivenNameCount, getUniqueGivenNames } from "./name-statistics";
 import { normalize, accentInsensitiveMatch, accentInsensitiveEqual, VIETNAMESE_NAME_REGEX } from "./normalize";
 import { salutation } from "./salutation";
+import { addressCalculate, pronounPairGet } from "./address";
 import { sortVietnamese, vietnameseNameComparator } from "./sort-vietnamese";
 import { EElement, getElementInfo, getNameElement, getNamesByElement, getBirthYearElement } from "./five-elements";
 import { getHanViet } from "./get-han-viet";
 import { generateNickname } from "./generate-nickname";
 import { generatePetName, generateManyPetNames } from "./generate-pet-name";
 import { generateGenZNickname } from "./generate-genz-nickname";
-import { EGender, ERegion, EEra, EMeaningCategory, ENameFormat } from "./types";
+import { EGender, ERegion, EEra, EMeaningCategory, ENameFormat, EFormality, EHonorificCategory, EReligion, EFeudalRank } from "./types";
 
 const VietnameseNameGenerator = {
   // Generation
@@ -131,6 +143,10 @@ const VietnameseNameGenerator = {
   parseName,
   validateName,
   detectGender,
+
+  // Address & Honorifics
+  addressCalculate,
+  pronounPairGet,
 
   // Formatting & i18n
   romanize,
@@ -168,6 +184,10 @@ const VietnameseNameGenerator = {
   EMeaningCategory,
   ENameFormat,
   EElement,
+  EFormality,
+  EHonorificCategory,
+  EReligion,
+  EFeudalRank,
 } as const;
 
 export default VietnameseNameGenerator;

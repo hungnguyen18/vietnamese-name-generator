@@ -15,7 +15,7 @@ Zero runtime dependencies. Ships as CJS + ESM with full TypeScript declarations.
 
 - **No npm alternative** for Vietnamese name parsing, gender detection, or validation
 - **Census-weighted** surname distribution (Nguyễn ~40%, Trần ~11%, Lê ~9%...)
-- **Culturally correct** -- regional variants (Hoang/Huynh), gender-encoded middle names, proper honorifics
+- **Culturally correct** -- regional variants (Hoang/Huynh), gender-encoded middle names, age-based pronoun system, 30+ professional titles
 - **i18n-ready** -- NFC normalization, accent-insensitive search, Vietnamese sort order
 - **Cultural depth** -- Five Elements (Ngu Hanh), Han Viet characters, protective nicknames, pet names
 - **AI/testing-friendly** -- deterministic seed, batch generation, CSV/JSON export
@@ -35,6 +35,8 @@ import {
   generate,
   parseName,
   detectGender,
+  addressCalculate,
+  pronounPairGet,
   salutation,
   romanize,
   getHanViet,
@@ -55,6 +57,18 @@ generate({ style: 'japanese', seed: 1 });
 // GenZ nickname from a Vietnamese name
 generateGenZNickname({ name: 'Trần Thảo Linh', style: 'jp-suffix', seed: 5 });
 // { nickname: 'Linh-chan', style: 'jp-suffix', culturalNote: '...' }
+
+// Vietnamese address & honorific system (age-based pronouns)
+addressCalculate('Nguyễn Văn Nam', { speakerAge: 25, addresseeAge: 60 });
+// { honorific: 'Ông', addressTerm: 'Ông Nam', pronounPair: { self: 'con', addressee: 'ông' }, ... }
+
+// Professional title addressing
+addressCalculate('Trần Thị Lan', { role: 'doctor' });
+// { honorific: 'Bác sĩ', addressTerm: 'Bác sĩ Lan', category: 'professional', ... }
+
+// Get pronoun pair for any age relationship
+pronounPairGet(25, 45, { gender: EGender.Male, region: ERegion.North });
+// { self: 'em', addressee: 'anh' }
 
 // Parse any Vietnamese name into structured parts
 parseName('Nguyen Van An');
@@ -127,13 +141,20 @@ npx vietnamese-name-generator --export json --count 50
 | `validateName(input)` | `IValidationResult` | Validate Vietnamese name with specific failure reasons |
 | `detectGender(input)` | `IGenderResult` | Infer gender from middle + given name signals |
 
+### Address & Honorifics
+
+| Function | Returns | Description |
+|----------|---------|-------------|
+| `addressCalculate(name, options?)` | `IAddressResult` | Vietnamese address term with pronoun pair (age-based, professional, regional) |
+| `pronounPairGet(speakerAge, addresseeAge, options?)` | `IPronounPair` | Get self/addressee pronoun pair for any age relationship |
+| `salutation(name, options?)` | `ISalutationResult` | Simple Vietnamese honorific (deprecated, use `addressCalculate`) |
+
 ### Formatting & i18n
 
 | Function | Returns | Description |
 |----------|---------|-------------|
 | `romanize(input)` | `string` | Remove Vietnamese diacritics |
 | `formatName(parts, format)` | `string` | Format as full/abbreviated/reversed/slug |
-| `salutation(name, options?)` | `ISalutationResult` | Culturally correct Vietnamese honorific |
 | `normalize(input)` | `string` | NFC Unicode normalization |
 | `accentInsensitiveMatch(text, query)` | `boolean` | Search ignoring diacritics |
 | `accentInsensitiveEqual(a, b)` | `boolean` | Compare ignoring diacritics |
@@ -230,6 +251,76 @@ generateGenZNickname({ style: 'social-handle', seed: 4 });
 | `meme` | Vietnamese internet memes | `Kevin Nguyễn`, `Phở Mai Que` |
 | `english-viet` | English + VN surname | `Jenny Phạm`, `Ryan Trần` |
 
+### Vietnamese Address & Honorific System
+
+Vietnamese has no universal "you" or "I" — pronouns encode **age, gender, social status, and emotional distance**. This system implements the full decision tree:
+
+```typescript
+import { addressCalculate, pronounPairGet, EFormality, EGender, ERegion } from 'vietnamese-name-generator';
+
+// Age-based addressing: 25-year-old speaking to 60-year-old
+addressCalculate('Nguyễn Văn Nam', {
+  speakerAge: 25,
+  addresseeAge: 60,
+  region: ERegion.North,
+});
+// {
+//   honorific: 'Ông',
+//   addressTerm: 'Ông Nam',
+//   fullAddress: 'Ông Nam',
+//   pronounPair: { self: 'con', addressee: 'ông' },
+//   category: 'age-based',
+// }
+
+// Professional title takes priority over age
+addressCalculate('Trần Thị Lan', {
+  role: 'professor',
+  speakerAge: 30,
+  addresseeAge: 55,
+});
+// { honorific: 'Giáo sư', addressTerm: 'Giáo sư Lan', ... }
+
+// Formality levels
+addressCalculate('Lê Minh Tuấn', {
+  speakerAge: 30,
+  addresseeAge: 50,
+  formality: EFormality.WrittenFormal,
+});
+// { fullAddress: 'Kính gửi Chú Tuấn', ... }
+
+addressCalculate('Phạm Thảo', {
+  formality: EFormality.Intimate,
+});
+// { fullAddress: 'Thảo ơi', ... }
+
+// Regional variants (Central Vietnam uses 'o' instead of 'cô')
+pronounPairGet(25, 40, { gender: EGender.Female, region: ERegion.Central });
+// { self: 'em', addressee: 'chị' }
+```
+
+**Age gap → Pronoun mapping:**
+
+| Age Gap (addressee - speaker) | Addressee Term | Self Term | Relationship |
+|-------------------------------|---------------|-----------|-------------|
+| +20 or more | Ông/Bà | con | Grandparent generation |
+| +10 to +19 | Chú/Cô | cháu | Parent generation |
+| +3 to +9 | Anh/Chị | em | Older sibling |
+| -2 to +2 | Anh/Chị | em | Same age (nâng principle) |
+| -9 to -3 | Em | anh/chị | Younger sibling |
+| -19 to -10 | Cháu | chú/cô | Child generation |
+| -20 or less | Con | ông/bà | Grandchild generation |
+
+**Professional titles (30+ roles across 6 categories):**
+
+| Category | Example Roles |
+|----------|--------------|
+| Academic | `professor` (Giáo sư), `phd` (Tiến sĩ), `master` (Thạc sĩ) |
+| Medical | `doctor` (Bác sĩ), `pharmacist` (Dược sĩ), `dentist` (Nha sĩ) |
+| Legal | `lawyer` (Luật sư), `judge` (Thẩm phán) |
+| Military | `general` (Đại tướng) through `second-lieutenant` (Thiếu úy) — 12 ranks |
+| Political | `general-secretary` (Tổng Bí thư), `president` (Chủ tịch), `comrade` (Đồng chí) |
+| Education | `teacher-male` (Thầy), `teacher-female` (Cô) |
+
 ### Enums & Types
 
 | Enum/Type | Values |
@@ -241,6 +332,10 @@ generateGenZNickname({ style: 'social-handle', seed: 4 });
 | `EMeaningCategory` | `strength`, `virtue`, `nature`, `precious`, `beauty`, `celestial`, `season`, `intellect`, `prosperity` |
 | `ENameFormat` | `full`, `abbreviated`, `reversed`, `slug` |
 | `EElement` | `kim` (Metal), `moc` (Wood), `thuy` (Water), `hoa` (Fire), `tho` (Earth) |
+| `EFormality` | `written-formal`, `spoken-formal`, `professional`, `casual`, `intimate` |
+| `EHonorificCategory` | `royal`, `mandarin`, `scholar`, `family`, `age-based`, `professional`, `religious`, `genz`, `regional` |
+| `EReligion` | `buddhism`, `catholicism`, `cao-dai`, `hoa-hao`, `folk` |
+| `EFeudalRank` | `emperor`, `consort`, `prince`, `princess`, `nobility`, `mandarin`, `scholar` |
 
 ---
 
@@ -336,6 +431,28 @@ Vietnamese naming culture is evolving rapidly under Japanese, Korean, and Wester
 
 Sources: [Kilala.vn](https://kilala.vn), [Huggies.com.vn](https://www.huggies.com.vn), [Vietcetera](https://vietcetera.com/en/how-vietnamese-choose-their-english-names), [korean-name.com](https://korean-name.com)
 
+### The Pronoun System (Xưng Hô)
+
+Vietnamese is one of the world's most complex pronoun systems. There is no universal "I" or "you" — speakers must choose from dozens of pronoun pairs based on relative age, social status, gender, and emotional closeness ([Wikipedia: Vietnamese pronouns](https://en.wikipedia.org/wiki/Vietnamese_pronouns), [Vietcetera](https://vietcetera.com)):
+
+| Self (Xưng) | Addressee (Hô) | When to use |
+|-------------|----------------|-------------|
+| con | ông/bà | Speaking to grandparent-age person |
+| cháu | chú/cô/bác | Speaking to parent-age person |
+| em | anh/chị | Speaking to someone older (sibling generation) |
+| tôi | anh/chị/ông/bà | Formal/neutral contexts |
+| anh/chị | em | Speaking to someone younger |
+| mình | bạn | Close friends of same age |
+
+Key cultural principles:
+
+- **Nâng principle (nâng người đối diện):** When ages are similar, Vietnamese speakers default to treating the addressee as older — using "em" (self) and "anh/chị" (addressee) — as a sign of politeness and respect
+- **Professional override:** Professional titles (Bác sĩ, Giáo sư, Thầy/Cô) always take precedence over age-based pronouns in professional contexts
+- **Regional variation:** Central Vietnam uses distinct terms — "o" replaces "cô" (aunt), "mệ" replaces "bà" (grandmother) in some dialects
+- **Formality markers:** "Kính gửi" (written formal), "Thưa" (spoken formal), "ơi" (intimate) modify the address term
+
+This library implements the full decision tree via `addressCalculate()` and `pronounPairGet()`.
+
 ### Compound Names (Tên Kép)
 
 Two-syllable given names like Bảo Châu, Minh Khôi, or Thanh Hà became popular from the late 20th century. With so few surnames in circulation, compound names reduce ambiguity while adding poetic meaning. Modern compound names often combine two auspicious characters.
@@ -401,6 +518,15 @@ Names are collected from 6 web sources via an automated crawl pipeline, then mer
 | [Colosmulti.com.vn](https://colosmulti.com.vn) | 440+ Korean names for Vietnamese children |
 | [Kenh14](https://kenh14.vn) | GenZ Instagram naming formulas |
 | [Know Your Meme](https://knowyourmeme.com/memes/kevin-nguyen) | Kevin Nguyen meme origin and cultural context |
+
+### Honorific & Address Data
+
+| Source | Coverage |
+|--------|----------|
+| [Wikipedia: Vietnamese pronouns](https://en.wikipedia.org/wiki/Vietnamese_pronouns) | Pronoun pair rules, age-based addressing system |
+| [Vietcetera](https://vietcetera.com) | Modern usage patterns, formality levels |
+| [Cultural Atlas](https://culturalatlas.sbs.com.au/vietnamese-culture) | Regional variants, kinship terminology |
+| Vietnamese military/political nomenclature | 30+ professional titles across 6 categories |
 
 ### Academic References
 

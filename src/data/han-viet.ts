@@ -6,719 +6,155 @@ export type THanVietEntry = {
   alternates?: { character: string; meaning: string }[];
 };
 
-export const HAN_VIET_MAP: Record<string, THanVietEntry> = {
-  // Male names
-  'An': {
-    name: 'An',
-    character: '\u5B89',
-    pinyin: 'an',
-    meaning: 'peace',
-    alternates: [{ character: '\u664F', meaning: 'calm' }],
-  },
-  'Anh': {
-    name: 'Anh',
-    character: '\u82F1',
-    pinyin: 'ying',
-    meaning: 'hero',
-    alternates: [{ character: '\u77CE', meaning: 'crystal/lustrous' }],
-  },
-  'B\u1EA3o': {
-    name: 'B\u1EA3o',
-    character: '\u5BF6',
-    pinyin: 'bao',
-    meaning: 'treasure',
-  },
-  'B\u00ECnh': {
-    name: 'B\u00ECnh',
-    character: '\u5E73',
-    pinyin: 'ping',
-    meaning: 'calm',
-    alternates: [{ character: '\u5175', meaning: 'soldier' }],
-  },
-  'C\u01B0\u1EDDng': {
-    name: 'C\u01B0\u1EDDng',
-    character: '\u5F37',
-    pinyin: 'qiang',
-    meaning: 'strong',
-  },
-  '\u0110\u1EA1t': {
-    name: '\u0110\u1EA1t',
-    character: '\u9054',
-    pinyin: 'da',
-    meaning: 'achieve',
-  },
-  '\u0110\u1EE9c': {
-    name: '\u0110\u1EE9c',
-    character: '\u5FB7',
-    pinyin: 'de',
-    meaning: 'virtue',
-  },
-  'D\u0169ng': {
-    name: 'D\u0169ng',
-    character: '\u52C7',
-    pinyin: 'yong',
-    meaning: 'brave',
-  },
-  'Duy': {
-    name: 'Duy',
-    character: '\u552F',
-    pinyin: 'wei',
-    meaning: 'only',
-    alternates: [{ character: '\u7DAD', meaning: 'maintain' }],
-  },
-  'H\u1EA3i': {
-    name: 'H\u1EA3i',
-    character: '\u6D77',
-    pinyin: 'hai',
-    meaning: 'sea',
-  },
-  'Hi\u1EBFu': {
-    name: 'Hi\u1EBFu',
-    character: '\u5B5D',
-    pinyin: 'xiao',
-    meaning: 'filial piety',
-  },
-  'Ho\u00E0ng': {
-    name: 'Ho\u00E0ng',
-    character: '\u7687',
-    pinyin: 'huang',
-    meaning: 'royal',
-    alternates: [{ character: '\u9EC3', meaning: 'yellow' }],
-  },
-  'H\u00F9ng': {
-    name: 'H\u00F9ng',
-    character: '\u96C4',
-    pinyin: 'xiong',
-    meaning: 'heroic',
-  },
-  'Huy': {
-    name: 'Huy',
-    character: '\u8F1D',
-    pinyin: 'hui',
-    meaning: 'radiant',
-  },
-  'Khang': {
-    name: 'Khang',
-    character: '\u5EB7',
-    pinyin: 'kang',
-    meaning: 'healthy',
-  },
-  'Kh\u00E1nh': {
-    name: 'Kh\u00E1nh',
-    character: '\u6176',
-    pinyin: 'qing',
-    meaning: 'celebrate',
-  },
-  'Khoa': {
-    name: 'Khoa',
-    character: '\u79D1',
-    pinyin: 'ke',
-    meaning: 'science',
-  },
-  'Ki\u00EAn': {
-    name: 'Ki\u00EAn',
-    character: '\u5805',
-    pinyin: 'jian',
-    meaning: 'firm',
-  },
-  'Long': {
-    name: 'Long',
-    character: '\u9F8D',
-    pinyin: 'long',
-    meaning: 'dragon',
-  },
-  'Minh': {
-    name: 'Minh',
-    character: '\u660E',
-    pinyin: 'ming',
-    meaning: 'bright',
-    alternates: [
-      { character: '\u9298', meaning: 'inscribe/remember' },
-      { character: '\u6C11', meaning: 'people' },
-    ],
-  },
-  'Nam': {
-    name: 'Nam',
-    character: '\u5357',
-    pinyin: 'nan',
-    meaning: 'south',
-  },
-  'Ngh\u0129a': {
-    name: 'Ngh\u0129a',
-    character: '\u7FA9',
-    pinyin: 'yi',
-    meaning: 'justice',
-  },
-  'Nh\u00E2n': {
-    name: 'Nh\u00E2n',
-    character: '\u4EC1',
-    pinyin: 'ren',
-    meaning: 'benevolent',
-    alternates: [{ character: '\u4EBA', meaning: 'person' }],
-  },
-  'Ph\u00FAc': {
-    name: 'Ph\u00FAc',
-    character: '\u798F',
-    pinyin: 'fu',
-    meaning: 'blessing',
-  },
-  'Qu\u00E2n': {
-    name: 'Qu\u00E2n',
-    character: '\u541B',
-    pinyin: 'jun',
-    meaning: 'noble',
-    alternates: [{ character: '\u8ECD', meaning: 'army' }],
-  },
-  'Quang': {
-    name: 'Quang',
-    character: '\u5149',
-    pinyin: 'guang',
-    meaning: 'light',
-  },
-  'S\u01A1n': {
-    name: 'S\u01A1n',
-    character: '\u5C71',
-    pinyin: 'shan',
-    meaning: 'mountain',
-  },
-  'T\u00E0i': {
-    name: 'T\u00E0i',
-    character: '\u624D',
-    pinyin: 'cai',
-    meaning: 'talent',
-    alternates: [{ character: '\u8CA1', meaning: 'wealth' }],
-  },
-  'Th\u00E0nh': {
-    name: 'Th\u00E0nh',
-    character: '\u6210',
-    pinyin: 'cheng',
-    meaning: 'success',
-    alternates: [{ character: '\u57CE', meaning: 'city' }],
-  },
-  'Thi\u1EC7n': {
-    name: 'Thi\u1EC7n',
-    character: '\u5584',
-    pinyin: 'shan',
-    meaning: 'good',
-  },
-  'To\u00E0n': {
-    name: 'To\u00E0n',
-    character: '\u5168',
-    pinyin: 'quan',
-    meaning: 'complete',
-  },
-  'Tr\u00ED': {
-    name: 'Tr\u00ED',
-    character: '\u667A',
-    pinyin: 'zhi',
-    meaning: 'wisdom',
-  },
-  'Trung': {
-    name: 'Trung',
-    character: '\u5FE0',
-    pinyin: 'zhong',
-    meaning: 'loyal',
-    alternates: [{ character: '\u4E2D', meaning: 'middle' }],
-  },
-  'Tu\u1EA5n': {
-    name: 'Tu\u1EA5n',
-    character: '\u4FCA',
-    pinyin: 'jun',
-    meaning: 'handsome',
-  },
-  'T\u00F9ng': {
-    name: 'T\u00F9ng',
-    character: '\u677E',
-    pinyin: 'song',
-    meaning: 'pine',
-  },
-  'Vinh': {
-    name: 'Vinh',
-    character: '\u69AE',
-    pinyin: 'rong',
-    meaning: 'glory',
-  },
-  'V\u0169': {
-    name: 'V\u0169',
-    character: '\u6B66',
-    pinyin: 'wu',
-    meaning: 'martial',
-    alternates: [{ character: '\u7FBD', meaning: 'feather' }],
-  },
+// Compact: name|character|pinyin|meaning|alt1Char:alt1Meaning;alt2Char:alt2Meaning
+const D = `An|安|an|peace|晏:calm
+Anh|英|ying|hero|矎:crystal/lustrous
+Bảo|寶|bao|treasure
+Bình|平|ping|calm|兵:soldier
+Cường|強|qiang|strong
+Đạt|達|da|achieve
+Đức|德|de|virtue
+Dũng|勇|yong|brave
+Duy|唯|wei|only|維:maintain
+Hải|海|hai|sea
+Hiếu|孝|xiao|filial piety
+Hoàng|皇|huang|royal|黃:yellow
+Hùng|雄|xiong|heroic
+Huy|輝|hui|radiant
+Khang|康|kang|healthy
+Khánh|慶|qing|celebrate
+Khoa|科|ke|science
+Kiên|堅|jian|firm
+Long|龍|long|dragon
+Minh|明|ming|bright|銘:inscribe/remember;民:people
+Nam|南|nan|south
+Nghĩa|義|yi|justice
+Nhân|仁|ren|benevolent|人:person
+Phúc|福|fu|blessing
+Quân|君|jun|noble|軍:army
+Quang|光|guang|light
+Sơn|山|shan|mountain
+Tài|才|cai|talent|財:wealth
+Thành|成|cheng|success|城:city
+Thiện|善|shan|good
+Toàn|全|quan|complete
+Trí|智|zhi|wisdom
+Trung|忠|zhong|loyal|中:middle
+Tuấn|俊|jun|handsome
+Tùng|松|song|pine
+Vinh|榮|rong|glory
+Vũ|武|wu|martial|羽:feather
+Châu|珠|zhu|pearl
+Chi|芝|zhi|sesame/noble|枝:branch
+Diệu|妙|miao|wonderful
+Giang|江|jiang|river
+Hạnh|幸|xing|happiness|行:conduct
+Hằng|恆|heng|constant
+Hoa|花|hua|flower|華:magnificent
+Huệ|慧|hui|wise
+Hương|香|xiang|fragrant
+Lan|蘭|lan|orchid
+Liên|蓮|lian|lotus|連:connect
+Linh|靈|ling|spirit|玉:jade tinkling
+Mai|梅|mei|plum blossom
+Ngọc|玉|yu|jade
+Nguyệt|月|yue|moon
+Nhung|絨|rong|velvet
+Phương|芳|fang|fragrant|方:direction
+Quyên|鵑|juan|cuckoo
+Thanh|清|qing|pure|青:blue/green;聲:sound
+Thảo|草|cao|grass
+Thu|秋|qiu|autumn
+Thúy|翠|cui|emerald
+Trang|莊|zhuang|elegant|裝:adorn
+Trâm|簪|zan|hairpin
+Trinh|貞|zhen|chaste
+Tuyết|雪|xue|snow
+Vy|薇|wei|rose
+Xuân|春|chun|spring
+Yến|燕|yan|swallow|宴:banquet
+Bách|柏|bai|cypress|百:hundred
+Hà|河|he|river
+Kim|金|jin|gold
+Lâm|林|lin|forest
+Phong|風|feng|wind|豐:abundant
+Thủy|水|shui|water
+Trúc|竹|zhu|bamboo
+Mạnh|孟|meng|eldest/vigorous
+Tín|信|xin|trust
+Khiêm|謙|qian|humble
+Tâm|心|xin|heart
+Thê|世|shi|generation
+Thịnh|盛|sheng|prosperous
+Tiến|進|jin|advance
+Phát|發|fa|prosper
+Phú|富|fu|wealthy
+Lộc|祿|lu|fortune
+Thiên|天|tian|heaven
+Nhật|日|ri|sun/day
+Đông|東|dong|east
+Hạ|夏|xia|summer
+Dương|陽|yang|sun/positive
+Vân|雲|yun|cloud
+Hiền|賢|xian|virtuous
+Hồng|紅|hong|red/rosy
+Mỹ|美|mei|beautiful
+Diễm|艶|yan|gorgeous
+Kiều|喬|qiao|graceful
+Như|如|ru|like/as
+Nhi|兒|er|child
+Uyên|鴛|yuan|mandarin duck
+Duyên|緣|yuan|grace/charm
+Ngân|銀|yin|silver
+Bích|碧|bi|jade-green
+Loan|鸞|luan|phoenix
+Sen|蓮|lian|lotus
+Đào|桃|tao|peach
+Cúc|菊|ju|chrysanthemum
+Kiệt|傑|jie|outstanding
+Khôi|魁|kui|leader/chief
+Triết|哲|zhe|philosopher
+Lực|力|li|strength
+Hào|豪|hao|heroic/grand
+Hân|欣|xin|joy
+Phước|福|fu|blessing
+Sáng|明|ming|bright/luminous
+Sao|星|xing|star`;
 
-  // Female names
-  'Ch\u00E2u': {
-    name: 'Ch\u00E2u',
-    character: '\u73E0',
-    pinyin: 'zhu',
-    meaning: 'pearl',
-  },
-  'Chi': {
-    name: 'Chi',
-    character: '\u829D',
-    pinyin: 'zhi',
-    meaning: 'sesame/noble',
-    alternates: [{ character: '\u679D', meaning: 'branch' }],
-  },
-  'Di\u1EC7u': {
-    name: 'Di\u1EC7u',
-    character: '\u5999',
-    pinyin: 'miao',
-    meaning: 'wonderful',
-  },
-  'Giang': {
-    name: 'Giang',
-    character: '\u6C5F',
-    pinyin: 'jiang',
-    meaning: 'river',
-  },
-  'H\u1EA1nh': {
-    name: 'H\u1EA1nh',
-    character: '\u5E78',
-    pinyin: 'xing',
-    meaning: 'happiness',
-    alternates: [{ character: '\u884C', meaning: 'conduct' }],
-  },
-  'H\u1EB1ng': {
-    name: 'H\u1EB1ng',
-    character: '\u6046',
-    pinyin: 'heng',
-    meaning: 'constant',
-  },
-  'Hoa': {
-    name: 'Hoa',
-    character: '\u82B1',
-    pinyin: 'hua',
-    meaning: 'flower',
-    alternates: [{ character: '\u83EF', meaning: 'magnificent' }],
-  },
-  'Hu\u1EC7': {
-    name: 'Hu\u1EC7',
-    character: '\u6167',
-    pinyin: 'hui',
-    meaning: 'wise',
-  },
-  'H\u01B0\u01A1ng': {
-    name: 'H\u01B0\u01A1ng',
-    character: '\u9999',
-    pinyin: 'xiang',
-    meaning: 'fragrant',
-  },
-  'Lan': {
-    name: 'Lan',
-    character: '\u862D',
-    pinyin: 'lan',
-    meaning: 'orchid',
-  },
-  'Li\u00EAn': {
-    name: 'Li\u00EAn',
-    character: '\u84EE',
-    pinyin: 'lian',
-    meaning: 'lotus',
-    alternates: [{ character: '\u9023', meaning: 'connect' }],
-  },
-  'Linh': {
-    name: 'Linh',
-    character: '\u9748',
-    pinyin: 'ling',
-    meaning: 'spirit',
-    alternates: [{ character: '\u7389', meaning: 'jade tinkling' }],
-  },
-  'Mai': {
-    name: 'Mai',
-    character: '\u6885',
-    pinyin: 'mei',
-    meaning: 'plum blossom',
-  },
-  'Ng\u1ECDc': {
-    name: 'Ng\u1ECDc',
-    character: '\u7389',
-    pinyin: 'yu',
-    meaning: 'jade',
-  },
-  'Nguy\u1EC7t': {
-    name: 'Nguy\u1EC7t',
-    character: '\u6708',
-    pinyin: 'yue',
-    meaning: 'moon',
-  },
-  'Nhung': {
-    name: 'Nhung',
-    character: '\u7D68',
-    pinyin: 'rong',
-    meaning: 'velvet',
-  },
-  'Ph\u01B0\u01A1ng': {
-    name: 'Ph\u01B0\u01A1ng',
-    character: '\u82B3',
-    pinyin: 'fang',
-    meaning: 'fragrant',
-    alternates: [{ character: '\u65B9', meaning: 'direction' }],
-  },
-  'Quy\u00EAn': {
-    name: 'Quy\u00EAn',
-    character: '\u9D51',
-    pinyin: 'juan',
-    meaning: 'cuckoo',
-  },
-  'Thanh': {
-    name: 'Thanh',
-    character: '\u6E05',
-    pinyin: 'qing',
-    meaning: 'pure',
-    alternates: [
-      { character: '\u9752', meaning: 'blue/green' },
-      { character: '\u8072', meaning: 'sound' },
-    ],
-  },
-  'Th\u1EA3o': {
-    name: 'Th\u1EA3o',
-    character: '\u8349',
-    pinyin: 'cao',
-    meaning: 'grass',
-  },
-  'Thu': {
-    name: 'Thu',
-    character: '\u79CB',
-    pinyin: 'qiu',
-    meaning: 'autumn',
-  },
-  'Th\u00FAy': {
-    name: 'Th\u00FAy',
-    character: '\u7FE0',
-    pinyin: 'cui',
-    meaning: 'emerald',
-  },
-  'Trang': {
-    name: 'Trang',
-    character: '\u838A',
-    pinyin: 'zhuang',
-    meaning: 'elegant',
-    alternates: [{ character: '\u88DD', meaning: 'adorn' }],
-  },
-  'Tr\u00E2m': {
-    name: 'Tr\u00E2m',
-    character: '\u7C2A',
-    pinyin: 'zan',
-    meaning: 'hairpin',
-  },
-  'Trinh': {
-    name: 'Trinh',
-    character: '\u8C9E',
-    pinyin: 'zhen',
-    meaning: 'chaste',
-  },
-  'Tuy\u1EBFt': {
-    name: 'Tuy\u1EBFt',
-    character: '\u96EA',
-    pinyin: 'xue',
-    meaning: 'snow',
-  },
-  'Vy': {
-    name: 'Vy',
-    character: '\u8587',
-    pinyin: 'wei',
-    meaning: 'rose',
-  },
-  'Xu\u00E2n': {
-    name: 'Xu\u00E2n',
-    character: '\u6625',
-    pinyin: 'chun',
-    meaning: 'spring',
-  },
-  'Y\u1EBFn': {
-    name: 'Y\u1EBFn',
-    character: '\u71D5',
-    pinyin: 'yan',
-    meaning: 'swallow',
-    alternates: [{ character: '\u5BB4', meaning: 'banquet' }],
-  },
+let cache: Record<string, THanVietEntry> | null = null;
 
-  // Shared names
-  'B\u00E1ch': {
-    name: 'B\u00E1ch',
-    character: '\u67CF',
-    pinyin: 'bai',
-    meaning: 'cypress',
-    alternates: [{ character: '\u767E', meaning: 'hundred' }],
-  },
-  'H\u00E0': {
-    name: 'H\u00E0',
-    character: '\u6CB3',
-    pinyin: 'he',
-    meaning: 'river',
-  },
-  'Kim': {
-    name: 'Kim',
-    character: '\u91D1',
-    pinyin: 'jin',
-    meaning: 'gold',
-  },
-  'L\u00E2m': {
-    name: 'L\u00E2m',
-    character: '\u6797',
-    pinyin: 'lin',
-    meaning: 'forest',
-  },
-  'Phong': {
-    name: 'Phong',
-    character: '\u98A8',
-    pinyin: 'feng',
-    meaning: 'wind',
-    alternates: [{ character: '\u8C50', meaning: 'abundant' }],
-  },
-  'Th\u1EE7y': {
-    name: 'Th\u1EE7y',
-    character: '\u6C34',
-    pinyin: 'shui',
-    meaning: 'water',
-  },
-  'Tr\u00FAc': {
-    name: 'Tr\u00FAc',
-    character: '\u7AF9',
-    pinyin: 'zhu',
-    meaning: 'bamboo',
-  },
+function hanVietParse(): Record<string, THanVietEntry> {
+  if (cache) return cache;
+  cache = {};
+  const listLine = D.split('\n');
+  for (let i = 0; i < listLine.length; i += 1) {
+    const listPart = listLine[i].split('|');
+    const entry: THanVietEntry = {
+      name: listPart[0],
+      character: listPart[1],
+      meaning: listPart[3],
+    };
+    if (listPart[2]) entry.pinyin = listPart[2];
+    if (listPart[4]) {
+      entry.alternates = listPart[4].split(';').map(a => {
+        const j = a.indexOf(':');
+        return { character: a.slice(0, j), meaning: a.slice(j + 1) };
+      });
+    }
+    cache[entry.name] = entry;
+  }
+  return cache;
+}
 
-  // Additional common names
-  'M\u1EA1nh': {
-    name: 'M\u1EA1nh',
-    character: '\u5B5F',
-    pinyin: 'meng',
-    meaning: 'eldest/vigorous',
-  },
-  'T\u00EDn': {
-    name: 'T\u00EDn',
-    character: '\u4FE1',
-    pinyin: 'xin',
-    meaning: 'trust',
-  },
-  'Khi\u00EAm': {
-    name: 'Khi\u00EAm',
-    character: '\u8B19',
-    pinyin: 'qian',
-    meaning: 'humble',
-  },
-  'T\u00E2m': {
-    name: 'T\u00E2m',
-    character: '\u5FC3',
-    pinyin: 'xin',
-    meaning: 'heart',
-  },
-  'Th\u00EA': {
-    name: 'Th\u00EA',
-    character: '\u4E16',
-    pinyin: 'shi',
-    meaning: 'generation',
-  },
-  'Th\u1ECBnh': {
-    name: 'Th\u1ECBnh',
-    character: '\u76DB',
-    pinyin: 'sheng',
-    meaning: 'prosperous',
-  },
-  'Ti\u1EBFn': {
-    name: 'Ti\u1EBFn',
-    character: '\u9032',
-    pinyin: 'jin',
-    meaning: 'advance',
-  },
-  'Ph\u00E1t': {
-    name: 'Ph\u00E1t',
-    character: '\u767C',
-    pinyin: 'fa',
-    meaning: 'prosper',
-  },
-  'Ph\u00FA': {
-    name: 'Ph\u00FA',
-    character: '\u5BCC',
-    pinyin: 'fu',
-    meaning: 'wealthy',
-  },
-  'L\u1ED9c': {
-    name: 'L\u1ED9c',
-    character: '\u797F',
-    pinyin: 'lu',
-    meaning: 'fortune',
-  },
-  'Thi\u00EAn': {
-    name: 'Thi\u00EAn',
-    character: '\u5929',
-    pinyin: 'tian',
-    meaning: 'heaven',
-  },
-  'Nh\u1EADt': {
-    name: 'Nh\u1EADt',
-    character: '\u65E5',
-    pinyin: 'ri',
-    meaning: 'sun/day',
-  },
-  '\u0110\u00F4ng': {
-    name: '\u0110\u00F4ng',
-    character: '\u6771',
-    pinyin: 'dong',
-    meaning: 'east',
-  },
-  'H\u1EA1': {
-    name: 'H\u1EA1',
-    character: '\u590F',
-    pinyin: 'xia',
-    meaning: 'summer',
-  },
-  'D\u01B0\u01A1ng': {
-    name: 'D\u01B0\u01A1ng',
-    character: '\u967D',
-    pinyin: 'yang',
-    meaning: 'sun/positive',
-  },
-  'V\u00E2n': {
-    name: 'V\u00E2n',
-    character: '\u96F2',
-    pinyin: 'yun',
-    meaning: 'cloud',
-  },
-  'Hi\u1EC1n': {
-    name: 'Hi\u1EC1n',
-    character: '\u8CE2',
-    pinyin: 'xian',
-    meaning: 'virtuous',
-  },
-  'H\u1ED3ng': {
-    name: 'H\u1ED3ng',
-    character: '\u7D05',
-    pinyin: 'hong',
-    meaning: 'red/rosy',
-  },
-  'M\u1EF9': {
-    name: 'M\u1EF9',
-    character: '\u7F8E',
-    pinyin: 'mei',
-    meaning: 'beautiful',
-  },
-  'Di\u1EC5m': {
-    name: 'Di\u1EC5m',
-    character: '\u8276',
-    pinyin: 'yan',
-    meaning: 'gorgeous',
-  },
-  'Ki\u1EC1u': {
-    name: 'Ki\u1EC1u',
-    character: '\u55AC',
-    pinyin: 'qiao',
-    meaning: 'graceful',
-  },
-  'Nh\u01B0': {
-    name: 'Nh\u01B0',
-    character: '\u5982',
-    pinyin: 'ru',
-    meaning: 'like/as',
-  },
-  'Nhi': {
-    name: 'Nhi',
-    character: '\u5152',
-    pinyin: 'er',
-    meaning: 'child',
-  },
-  'Uy\u00EAn': {
-    name: 'Uy\u00EAn',
-    character: '\u9D1B',
-    pinyin: 'yuan',
-    meaning: 'mandarin duck',
-  },
-  'Duy\u00EAn': {
-    name: 'Duy\u00EAn',
-    character: '\u7DE3',
-    pinyin: 'yuan',
-    meaning: 'grace/charm',
-  },
-  'Ng\u00E2n': {
-    name: 'Ng\u00E2n',
-    character: '\u9280',
-    pinyin: 'yin',
-    meaning: 'silver',
-  },
-  'B\u00EDch': {
-    name: 'B\u00EDch',
-    character: '\u78A7',
-    pinyin: 'bi',
-    meaning: 'jade-green',
-  },
-  'Loan': {
-    name: 'Loan',
-    character: '\u9E1E',
-    pinyin: 'luan',
-    meaning: 'phoenix',
-  },
-  'Sen': {
-    name: 'Sen',
-    character: '\u84EE',
-    pinyin: 'lian',
-    meaning: 'lotus',
-  },
-  '\u0110\u00E0o': {
-    name: '\u0110\u00E0o',
-    character: '\u6843',
-    pinyin: 'tao',
-    meaning: 'peach',
-  },
-  'C\u00FAc': {
-    name: 'C\u00FAc',
-    character: '\u83CA',
-    pinyin: 'ju',
-    meaning: 'chrysanthemum',
-  },
-  'Ki\u1EC7t': {
-    name: 'Ki\u1EC7t',
-    character: '\u5091',
-    pinyin: 'jie',
-    meaning: 'outstanding',
-  },
-  'Kh\u00F4i': {
-    name: 'Kh\u00F4i',
-    character: '\u9B41',
-    pinyin: 'kui',
-    meaning: 'leader/chief',
-  },
-  'Tri\u1EBFt': {
-    name: 'Tri\u1EBFt',
-    character: '\u54F2',
-    pinyin: 'zhe',
-    meaning: 'philosopher',
-  },
-  'L\u1EF1c': {
-    name: 'L\u1EF1c',
-    character: '\u529B',
-    pinyin: 'li',
-    meaning: 'strength',
-  },
-  'H\u00E0o': {
-    name: 'H\u00E0o',
-    character: '\u8C6A',
-    pinyin: 'hao',
-    meaning: 'heroic/grand',
-  },
-  'H\u00E2n': {
-    name: 'H\u00E2n',
-    character: '\u6B23',
-    pinyin: 'xin',
-    meaning: 'joy',
-  },
-  'Ph\u01B0\u1EDBc': {
-    name: 'Ph\u01B0\u1EDBc',
-    character: '\u798F',
-    pinyin: 'fu',
-    meaning: 'blessing',
-  },
-  'S\u00E1ng': {
-    name: 'S\u00E1ng',
-    character: '\u660E',
-    pinyin: 'ming',
-    meaning: 'bright/luminous',
-  },
-  'Sao': {
-    name: 'Sao',
-    character: '\u661F',
-    pinyin: 'xing',
-    meaning: 'star',
-  },
-};
+export const HAN_VIET_MAP: Record<string, THanVietEntry> = new Proxy(
+  {} as Record<string, THanVietEntry>,
+  {
+    get(_t, p: string) { return hanVietParse()[p]; },
+    ownKeys() { return Object.keys(hanVietParse()); },
+    getOwnPropertyDescriptor(_t, p: string) {
+      const m = hanVietParse();
+      return p in m ? { configurable: true, enumerable: true, value: m[p] } : undefined;
+    },
+    has(_t, p: string) { return p in hanVietParse(); },
+  }
+);

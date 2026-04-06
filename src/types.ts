@@ -48,6 +48,89 @@ export enum ENameFormat {
 
 export type TNameStyle = 'japanese' | 'korean' | 'western' | 'hybrid';
 
+export enum EFormality {
+  WrittenFormal = 'written-formal',
+  SpokenFormal = 'spoken-formal',
+  Professional = 'professional',
+  Casual = 'casual',
+  Intimate = 'intimate',
+}
+
+export enum EHonorificCategory {
+  Royal = 'royal',
+  Mandarin = 'mandarin',
+  Scholar = 'scholar',
+  Family = 'family',
+  AgeBased = 'age-based',
+  Professional = 'professional',
+  Religious = 'religious',
+  GenZ = 'genz',
+  Regional = 'regional',
+}
+
+export enum EReligion {
+  Buddhism = 'buddhism',
+  Catholicism = 'catholicism',
+  CaoDai = 'cao-dai',
+  HoaHao = 'hoa-hao',
+  Folk = 'folk',
+}
+
+export enum EFeudalRank {
+  Emperor = 'emperor',
+  Consort = 'consort',
+  Prince = 'prince',
+  Princess = 'princess',
+  Nobility = 'nobility',
+  Mandarin = 'mandarin',
+  Scholar = 'scholar',
+}
+
+export interface IPronounPair {
+  self: string;
+  addressee: string;
+}
+
+export interface IAddressOptions {
+  familyRelation?: string;
+  role?: string;
+  speakerAge?: number;
+  addresseeAge?: number;
+  gender?: EGender;
+  formality?: EFormality;
+  region?: ERegion;
+  era?: EEra;
+  religion?: EReligion;
+  seed?: number;
+}
+
+export interface IAddressResult {
+  honorific: string;
+  addressTerm: string;
+  fullAddress: string;
+  pronounPair: IPronounPair;
+  category: EHonorificCategory;
+  formality: EFormality;
+  region: ERegion;
+}
+
+export interface ITitleEntry {
+  title: string;
+  sinoVietnamese?: string;
+  era: EEra | 'all';
+  gender?: EGender | 'any';
+  description?: string;
+}
+
+export interface IKinshipTerm {
+  term: string;
+  relation: string;
+  generation: number;
+  side?: 'paternal' | 'maternal';
+  gender: EGender | 'any';
+  regionVariants?: Partial<Record<ERegion, string>>;
+}
+
 export type TGenerateOptions = {
   gender?: EGender;
   region?: ERegion;

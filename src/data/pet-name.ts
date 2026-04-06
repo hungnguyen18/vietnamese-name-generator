@@ -6,126 +6,124 @@ export type TPetNameEntry = {
   furColor?: string;
 };
 
-export const LIST_PET_NAME: TPetNameEntry[] = [
-  // byColor
-  { name: 'Vàng', meaning: 'gold/yellow', category: 'byColor', furColor: 'yellow', petType: 'any' },
-  { name: 'Mực', meaning: 'ink/black', category: 'byColor', furColor: 'black', petType: 'dog' },
-  { name: 'Bông', meaning: 'cotton/white', category: 'byColor', furColor: 'white', petType: 'any' },
-  { name: 'Tuyết', meaning: 'snow', category: 'byColor', furColor: 'white', petType: 'any' },
-  { name: 'Sữa', meaning: 'milk', category: 'byColor', furColor: 'white', petType: 'any' },
-  { name: 'Mây', meaning: 'cloud', category: 'byColor', furColor: 'white', petType: 'any' },
-  { name: 'Kem', meaning: 'cream', category: 'byColor', furColor: 'cream', petType: 'any' },
-  { name: 'Đen', meaning: 'black', category: 'byColor', furColor: 'black', petType: 'any' },
-  { name: 'Than', meaning: 'charcoal', category: 'byColor', furColor: 'black', petType: 'any' },
-  { name: 'Kim', meaning: 'gold (metal)', category: 'byColor', furColor: 'yellow', petType: 'any' },
-  { name: 'Nắng', meaning: 'sunshine', category: 'byColor', furColor: 'yellow', petType: 'any' },
-  { name: 'Đốm', meaning: 'spotted', category: 'byColor', furColor: 'spotted', petType: 'dog' },
-  { name: 'Xám', meaning: 'gray', category: 'byColor', furColor: 'gray', petType: 'any' },
-  { name: 'Mun', meaning: 'traditional black cat name', category: 'byColor', furColor: 'black', petType: 'cat' },
-  { name: 'Mướp', meaning: 'tabby/orange', category: 'byColor', furColor: 'orange', petType: 'cat' },
-  { name: 'Bạch', meaning: 'pure white', category: 'byColor', furColor: 'white', petType: 'any' },
-  { name: 'Khói', meaning: 'smoke', category: 'byColor', furColor: 'gray', petType: 'cat' },
-  { name: 'Bạc', meaning: 'silver', category: 'byColor', furColor: 'gray', petType: 'any' },
-  { name: 'Cam', meaning: 'orange', category: 'byColor', furColor: 'orange', petType: 'cat' },
-  { name: 'Gừng', meaning: 'ginger', category: 'byColor', furColor: 'orange', petType: 'cat' },
-  { name: 'Cà Phê', meaning: 'coffee', category: 'byColor', furColor: 'brown', petType: 'any' },
-  { name: 'Socola', meaning: 'chocolate', category: 'byColor', furColor: 'brown', petType: 'any' },
-  { name: 'Hổ', meaning: 'tiger', category: 'byColor', furColor: 'tabby', petType: 'cat' },
+// Compact: name|meaning|category|petType|furColor (last 2 optional)
+const D = `Vàng|gold/yellow|byColor|any|yellow
+Mực|ink/black|byColor|dog|black
+Bông|cotton/white|byColor|any|white
+Tuyết|snow|byColor|any|white
+Sữa|milk|byColor|any|white
+Mây|cloud|byColor|any|white
+Kem|cream|byColor|any|cream
+Đen|black|byColor|any|black
+Than|charcoal|byColor|any|black
+Kim|gold (metal)|byColor|any|yellow
+Nắng|sunshine|byColor|any|yellow
+Đốm|spotted|byColor|dog|spotted
+Xám|gray|byColor|any|gray
+Mun|traditional black cat name|byColor|cat|black
+Mướp|tabby/orange|byColor|cat|orange
+Bạch|pure white|byColor|any|white
+Khói|smoke|byColor|cat|gray
+Bạc|silver|byColor|any|gray
+Cam|orange|byColor|cat|orange
+Gừng|ginger|byColor|cat|orange
+Cà Phê|coffee|byColor|any|brown
+Socola|chocolate|byColor|any|brown
+Hổ|tiger|byColor|cat|tabby
+Phở|pho noodle soup|byFood
+Bún|rice vermicelli|byFood
+Bánh|cake/pastry|byFood
+Bánh Mì|bread/sandwich|byFood
+Bánh Bao|steamed bun|byFood
+Xôi|sticky rice|byFood
+Nem|spring roll|byFood
+Chè|sweet dessert soup|byFood
+Cơm|rice|byFood
+Tiêu|pepper|byFood
+Xúc Xích|sausage|byFood
+Bim Bim|chips/snacks|byFood
+Kẹo|candy|byFood
+Bơ|butter/avocado|byFood
+Đậu|bean|byFood
+Bắp|corn|byFood
+Gạo|rice (uncooked)|byFood
+Xoài|mango|byFood
+Mít|jackfruit|byFood
+Chanh|lime|byFood
+Bí|pumpkin|byFood
+Cà Rốt|carrot|byFood
+Tôm Hùm|lobster|byFood
+Ruốc|meat floss|byFood
+Sen|lotus|byNature
+Mai|apricot blossom|byNature
+Đào|peach blossom|byNature
+Lan|orchid|byNature
+Cúc|chrysanthemum|byNature
+Hồng|rose/pink|byNature
+Trúc|bamboo|byNature
+Sao|star|byNature
+Gió|wind|byNature
+Rừng|forest|byNature
+Xuân|spring|byNature
+Bướm|butterfly|byNature
+Sương|dew/mist|byNature
+Biển|sea|byNature
+Mưa|rain|byNature
+Tài|wealth|byLuck
+Lộc|fortune|byLuck
+Phú Quý|rich & noble|byLuck
+Phúc|blessing|byLuck
+Phát|prosper|byLuck
+Thịnh|prosperous|byLuck
+Vui|happy|byLuck
+Sướng|comfortable|byLuck
+May Mắn|lucky|byLuck
+Hạnh Phúc|happiness|byLuck
+Như Ý|as wished|byLuck
+Thần Tài|god of wealth|byLuck
+Cậu Vàng|Mr. Gold (literary classic)|byHumor
+Đại Ca|big boss|byHumor
+Tướng Quân|general|byHumor
+Hoàng Tử|prince|byHumor
+Soái Ca|heartthrob|byHumor
+Béo|fat|byHumor
+Mập|chubby|byHumor
+Lùn|shorty|byHumor
+Xíu|tiny|byHumor
+Lì|stubborn|byHumor
+Lười|lazy|byHumor
+Ninja|ninja|byHumor
+Luna|moon (Sailor Moon cat)|byPopCulture
+Milo|popular international name|byPopCulture
+Simba|lion (The Lion King)|byPopCulture
+Totoro|forest spirit (anime)|byPopCulture
+Pikachu|electric mouse (Pokemon)|byPopCulture
+Momo|peach (various anime)|byPopCulture
+Haru|spring (Japanese)|byPopCulture
+Coco|chic/stylish|byPopCulture
+Lucky|lucky (English)|byPopCulture
+Max|greatest (English)|byPopCulture
+Bella|beautiful (Italian)|byPopCulture
+Charlie|free man (English)|byPopCulture
+Tí|tiny|endearment
+Bé|small/baby|endearment
+Cu|boy (informal)|endearment
+Bống|little fish|endearment
+Gấu|bear|endearment
+Cún|puppy|endearment|dog
+Miu|kitty|endearment|cat
+Bọ|beetle/bug|endearment
+Bin|baby (slang)|endearment
+Bún Bò|beef noodle (cute combo)|endearment`;
 
-  // byFood
-  { name: 'Phở', meaning: 'pho noodle soup', category: 'byFood' },
-  { name: 'Bún', meaning: 'rice vermicelli', category: 'byFood' },
-  { name: 'Bánh', meaning: 'cake/pastry', category: 'byFood' },
-  { name: 'Bánh Mì', meaning: 'bread/sandwich', category: 'byFood' },
-  { name: 'Bánh Bao', meaning: 'steamed bun', category: 'byFood' },
-  { name: 'Xôi', meaning: 'sticky rice', category: 'byFood' },
-  { name: 'Nem', meaning: 'spring roll', category: 'byFood' },
-  { name: 'Chè', meaning: 'sweet dessert soup', category: 'byFood' },
-  { name: 'Cơm', meaning: 'rice', category: 'byFood' },
-  { name: 'Tiêu', meaning: 'pepper', category: 'byFood' },
-  { name: 'Xúc Xích', meaning: 'sausage', category: 'byFood' },
-  { name: 'Bim Bim', meaning: 'chips/snacks', category: 'byFood' },
-  { name: 'Kẹo', meaning: 'candy', category: 'byFood' },
-  { name: 'Bơ', meaning: 'butter/avocado', category: 'byFood' },
-  { name: 'Đậu', meaning: 'bean', category: 'byFood' },
-  { name: 'Bắp', meaning: 'corn', category: 'byFood' },
-  { name: 'Gạo', meaning: 'rice (uncooked)', category: 'byFood' },
-  { name: 'Xoài', meaning: 'mango', category: 'byFood' },
-  { name: 'Mít', meaning: 'jackfruit', category: 'byFood' },
-  { name: 'Chanh', meaning: 'lime', category: 'byFood' },
-  { name: 'Bí', meaning: 'pumpkin', category: 'byFood' },
-  { name: 'Cà Rốt', meaning: 'carrot', category: 'byFood' },
-  { name: 'Tôm Hùm', meaning: 'lobster', category: 'byFood' },
-  { name: 'Ruốc', meaning: 'meat floss', category: 'byFood' },
-
-  // byNature
-  { name: 'Sen', meaning: 'lotus', category: 'byNature' },
-  { name: 'Mai', meaning: 'apricot blossom', category: 'byNature' },
-  { name: 'Đào', meaning: 'peach blossom', category: 'byNature' },
-  { name: 'Lan', meaning: 'orchid', category: 'byNature' },
-  { name: 'Cúc', meaning: 'chrysanthemum', category: 'byNature' },
-  { name: 'Hồng', meaning: 'rose/pink', category: 'byNature' },
-  { name: 'Trúc', meaning: 'bamboo', category: 'byNature' },
-  { name: 'Sao', meaning: 'star', category: 'byNature' },
-  { name: 'Gió', meaning: 'wind', category: 'byNature' },
-  { name: 'Rừng', meaning: 'forest', category: 'byNature' },
-  { name: 'Xuân', meaning: 'spring', category: 'byNature' },
-  { name: 'Bướm', meaning: 'butterfly', category: 'byNature' },
-  { name: 'Sương', meaning: 'dew/mist', category: 'byNature' },
-  { name: 'Biển', meaning: 'sea', category: 'byNature' },
-  { name: 'Mưa', meaning: 'rain', category: 'byNature' },
-
-  // byLuck
-  { name: 'Tài', meaning: 'wealth', category: 'byLuck' },
-  { name: 'Lộc', meaning: 'fortune', category: 'byLuck' },
-  { name: 'Phú Quý', meaning: 'rich & noble', category: 'byLuck' },
-  { name: 'Phúc', meaning: 'blessing', category: 'byLuck' },
-  { name: 'Phát', meaning: 'prosper', category: 'byLuck' },
-  { name: 'Thịnh', meaning: 'prosperous', category: 'byLuck' },
-  { name: 'Vui', meaning: 'happy', category: 'byLuck' },
-  { name: 'Sướng', meaning: 'comfortable', category: 'byLuck' },
-  { name: 'May Mắn', meaning: 'lucky', category: 'byLuck' },
-  { name: 'Hạnh Phúc', meaning: 'happiness', category: 'byLuck' },
-  { name: 'Như Ý', meaning: 'as wished', category: 'byLuck' },
-  { name: 'Thần Tài', meaning: 'god of wealth', category: 'byLuck' },
-
-  // byHumor
-  { name: 'Cậu Vàng', meaning: 'Mr. Gold (literary classic)', category: 'byHumor' },
-  { name: 'Đại Ca', meaning: 'big boss', category: 'byHumor' },
-  { name: 'Tướng Quân', meaning: 'general', category: 'byHumor' },
-  { name: 'Hoàng Tử', meaning: 'prince', category: 'byHumor' },
-  { name: 'Soái Ca', meaning: 'heartthrob', category: 'byHumor' },
-  { name: 'Béo', meaning: 'fat', category: 'byHumor' },
-  { name: 'Mập', meaning: 'chubby', category: 'byHumor' },
-  { name: 'Lùn', meaning: 'shorty', category: 'byHumor' },
-  { name: 'Xíu', meaning: 'tiny', category: 'byHumor' },
-  { name: 'Lì', meaning: 'stubborn', category: 'byHumor' },
-  { name: 'Lười', meaning: 'lazy', category: 'byHumor' },
-  { name: 'Ninja', meaning: 'ninja', category: 'byHumor' },
-
-  // byPopCulture
-  { name: 'Luna', meaning: 'moon (Sailor Moon cat)', category: 'byPopCulture' },
-  { name: 'Milo', meaning: 'popular international name', category: 'byPopCulture' },
-  { name: 'Simba', meaning: 'lion (The Lion King)', category: 'byPopCulture' },
-  { name: 'Totoro', meaning: 'forest spirit (anime)', category: 'byPopCulture' },
-  { name: 'Pikachu', meaning: 'electric mouse (Pokemon)', category: 'byPopCulture' },
-  { name: 'Momo', meaning: 'peach (various anime)', category: 'byPopCulture' },
-  { name: 'Haru', meaning: 'spring (Japanese)', category: 'byPopCulture' },
-  { name: 'Coco', meaning: 'chic/stylish', category: 'byPopCulture' },
-  { name: 'Lucky', meaning: 'lucky (English)', category: 'byPopCulture' },
-  { name: 'Max', meaning: 'greatest (English)', category: 'byPopCulture' },
-  { name: 'Bella', meaning: 'beautiful (Italian)', category: 'byPopCulture' },
-  { name: 'Charlie', meaning: 'free man (English)', category: 'byPopCulture' },
-
-  // endearment
-  { name: 'Tí', meaning: 'tiny', category: 'endearment' },
-  { name: 'Bé', meaning: 'small/baby', category: 'endearment' },
-  { name: 'Cu', meaning: 'boy (informal)', category: 'endearment' },
-  { name: 'Bống', meaning: 'little fish', category: 'endearment' },
-  { name: 'Gấu', meaning: 'bear', category: 'endearment' },
-  { name: 'Cún', meaning: 'puppy', category: 'endearment', petType: 'dog' },
-  { name: 'Miu', meaning: 'kitty', category: 'endearment', petType: 'cat' },
-  { name: 'Bọ', meaning: 'beetle/bug', category: 'endearment' },
-  { name: 'Bin', meaning: 'baby (slang)', category: 'endearment' },
-  { name: 'Bún Bò', meaning: 'beef noodle (cute combo)', category: 'endearment' },
-];
+export const LIST_PET_NAME: TPetNameEntry[] = D.split('\n').map(line => {
+  const listPart = line.split('|');
+  const entry: TPetNameEntry = {
+    name: listPart[0],
+    meaning: listPart[1],
+    category: listPart[2],
+  };
+  if (listPart[3]) entry.petType = listPart[3];
+  if (listPart[4]) entry.furColor = listPart[4];
+  return entry;
+});
