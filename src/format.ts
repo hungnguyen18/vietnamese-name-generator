@@ -7,6 +7,22 @@ function abbreviateParts(parts: string[]): string {
     .join(".");
 }
 
+/**
+ * Format a Vietnamese name into the specified display format.
+ *
+ * Supports full name, abbreviated (initials + given name), reversed (Western order),
+ * and URL-safe slug formats.
+ *
+ * @param parts - The name parts including surname, middle name, given name, and romanized forms
+ * @param format - The desired output format (Full, Abbreviated, Reversed, or Slug)
+ * @returns The formatted name string
+ * @example
+ * ```typescript
+ * const parts = { surname: 'Nguyễn', middleName: 'Thị', givenName: 'Mai', fullName: 'Nguyễn Thị Mai', romanized: { surname: 'Nguyen', middleName: 'Thi', givenName: 'Mai', fullName: 'Nguyen Thi Mai' } };
+ * formatName(parts, ENameFormat.Abbreviated); // 'N.T. Mai'
+ * formatName(parts, ENameFormat.Slug);        // 'nguyen-thi-mai'
+ * ```
+ */
 export function formatName(parts: INameParts, format: ENameFormat): string {
   switch (format) {
     case ENameFormat.Full:

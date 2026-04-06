@@ -1,5 +1,14 @@
 import { givenNameIndex } from './data/given-name-compact';
 
+/**
+ * Vietnamese Five Elements (Ngu Hanh) used in traditional naming and fortune.
+ *
+ * @example
+ * ```typescript
+ * EElement.Kim  // 'kim' - Metal
+ * EElement.Thuy // 'thuy' - Water
+ * ```
+ */
 export enum EElement {
   Kim = 'kim',
   Moc = 'moc',
@@ -165,10 +174,33 @@ for (let i = 0; i < LIST_NAME_KEY.length; i += 1) {
   MAP_ELEMENT_NAME[MAP_NAME_ELEMENT[name]].push(name);
 }
 
+/**
+ * Retrieve detailed information about a Five Element (Ngu Hanh), including its
+ * Han Viet character, meaning, and generating/destroying cycle relationships.
+ *
+ * @param element - The element to look up
+ * @returns Element info with Han Viet character, meaning, and cycle relationships
+ * @example
+ * ```typescript
+ * getElementInfo(EElement.Kim);
+ * // { element: 'kim', hanViet: '金', meaning: 'Metal', generating: 'thuy', destroying: 'moc' }
+ * ```
+ */
 export function getElementInfo(element: EElement): IElementInfo {
   return MAP_ELEMENT_INFO[element];
 }
 
+/**
+ * Determine the Five Element (Ngu Hanh) associated with a Vietnamese given name.
+ *
+ * @param name - Vietnamese given name to look up (e.g. "Minh", "Lan")
+ * @returns The associated element, or null if the name is not in the element map
+ * @example
+ * ```typescript
+ * getNameElement('Minh'); // 'hoa' (Fire)
+ * getNameElement('Lan');  // 'moc' (Wood)
+ * ```
+ */
 export function getNameElement(name: string): EElement | null {
   if (!name || name.trim().length === 0) {
     return null;
@@ -177,6 +209,21 @@ export function getNameElement(name: string): EElement | null {
   return MAP_NAME_ELEMENT[trimmed] ?? null;
 }
 
+/**
+ * Get a list of Vietnamese given names associated with a specific Five Element.
+ * Optionally filter by gender and limit the number of results.
+ *
+ * @param element - The Five Element to filter names by
+ * @param options - Optional filters: gender ('male'|'female') and result limit
+ * @returns Array of Vietnamese given names belonging to the specified element
+ * @example
+ * ```typescript
+ * getNamesByElement(EElement.Moc);
+ * // ['Lam', 'Phong', 'Xuan', 'Mai', 'Lan', ...]
+ * getNamesByElement(EElement.Kim, { limit: 3 });
+ * // ['Kim', 'Ngan', 'Bao']
+ * ```
+ */
 export function getNamesByElement(
   element: EElement,
   options?: { gender?: string; limit?: number },
@@ -218,6 +265,18 @@ export function getNamesByElement(
   return listName;
 }
 
+/**
+ * Determine the Five Element (Ngu Hanh) for a birth year based on the last digit
+ * of the year in the Vietnamese/Chinese zodiac system.
+ *
+ * @param year - Birth year (e.g. 1990, 2000)
+ * @returns The Five Element corresponding to the birth year
+ * @example
+ * ```typescript
+ * getBirthYearElement(1990); // 'kim' (Metal) - last digit 0
+ * getBirthYearElement(1995); // 'moc' (Wood) - last digit 5
+ * ```
+ */
 export function getBirthYearElement(year: number): EElement {
   const lastDigit = Math.abs(year) % 10;
 

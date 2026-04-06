@@ -55,9 +55,19 @@ function buildLookup(): Map<string, TLookupEntry> {
 const LOOKUP = buildLookup();
 
 /**
- * Convert a Vietnamese surname to its regional variant.
- * If no variant exists for the target region, returns the original surname.
+ * Convert a Vietnamese surname to its regional variant (e.g. Hoang <-> Huynh, Vu <-> Vo).
+ * Returns the original surname if no variant exists for the target region.
  * Supports both diacritical and romanized (ASCII) input.
+ *
+ * @param surname - Vietnamese surname to convert (e.g. "Hoang", "Vu")
+ * @param targetRegion - Target region to get the variant for
+ * @returns The regional variant of the surname, or the original if no variant exists
+ * @example
+ * ```typescript
+ * getRegionalVariant('Hoang', ERegion.South); // 'Huynh'
+ * getRegionalVariant('Vu', ERegion.South);    // 'Vo'
+ * getRegionalVariant('Tran', ERegion.North);  // 'Tran' (no variant)
+ * ```
  */
 export function getRegionalVariant(surname: string, targetRegion: ERegion): string {
   const entry = LOOKUP.get(surname) || LOOKUP.get(surname.toLowerCase());

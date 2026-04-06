@@ -12,6 +12,20 @@ export interface INameMeaning {
   isCompound: boolean;
 }
 
+/**
+ * Look up cultural metadata for a Vietnamese given name, including which genders,
+ * regions, and eras it appears in, and whether it is a compound name.
+ *
+ * @param name - Vietnamese given name to look up (e.g. "Minh", "Thanh Huong")
+ * @returns Name meaning result with gender/region/era usage and compound status
+ * @example
+ * ```typescript
+ * getMeaning('Minh');
+ * // { name: 'Minh', found: true, genders: ['male','female'], regions: ['north','south'], ... }
+ * getMeaning('xyz');
+ * // { name: 'xyz', found: false, genders: [], regions: [], eras: [], isCompound: false }
+ * ```
+ */
 export function getMeaning(name: string): INameMeaning {
   const result: INameMeaning = {
     name,

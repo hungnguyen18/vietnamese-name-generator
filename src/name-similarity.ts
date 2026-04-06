@@ -140,6 +140,22 @@ function listWordPermutation(input: string): string[] {
   return result;
 }
 
+/**
+ * Compare two Vietnamese names and compute a similarity score (0.0 to 1.0).
+ * Handles word order permutations, romanized/diacritical mismatches, regional
+ * surname variants (e.g. Vo/Vu), and missing middle names.
+ *
+ * @param name1 - First Vietnamese full name
+ * @param name2 - Second Vietnamese full name to compare against
+ * @returns Similarity result with score, match flags, and per-part match details
+ * @example
+ * ```typescript
+ * nameSimilarity('Nguyen Van Minh', 'Nguyen Van Minh');
+ * // { score: 1, exactMatch: true, romanizedMatch: true, details: { ... } }
+ * nameSimilarity('Vo Thi Lan', 'Vu Thi Lan');
+ * // { score: 0.94, exactMatch: false, romanizedMatch: false, details: { surnameMatch: true, ... } }
+ * ```
+ */
 export function nameSimilarity(name1: string, name2: string): ISimilarityResult {
   const parsed1 = parseName(name1);
   const parsed2 = parseName(name2);

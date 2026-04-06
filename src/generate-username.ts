@@ -26,6 +26,20 @@ const LIST_PATTERN: TPatternFn[] = [
   },
 ];
 
+/**
+ * Generate a username from a randomly generated Vietnamese name using common
+ * username patterns (dot-separated, underscore, initial+surname, etc.).
+ *
+ * @param options - Optional generation options (gender, region, era, seed)
+ * @returns Object containing the generated username and the full name result
+ * @example
+ * ```typescript
+ * generateUsername({ seed: 42 });
+ * // { username: 'minh_nguyen', name: { fullName: 'Nguyen Van Minh', ... } }
+ * generateUsername();
+ * // { username: 'lan.tran', name: { fullName: 'Tran Thi Lan', ... } }
+ * ```
+ */
 export function generateUsername(options?: TGenerateOptions): IUsernameResult {
   const rng = options?.seed !== undefined ? mulberry32(options.seed) : undefined;
   const name = generate(options);

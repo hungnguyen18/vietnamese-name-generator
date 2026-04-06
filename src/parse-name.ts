@@ -85,6 +85,21 @@ function matchCompoundSurname(first: string, second: string): string | null {
   return null;
 }
 
+/**
+ * Parse a Vietnamese full name into structured parts (surname, middle name, given name).
+ * Handles compound surnames (e.g. "Tôn Thất", "Tôn Nữ") and romanized input.
+ *
+ * @param input - Full Vietnamese name string to parse
+ * @returns {IParsedName} Parsed name with surname, middleName, givenName, and fullName fields
+ * @example
+ * ```typescript
+ * parseName('Nguyễn Văn An');
+ * // { surname: 'Nguyễn', middleName: 'Văn', givenName: 'An', fullName: 'Nguyễn Văn An' }
+ *
+ * parseName('Tôn Thất Minh Đức');
+ * // { surname: 'Tôn Thất', middleName: 'Minh', givenName: 'Đức', fullName: 'Tôn Thất Minh Đức' }
+ * ```
+ */
 export function parseName(input: string): IParsedName {
   const trimmed = input.trim();
   if (trimmed.length === 0) {

@@ -92,6 +92,17 @@ function genzGivenNamePick(
   return pickRandom(list, rng).value;
 }
 
+/**
+ * Generate a random Vietnamese name with full cultural metadata.
+ *
+ * @param options - Generation options including gender, region, era, seed, style, format, and more
+ * @returns A complete name result with surname, middle name, given name, romanized forms, formatted variants, and metadata
+ * @example
+ * ```typescript
+ * const name = generate({ gender: EGender.Female, region: ERegion.South, seed: 42 });
+ * // { surname: 'Nguyễn', middleName: 'Thị', givenName: 'Mai', fullName: 'Nguyễn Thị Mai', ... }
+ * ```
+ */
 export function generate(options?: TGenerateOptions): INameResult {
   let rng: (() => number) | undefined;
   if (options?.seed !== undefined) {
@@ -157,10 +168,34 @@ export function generate(options?: TGenerateOptions): INameResult {
   return { ...parts, gender, region, era, formatted };
 }
 
+/**
+ * Generate a random Vietnamese full name as a single string.
+ *
+ * @param options - Generation options including gender, region, era, seed, style, and more
+ * @returns The full Vietnamese name string (e.g. "Nguyễn Văn An")
+ * @example
+ * ```typescript
+ * const name = generateFullName({ gender: EGender.Male, region: ERegion.North });
+ * // 'Trần Văn Hùng'
+ * ```
+ */
 export function generateFullName(options?: TGenerateOptions): string {
   return generate(options).fullName;
 }
 
+/**
+ * Generate multiple unique Vietnamese names at once.
+ *
+ * @param count - Number of unique names to generate (must be greater than 0)
+ * @param options - Generation options including gender, region, era, seed, and more
+ * @returns An array of unique name results with full metadata
+ * @throws {Error} If count is less than or equal to 0, or if unique name space is exhausted
+ * @example
+ * ```typescript
+ * const names = generateMany(3, { gender: EGender.Female, era: EEra.Modern });
+ * // [{ fullName: 'Lê Thị Hà' }, { fullName: 'Phạm Thị Linh' }, { fullName: 'Võ Thị Ngọc' }]
+ * ```
+ */
 export function generateMany(
   count: number,
   options?: TGenerateOptions,
@@ -216,6 +251,19 @@ export function generateMany(
   return results;
 }
 
+/**
+ * Generate multiple unique Vietnamese full names as plain strings.
+ *
+ * @param count - Number of unique names to generate (must be greater than 0)
+ * @param options - Generation options including gender, region, era, seed, and more
+ * @returns An array of unique full name strings
+ * @throws {Error} If count is less than or equal to 0, or if unique name space is exhausted
+ * @example
+ * ```typescript
+ * const names = generateManyFullNames(3, { region: ERegion.Central, seed: 100 });
+ * // ['Nguyễn Văn Bình', 'Trần Thị Lan', 'Lê Hoàng Nam']
+ * ```
+ */
 export function generateManyFullNames(
   count: number,
   options?: TGenerateOptions,

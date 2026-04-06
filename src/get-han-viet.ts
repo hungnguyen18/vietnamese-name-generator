@@ -3,6 +3,19 @@ export type { THanVietEntry } from './data/han-viet';
 import type { THanVietEntry } from './data/han-viet';
 import { romanize } from './romanize';
 
+/**
+ * Look up Han Viet (Sino-Vietnamese) character origin and meaning for a Vietnamese name.
+ * Supports both diacritical and romanized (ASCII) input.
+ *
+ * @param name - Vietnamese given name to look up (e.g. "Minh", "Thanh")
+ * @returns Han Viet entry with Chinese character and meaning, or null if not found
+ * @example
+ * ```typescript
+ * getHanViet('Minh');
+ * // { character: '明', meaning: 'bright, intelligent', ... }
+ * getHanViet('xyz'); // null
+ * ```
+ */
 export function getHanViet(name: string): THanVietEntry | null {
   if (!name || name.trim().length === 0) {
     return null;

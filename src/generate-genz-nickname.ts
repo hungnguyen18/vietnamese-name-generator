@@ -102,6 +102,20 @@ function templateResolve(
   return result;
 }
 
+/**
+ * Generate a Gen Z-style Vietnamese nickname using modern social media and
+ * cross-cultural naming patterns (JP/KR suffixes, meme styles, English-Viet blends).
+ *
+ * @param options - Optional settings: input name, style, gender, seed, and secure flag
+ * @returns Nickname result with the generated name, style, cultural origin, and note
+ * @example
+ * ```typescript
+ * generateGenZNickname({ name: 'Nguyen Thi Lan', style: 'jp-suffix' });
+ * // { nickname: 'Lan-chan', style: 'jp-suffix', origin: 'japanese-honorific', culturalNote: '...' }
+ * generateGenZNickname({ style: 'social-handle', seed: 42 });
+ * // deterministic social media handle
+ * ```
+ */
 export function generateGenZNickname(options?: IGenZNicknameOptions): IGenZNicknameResult {
   const rng = options?.seed !== undefined ? xoroshiro128plus(options.seed) : undefined;
   const style = options?.style ?? pickRandom(LIST_STYLE, rng);

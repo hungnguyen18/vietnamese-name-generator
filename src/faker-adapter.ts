@@ -22,6 +22,19 @@ function randomPick<T>(list: T[]): T {
   return list[Math.floor(Math.random() * list.length)];
 }
 
+/**
+ * A faker.js-compatible adapter for generating Vietnamese person and internet data.
+ * Provides `person` (firstName, lastName, middleName, fullName, sex, prefix) and
+ * `internet` (email, username) namespaces with the same API shape as faker.js.
+ *
+ * @example
+ * ```typescript
+ * fakerVi.person.fullName({ gender: 'female' }); // 'Tran Thi Lan'
+ * fakerVi.person.firstName('male');               // 'Minh'
+ * fakerVi.internet.email();                       // 'lan.tran@gmail.com'
+ * fakerVi.internet.username();                    // 'minh_nguyen'
+ * ```
+ */
 export const fakerVi = {
   person: {
     firstName(gender?: TGenderOption): string {

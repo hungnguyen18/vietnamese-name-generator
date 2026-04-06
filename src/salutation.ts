@@ -44,7 +44,22 @@ function fullSalutationBuild(honorific: string, addressName: string, formality: 
   return base;
 }
 
-/** @deprecated Use addressCalculate() for the full honorific system with age-based pronouns, professional titles, and regional variants. */
+/**
+ * Generate a Vietnamese salutation/honorific for a person based on their name,
+ * gender, and formality level. Automatically detects gender from the name if not provided.
+ *
+ * @deprecated Use addressCalculate() for the full honorific system with age-based pronouns, professional titles, and regional variants.
+ * @param fullName - Vietnamese full name (e.g. "Nguyen Van Minh")
+ * @param options - Optional settings: gender ('male'|'female') and formality ('formal'|'casual'|'professional')
+ * @returns Salutation result with honorific, address name, and full salutation string
+ * @example
+ * ```typescript
+ * salutation('Nguyen Van Minh', { formality: 'formal' });
+ * // { salutation: 'Ong Minh', honorific: 'Ong', addressName: 'Minh', fullSalutation: 'Kinh gui Ong Minh' }
+ * salutation('Tran Thi Lan', { formality: 'casual' });
+ * // { salutation: 'Chi Lan', honorific: 'Chi', addressName: 'Lan', fullSalutation: 'Chi Lan' }
+ * ```
+ */
 export function salutation(fullName: string, options?: ISalutationOptions): ISalutationResult {
   const formality: TFormality = options?.formality ?? 'casual';
   const parsed = parseName(fullName);

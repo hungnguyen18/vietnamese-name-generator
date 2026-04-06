@@ -43,6 +43,22 @@ function surnameMatch(listPart: string[]): { matched: boolean; surnameLength: nu
   return { matched: false, surnameLength: 0, surname: single };
 }
 
+/**
+ * Validate whether a string is a well-formed Vietnamese name.
+ * Checks for non-empty input, Vietnamese alphabet characters, proper capitalization,
+ * known surname, and reasonable part count (2-6 parts).
+ *
+ * @param input - Full Vietnamese name string to validate
+ * @returns {IValidationResult} Object with `valid` boolean and `reasons` array describing any failures
+ * @example
+ * ```typescript
+ * validateName('Nguyễn Thị Mai');
+ * // { valid: true, reasons: [] }
+ *
+ * validateName('xyz An');
+ * // { valid: false, reasons: ['Unknown surname: xyz'] }
+ * ```
+ */
 export function validateName(input: string): IValidationResult {
   const listReason: string[] = [];
 

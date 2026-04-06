@@ -97,6 +97,21 @@ const CULTURAL_NOTE: Record<TNicknameCategory, string> = {
 
 const LIST_CATEGORY: TNicknameCategory[] = ['animal', 'descriptor', 'ordinal', 'food', 'endearment'];
 
+/**
+ * Generate a traditional Vietnamese protective nickname (ten xau de nuoi).
+ * These deliberately unflattering names are given to ward off evil spirits,
+ * a longstanding Vietnamese cultural practice.
+ *
+ * @param options - Optional generation settings: category and seed for deterministic output
+ * @returns Nickname result with the name, category, meaning, and cultural context
+ * @example
+ * ```typescript
+ * generateNickname({ category: 'animal' });
+ * // { nickname: 'Coc', category: 'animal', meaning: 'toad', culturalNote: '...' }
+ * generateNickname({ seed: 42 });
+ * // deterministic output based on seed
+ * ```
+ */
 export function generateNickname(options?: INicknameOptions): INicknameResult {
   const rng = options?.seed !== undefined ? mulberry32(options.seed) : undefined;
   const category = options?.category ?? pickRandom(LIST_CATEGORY, rng);

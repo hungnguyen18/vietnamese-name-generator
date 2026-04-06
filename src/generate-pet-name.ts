@@ -42,6 +42,20 @@ function filterEntry(listEntry: TPetNameEntry[], options?: IPetNameOptions): TPe
   return listFiltered;
 }
 
+/**
+ * Generate a single Vietnamese pet name, optionally filtered by category, pet type, or fur color.
+ *
+ * @param options - Optional filters: category, petType ('dog'|'cat'), furColor, and seed
+ * @returns A pet name result with name, meaning, category, and optional pet metadata
+ * @throws {Error} If no pet names match the given filter combination
+ * @example
+ * ```typescript
+ * generatePetName({ petType: 'cat', category: 'byColor' });
+ * // { name: 'Meo Muop', meaning: 'tabby cat', category: 'byColor', petType: 'cat' }
+ * generatePetName({ seed: 123 });
+ * // deterministic output based on seed
+ * ```
+ */
 export function generatePetName(options?: IPetNameOptions): IPetNameResult {
   const rng = options?.seed !== undefined ? mulberry32(options.seed) : undefined;
   const listFiltered = filterEntry(LIST_PET_NAME, options);
@@ -61,6 +75,20 @@ export function generatePetName(options?: IPetNameOptions): IPetNameResult {
   };
 }
 
+/**
+ * Generate multiple unique Vietnamese pet names. Names are deduplicated until
+ * the pool is exhausted, then names may repeat.
+ *
+ * @param count - Number of pet names to generate
+ * @param options - Optional filters: category, petType ('dog'|'cat'), furColor, and seed
+ * @returns Array of pet name results
+ * @throws {Error} If no pet names match the given filter combination
+ * @example
+ * ```typescript
+ * generateManyPetNames(3, { petType: 'dog' });
+ * // [{ name: 'Lu', meaning: 'fluffy', ... }, { name: 'Bong', ... }, ...]
+ * ```
+ */
 export function generateManyPetNames(count: number, options?: IPetNameOptions): IPetNameResult[] {
   const rng = options?.seed !== undefined ? mulberry32(options.seed) : undefined;
   const listFiltered = filterEntry(LIST_PET_NAME, options);

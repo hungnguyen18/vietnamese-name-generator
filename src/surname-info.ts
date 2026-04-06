@@ -79,6 +79,20 @@ function surnameFind(
   return null;
 }
 
+/**
+ * Look up detailed information about a Vietnamese surname, including regional
+ * frequency weights, rank, compound status, and North/South variants.
+ *
+ * @param surname - Vietnamese surname to look up (e.g. "Nguyen", "Hoang", "Vo")
+ * @returns Surname info with frequency, rank, compound flag, and regional variants
+ * @example
+ * ```typescript
+ * getSurnameInfo('Nguyen');
+ * // { surname: 'Nguyen', found: true, frequency: { north: 38, south: 40 }, rank: { north: 1, south: 1 }, ... }
+ * getSurnameInfo('Hoang');
+ * // { ..., regionalVariants: { south: 'Huynh' } }
+ * ```
+ */
 export function getSurnameInfo(surname: string): ISurnameInfo {
   const match = surnameFind(surname);
 

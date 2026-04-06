@@ -17,7 +17,15 @@ export interface IRankedName {
 }
 
 /**
- * Get dataset overview with counts of unique names across all categories.
+ * Get a high-level overview of the built-in Vietnamese name dataset, returning
+ * counts of unique surnames, given names, compound names, and middle names.
+ *
+ * @returns Statistics object with totals for each name category
+ * @example
+ * ```typescript
+ * getStatistics();
+ * // { totalSurnames: 150, totalGivenNames: 800, totalCompoundNames: 120, totalMiddleNames: 30 }
+ * ```
  */
 export function getStatistics(): IStatisticsResult {
   // Unique surnames across all regions
@@ -90,8 +98,18 @@ export function getStatistics(): IStatisticsResult {
 }
 
 /**
- * Get top N surnames by frequency weight.
- * If region is specified, use that region's data; otherwise average weights across regions.
+ * Get the top N most common Vietnamese surnames ranked by frequency weight.
+ * When a region is specified, uses that region's weights; otherwise averages across all regions.
+ *
+ * @param options - Optional filters: region ('north'|'central'|'south') and limit (default 10)
+ * @returns Array of ranked surname entries sorted by weight descending
+ * @example
+ * ```typescript
+ * getTopSurnames({ limit: 3 });
+ * // [{ name: 'Nguyen', weight: 38.4 }, { name: 'Tran', weight: 11.2 }, ...]
+ * getTopSurnames({ region: 'south', limit: 2 });
+ * // [{ name: 'Nguyen', weight: 40.1 }, { name: 'Tran', weight: 10.8 }]
+ * ```
  */
 export function getTopSurnames(options?: { region?: string; limit?: number }): IRankedName[] {
   const limit = options?.limit ?? 10;
@@ -141,7 +159,18 @@ export function getTopSurnames(options?: { region?: string; limit?: number }): I
 }
 
 /**
- * Get count of given names for a specific gender/region/era combination.
+ * Count given names in the dataset, optionally filtered by gender, region, and/or era.
+ * Returns the total count across all matching combinations.
+ *
+ * @param options - Optional filters: gender ('male'|'female'), region ('north'|'central'|'south'), era
+ * @returns Number of given name entries matching the filters
+ * @example
+ * ```typescript
+ * getGivenNameCount({ gender: 'female', region: 'north' });
+ * // 245
+ * getGivenNameCount();
+ * // 1800 (total across all combinations)
+ * ```
  */
 export function getGivenNameCount(options?: { gender?: string; region?: string; era?: string }): number {
   const index = givenNameIndex();
@@ -191,7 +220,18 @@ export function getGivenNameCount(options?: { gender?: string; region?: string; 
 }
 
 /**
- * Get unique given names across all combinations, optionally filtered by gender.
+ * Get a sorted list of unique given names from the dataset, optionally filtered
+ * by gender and limited to a maximum number of results.
+ *
+ * @param options - Optional filters: gender ('male'|'female') and result limit
+ * @returns Alphabetically sorted array of unique Vietnamese given names
+ * @example
+ * ```typescript
+ * getUniqueGivenNames({ gender: 'female', limit: 3 });
+ * // ['An', 'Anh', 'Bach']
+ * getUniqueGivenNames({ limit: 5 });
+ * // ['An', 'Anh', 'Bach', 'Bao', 'Binh']
+ * ```
  */
 export function getUniqueGivenNames(options?: { gender?: string; limit?: number }): string[] {
   const index = givenNameIndex();

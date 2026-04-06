@@ -121,10 +121,20 @@ function nameParse(input: string): { surname: string; middleName: string; givenN
 }
 
 /**
- * Detect the likely gender of a Vietnamese name.
+ * Detect the likely gender of a Vietnamese name by analyzing middle name and given name signals.
+ * Middle names carry the strongest signal (e.g. "Thị" is exclusively female, "Văn" is exclusively male).
  *
  * @param input - A Vietnamese full name string (e.g. "Nguyễn Thị Mai")
- * @returns An IGenderResult with gender, confidence, and individual signals
+ * @returns {IGenderResult} Object with gender ('male' | 'female' | 'unisex' | 'unknown'),
+ *   confidence ('high' | 'medium' | 'low'), and per-component signals
+ * @example
+ * ```typescript
+ * detectGender('Nguyễn Thị Mai');
+ * // { gender: 'female', confidence: 'high', signals: { middleName: { gender: 'female', value: 'Thị' }, ... } }
+ *
+ * detectGender('Trần Văn Minh');
+ * // { gender: 'male', confidence: 'high', signals: { middleName: { gender: 'male', value: 'Văn' }, ... } }
+ * ```
  */
 export function detectGender(input: string): IGenderResult {
   const unknown: IGenderResult = { gender: 'unknown', confidence: 'low', signals: {} };

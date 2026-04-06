@@ -46,6 +46,21 @@ function honorificFromGenderFormality(
   return gender === 'male' ? 'Anh' : 'Chị';
 }
 
+/**
+ * Calculate the appropriate Vietnamese address term, honorific, and pronoun pair for a person.
+ *
+ * Uses a priority-based decision tree: professional role first, then age-based lookup,
+ * then gender/formality fallback.
+ *
+ * @param fullName - The full Vietnamese name to address (e.g. "Nguyễn Văn An")
+ * @param options - Address options including role, speaker/addressee ages, gender, formality, and region
+ * @returns An address result with honorific, address term, full address phrase, pronoun pair, and metadata
+ * @example
+ * ```typescript
+ * const result = addressCalculate('Nguyễn Văn An', { speakerAge: 25, addresseeAge: 50, formality: EFormality.SpokenFormal });
+ * // { honorific: 'Chú', addressTerm: 'Chú An', fullAddress: 'Thưa Chú An', pronounPair: { self: 'cháu', addressee: 'chú' }, ... }
+ * ```
+ */
 export function addressCalculate(
   fullName: string,
   options?: IAddressOptions,
@@ -116,6 +131,22 @@ export function addressCalculate(
   };
 }
 
+/**
+ * Get the Vietnamese pronoun pair (self/addressee) based on relative ages.
+ *
+ * Determines the culturally appropriate first-person and second-person pronouns
+ * for a conversation between two people of known ages.
+ *
+ * @param speakerAge - Age of the person speaking
+ * @param addresseeAge - Age of the person being addressed
+ * @param options - Optional gender and region for more accurate pronoun selection
+ * @returns A pronoun pair with self (first-person) and addressee (second-person) terms
+ * @example
+ * ```typescript
+ * const pair = pronounPairGet(25, 55, { gender: EGender.Male, region: ERegion.North });
+ * // { self: 'cháu', addressee: 'chú' }
+ * ```
+ */
 export function pronounPairGet(
   speakerAge: number,
   addresseeAge: number,

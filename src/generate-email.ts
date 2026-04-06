@@ -23,6 +23,20 @@ const LIST_EMAIL_PATTERN: TPatternFn[] = [
   (first, _middle, last) => `${first[0]}${last}`,
 ];
 
+/**
+ * Generate a realistic email address from a randomly generated Vietnamese name.
+ * Supports custom domain and all standard generation options (gender, region, era, seed).
+ *
+ * @param options - Optional generation options including custom domain and name generation params
+ * @returns Object containing the generated email and the full name result
+ * @example
+ * ```typescript
+ * generateEmail({ domain: 'company.vn', seed: 42 });
+ * // { email: 'minh.nguyen@company.vn', name: { fullName: 'Nguyen Van Minh', ... } }
+ * generateEmail();
+ * // { email: 'lan.tran@gmail.com', name: { fullName: 'Tran Thi Lan', ... } }
+ * ```
+ */
 export function generateEmail(options?: TEmailOptions): IEmailResult {
   const rng = options?.seed !== undefined ? mulberry32(options.seed) : undefined;
 
