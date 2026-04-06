@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.13.1] - 2026-04-06
+
+### Fixed
+- `formatName(parts, ENameFormat.Slug)` crashed with TypeError when `romanized` field was missing — now auto-romanizes from `fullName` as fallback
+
 ## [0.13.0] - 2026-04-06
 
 ### Added
@@ -140,7 +145,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Census-weighted surname distribution
 - Types and enums: `EGender`, `ERegion`, `EEra`, `EMeaningCategory`
 
-[Unreleased]: https://github.com/hungnguyen18/vietnamese-name-generator/compare/v0.13.0...HEAD
+[Unreleased]: https://github.com/hungnguyen18/vietnamese-name-generator/compare/v0.13.1...HEAD
+[0.13.1]: https://github.com/hungnguyen18/vietnamese-name-generator/compare/v0.13.0...v0.13.1
 [0.13.0]: https://github.com/hungnguyen18/vietnamese-name-generator/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/hungnguyen18/vietnamese-name-generator/compare/v0.11.1...v0.12.0
 [0.11.1]: https://github.com/hungnguyen18/vietnamese-name-generator/compare/v0.11.0...v0.11.1

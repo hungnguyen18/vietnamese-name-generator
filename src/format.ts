@@ -1,5 +1,6 @@
 import type { INameParts } from "./types";
 import { ENameFormat } from "./types";
+import { romanize } from "./romanize";
 
 function abbreviateParts(parts: string[]): string {
   return parts
@@ -46,7 +47,8 @@ export function formatName(parts: INameParts, format: ENameFormat): string {
     }
 
     case ENameFormat.Slug: {
-      return parts.romanized.fullName
+      const romanizedFull = parts.romanized?.fullName ?? romanize(parts.fullName);
+      return romanizedFull
         .toLowerCase()
         .replace(/\s+/g, "-");
     }

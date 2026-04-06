@@ -94,6 +94,16 @@ describe("formatName", () => {
   it("slug with compound surname", () => {
     expect(formatName(COMPOUND_SURNAME, ENameFormat.Slug)).toBe("ton-that-van-an");
   });
+
+  it("slug without romanized field auto-romanizes", () => {
+    const parts = {
+      surname: "Nguyễn",
+      middleName: "Văn",
+      givenName: "An",
+      fullName: "Nguyễn Văn An",
+    } as INameParts;
+    expect(formatName(parts, ENameFormat.Slug)).toBe("nguyen-van-an");
+  });
 });
 
 import { generate } from "../src/generator";
