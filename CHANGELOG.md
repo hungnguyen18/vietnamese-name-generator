@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.13.0] - 2026-04-06
+
 ### Added
 - Vietnamese honorific & address system (`addressCalculate`, `pronounPairGet`)
   - Age-based pronoun pairs with 7 generational ranges
@@ -16,7 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Nâng principle for same-age addressing
 - New enums: `EFormality`, `EHonorificCategory`, `EReligion`, `EFeudalRank`
 - New types: `IPronounPair`, `IAddressOptions`, `IAddressResult`, `ITitleEntry`, `IKinshipTerm`
-- Research documentation for Vietnamese honorific system
+- JSDoc with `@param`, `@returns`, `@example` for all 40+ exported functions
+- VitePress documentation site with GitHub Pages deployment
+- CHANGELOG.md, CONTRIBUTING.md, GitHub issue templates
+- 18 new npm keywords and 12 GitHub topics for discoverability
+- Bundle size, TypeScript, and zero-dependencies badges
 
 ### Deprecated
 - `salutation()` — use `addressCalculate()` instead
@@ -134,7 +140,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Census-weighted surname distribution
 - Types and enums: `EGender`, `ERegion`, `EEra`, `EMeaningCategory`
 
-[Unreleased]: https://github.com/hungnguyen18/vietnamese-name-generator/compare/v0.12.0...HEAD
+[Unreleased]: https://github.com/hungnguyen18/vietnamese-name-generator/compare/v0.13.0...HEAD
+[0.13.0]: https://github.com/hungnguyen18/vietnamese-name-generator/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/hungnguyen18/vietnamese-name-generator/compare/v0.11.1...v0.12.0
 [0.11.1]: https://github.com/hungnguyen18/vietnamese-name-generator/compare/v0.11.0...v0.11.1
 [0.11.0]: https://github.com/hungnguyen18/vietnamese-name-generator/compare/v0.10.0...v0.11.0
